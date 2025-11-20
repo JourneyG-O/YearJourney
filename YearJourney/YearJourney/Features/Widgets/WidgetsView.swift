@@ -9,7 +9,25 @@ import SwiftUI
 
 struct WidgetsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List {
+                Section("Medium Widget") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        RoundedRectangle(cornerRadius: 8)
+                            .frame(height: 60)
+                            .opacity(0.2)
+                        Text("Year Journey Widget")
+                            .font(.subheadline)
+                    }
+                }
+
+                Section("Small Widgets") {
+                    Text("Goal Fill Widget")
+                    Text("Month Progress Widget")
+                }
+            }
+            .navigationTitle("Widgets")
+        }
     }
 }
 

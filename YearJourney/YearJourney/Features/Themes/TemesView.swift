@@ -9,7 +9,16 @@ import SwiftUI
 
 struct TemesView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List {
+                Section("Themes") {
+                    Text("Minimal Cat")
+                    Text("Dog & Bone")
+                    Text("8bit Retro")
+                }
+            }
+            .navigationTitle("Themes")
+        }
     }
 }
 

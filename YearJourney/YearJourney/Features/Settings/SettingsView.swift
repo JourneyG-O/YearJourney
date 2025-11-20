@@ -9,7 +9,24 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List {
+                Section("General") {
+                    Text("Language")
+                    Text("Appearance")
+                }
+                
+                Section("App") {
+                    Text("App Icon")
+                    Text("Feedback")
+                }
+                
+                Section("About") {
+                    Text("Version 1.0.0")
+                }
+            }
+            .navigationTitle("Settings")
+        }
     }
 }
 
