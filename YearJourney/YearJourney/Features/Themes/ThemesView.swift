@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TemesView: View {
+struct ThemesView: View {
     var body: some View {
         NavigationStack {
             List {
@@ -23,5 +23,5 @@ struct TemesView: View {
 }
 
 #Preview {
-    TemesView()
+    ThemesView()
 }

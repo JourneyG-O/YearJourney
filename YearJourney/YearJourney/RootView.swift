@@ -10,25 +10,25 @@ import SwiftUI
 struct RootView: View {
     var body: some View {
         TabView {
-            Text("Journey")
+            JourneyView()
                 .tabItem {
                     Image(systemName: "circle")
                     Text("Journey")
                 }
 
-            Text("Themes")
+            ThemesView()
                 .tabItem {
                     Image(systemName: "paintpalette")
                     Text("Themes")
                 }
 
-            Text("Widgets")
+            WidgetsView()
                 .tabItem {
                     Image(systemName: "rectangle")
                     Text("Widgets")
                 }
 
-            Text("Settings")
+            SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape")
                     Text("Settings")
