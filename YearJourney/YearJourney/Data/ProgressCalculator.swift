@@ -102,4 +102,12 @@ enum ProgressCalculator {
             totalDaysInMonth: totalDaysInMonth
         )
     }
+
+    static func goalFillProgress(
+        for date: Date = Date(),
+        calendar: Calendar = .current
+    ) -> Double {
+        let monthInfo = monthProgress(for: date, calendar: calendar)
+        return max(0.0, min(1.0, monthInfo.progress))
+    }
 }
