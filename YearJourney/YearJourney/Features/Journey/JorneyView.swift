@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct JourneyView: View {
+
+    private let dummyDate = Date()
+    private let dummyProgress: Double = 0.32
+    private let dummyDayOfYear: Int = 45
+
     var body: some View {
         VStack(spacing: 24) {
-            Text("Journey")
+
+            Spacer()
+
+            // 1) 동반자
+            CircleCompanionPlaceholder()
+                .frame(width: 300, height: 300)
+
+            // 2) 날짜
+            Text("\(dummyDayOfYear) / 365")
                 .font(.largeTitle)
-                .padding(.top, 40)
-
-            Circle()
-                .frame(width: 150, height: 150)
-                .overlay(Text("🐈"))
-
-            Rectangle()
-                .frame(height: 6)
-                .padding(.horizontal, 40)
-                .opacity(0.3)
-
-            Text("Today: 2025-02-10")
-                .font(.headline)
 
             Spacer()
         }
