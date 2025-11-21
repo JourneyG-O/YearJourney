@@ -15,18 +15,25 @@ struct YearJourneyEntry: TimelineEntry {
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> YearJourneyEntry {
-        YearJourneyEntry(date: Date(), progress: 0.32)
+        let info = ProgressCalculator.yearProgress()
+        return YearJourneyEntry(date: info.date, progress: info.progress)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneyEntry) -> ()) {
-        let entry = YearJourneyEntry(date: Date(), progress: 0.32)
+        let info = ProgressCalculator.yearProgress()
+        let entry = YearJourneyEntry(date: info.date, progress: info.progress)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneyEntry>) -> ()) {
+        let now = Date()
+        let info = ProgressCalculator.yearProgress(for: now)
 
-        let entry = YearJourneyEntry(date: Date(), progress: 0.32)
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date()
+        let entry = YearJourneyEntry(date: info.date, progress: info.progress)
+
+        // 하루에 한 번 업데이트로 충분함(0시 이후)
+        let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
+
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }

@@ -51,6 +51,13 @@
 			);
 			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
 		};
+		D7B0A9D22ED0722E007CB1EB /* Exceptions for "YearJourney" folder in "YearJourneyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Data/ProgressCalculator.swift,
+			);
+			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -64,6 +71,9 @@
 		};
 		D7BDACA52ECDFC6A0015FC22 /* YearJourney */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D7B0A9D22ED0722E007CB1EB /* Exceptions for "YearJourney" folder in "YearJourneyWidgetExtension" target */,
+			);
 			path = YearJourney;
 			sourceTree = "<group>";
 		};

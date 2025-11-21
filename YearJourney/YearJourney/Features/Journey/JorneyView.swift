@@ -9,9 +9,9 @@ import SwiftUI
 
 struct JourneyView: View {
 
-    private let dummyDate = Date()
-    private let dummyProgress: Double = 0.32
-    private let dummyDayOfYear: Int = 45
+    private var yearInfo: YearProgressInfo {
+        ProgressCalculator.yearProgress()
+    }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -23,7 +23,7 @@ struct JourneyView: View {
                 .frame(width: 300, height: 300)
 
             // 2) 날짜
-            Text("\(dummyDayOfYear) / 365")
+            Text("\(yearInfo.dayOfYear) / \(yearInfo.totalDaysInYeal)")
                 .font(.largeTitle)
 
             Spacer()
