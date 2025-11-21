@@ -6,11 +6,62 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D7B0A9BB2ED05E1C007CB1EB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */; };
+		D7B0A9BD2ED05E1C007CB1EB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */; };
+		D7B0A9C82ED05E1E007CB1EB /* YearJourneyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7B0A9C62ED05E1E007CB1EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7BDAC9B2ECDFC6A0015FC22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B0A9B72ED05E1C007CB1EB;
+			remoteInfo = YearJourneyWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7B0A9CD2ED05E1E007CB1EB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D7B0A9C82ED05E1E007CB1EB /* YearJourneyWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = YearJourneyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		D7BDACA32ECDFC6A0015FC22 /* YearJourney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YearJourney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D7B0A9C92ED05E1E007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourneyWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D7B0A9BE2ED05E1C007CB1EB /* YearJourneyWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D7B0A9C92ED05E1E007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourneyWidgetExtension" target */,
+			);
+			path = YearJourneyWidget;
+			sourceTree = "<group>";
+		};
 		D7BDACA52ECDFC6A0015FC22 /* YearJourney */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = YearJourney;
@@ -19,6 +70,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D7B0A9B52ED05E1C007CB1EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B0A9BD2ED05E1C007CB1EB /* SwiftUI.framework in Frameworks */,
+				D7B0A9BB2ED05E1C007CB1EB /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7BDACA02ECDFC6A0015FC22 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +89,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D7B0A9B92ED05E1C007CB1EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */,
+				D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D7BDAC9A2ECDFC6A0015FC22 = {
 			isa = PBXGroup;
 			children = (
 				D7BDACA52ECDFC6A0015FC22 /* YearJourney */,
+				D7B0A9BE2ED05E1C007CB1EB /* YearJourneyWidget */,
+				D7B0A9B92ED05E1C007CB1EB /* Frameworks */,
 				D7BDACA42ECDFC6A0015FC22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				D7BDACA32ECDFC6A0015FC22 /* YearJourney.app */,
+				D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +120,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7B0A9CA2ED05E1E007CB1EB /* Build configuration list for PBXNativeTarget "YearJourneyWidgetExtension" */;
+			buildPhases = (
+				D7B0A9B42ED05E1C007CB1EB /* Sources */,
+				D7B0A9B52ED05E1C007CB1EB /* Frameworks */,
+				D7B0A9B62ED05E1C007CB1EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D7B0A9BE2ED05E1C007CB1EB /* YearJourneyWidget */,
+			);
+			name = YearJourneyWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = YearJourneyWidgetExtension;
+			productReference = D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		D7BDACA22ECDFC6A0015FC22 /* YearJourney */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7BDACAE2ECDFC6C0015FC22 /* Build configuration list for PBXNativeTarget "YearJourney" */;
@@ -55,10 +149,12 @@
 				D7BDAC9F2ECDFC6A0015FC22 /* Sources */,
 				D7BDACA02ECDFC6A0015FC22 /* Frameworks */,
 				D7BDACA12ECDFC6A0015FC22 /* Resources */,
+				D7B0A9CD2ED05E1E007CB1EB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D7B0A9C72ED05E1E007CB1EB /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D7BDACA52ECDFC6A0015FC22 /* YearJourney */,
@@ -80,6 +176,9 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					D7B0A9B72ED05E1C007CB1EB = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					D7BDACA22ECDFC6A0015FC22 = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -100,11 +199,19 @@
 			projectRoot = "";
 			targets = (
 				D7BDACA22ECDFC6A0015FC22 /* YearJourney */,
+				D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D7B0A9B62ED05E1C007CB1EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7BDACA12ECDFC6A0015FC22 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +222,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D7B0A9B42ED05E1C007CB1EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7BDAC9F2ECDFC6A0015FC22 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +238,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D7B0A9C72ED05E1E007CB1EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
+			targetProxy = D7B0A9C62ED05E1E007CB1EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		D7B0A9CB2ED05E1E007CB1EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S2A2JAHX9A;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = YearJourneyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = YearJourneyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.stannum.YearJourney.YearJourneyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7B0A9CC2ED05E1E007CB1EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S2A2JAHX9A;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = YearJourneyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = YearJourneyWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.stannum.YearJourney.YearJourneyWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D7BDACAC2ECDFC6C0015FC22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -313,6 +495,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D7B0A9CA2ED05E1E007CB1EB /* Build configuration list for PBXNativeTarget "YearJourneyWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B0A9CB2ED05E1E007CB1EB /* Debug */,
+				D7B0A9CC2ED05E1E007CB1EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D7BDAC9E2ECDFC6A0015FC22 /* Build configuration list for PBXProject "YearJourney" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
