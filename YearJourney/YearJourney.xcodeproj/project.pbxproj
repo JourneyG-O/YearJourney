@@ -58,12 +58,23 @@
 			);
 			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
 		};
+		D7B0A9D62ED08F09007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourney" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GoalFillEntry.swift,
+				GoalFillProvider.swift,
+				GoalFillWidget.swift,
+				GoalFillWidgetEntryView.swift,
+			);
+			target = D7BDACA22ECDFC6A0015FC22 /* YearJourney */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D7B0A9BE2ED05E1C007CB1EB /* YearJourneyWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				D7B0A9D62ED08F09007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourney" target */,
 				D7B0A9C92ED05E1E007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourneyWidgetExtension" target */,
 			);
 			path = YearJourneyWidget;
