@@ -61,10 +61,7 @@
 		D7B0A9D62ED08F09007CB1EB /* Exceptions for "YearJourneyWidget" folder in "YearJourney" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				GoalFillEntry.swift,
-				GoalFillProvider.swift,
 				GoalFillWidget.swift,
-				GoalFillWidgetEntryView.swift,
 			);
 			target = D7BDACA22ECDFC6A0015FC22 /* YearJourney */;
 		};

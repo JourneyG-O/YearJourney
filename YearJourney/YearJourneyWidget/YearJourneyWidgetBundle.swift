@@ -12,5 +12,6 @@ import SwiftUI
 struct YearJourneyWidgetBundle: WidgetBundle {
     var body: some Widget {
         YearJourneyWidget()
+        GoalFillWidget()
     }
 }
