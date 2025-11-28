@@ -11,17 +11,29 @@ import SwiftUI
 struct YearJourneyEntry: TimelineEntry {
     let date: Date
     let progress: Double
+    let dayOfYear: Int
+    let totalDaysInYear: Int
 }
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> YearJourneyEntry {
         let info = ProgressCalculator.yearProgress()
-        return YearJourneyEntry(date: info.date, progress: info.progress)
+        return YearJourneyEntry(
+            date: info.date,
+            progress: info.progress,
+            dayOfYear: info.dayOfYear,
+            totalDaysInYear: info.totalDaysInYeal
+        )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneyEntry) -> ()) {
         let info = ProgressCalculator.yearProgress()
-        let entry = YearJourneyEntry(date: info.date, progress: info.progress)
+        let entry = YearJourneyEntry(
+            date: info.date,
+            progress: info.progress,
+            dayOfYear: info.dayOfYear,
+            totalDaysInYear: info.totalDaysInYeal
+        )
         completion(entry)
     }
 
@@ -29,11 +41,14 @@ struct Provider: TimelineProvider {
         let now = Date()
         let info = ProgressCalculator.yearProgress(for: now)
 
-        let entry = YearJourneyEntry(date: info.date, progress: info.progress)
+        let entry = YearJourneyEntry(
+            date: info.date,
+            progress: info.progress,
+            dayOfYear: info.dayOfYear,
+            totalDaysInYear: info.totalDaysInYeal
+        )
 
-        // 하루에 한 번 업데이트로 충분함(0시 이후)
         let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
-
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
@@ -43,55 +58,87 @@ struct YearJourneyWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        YearJourneyMediumWidgetView(progress: entry.progress)
-            .padding()
-            .containerBackground(.background, for: .widget)
+        YearJourneyMediumWidgetView(
+            progress: entry.progress,
+            dayOfYear: entry.dayOfYear,
+            totalDaysInYear: entry.totalDaysInYear
+        )
+        .padding()
+        .containerBackground(.background, for: .widget)
     }
 }
 
 struct YearJourneyMediumWidgetView: View {
-    var progress: Double
-    
+    let progress: Double
+    let dayOfYear: Int
+    let totalDaysInYear: Int
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Year Journey")
-                .font(.headline)
+        GeometryReader { proxy in
+            let size = proxy.size
 
-            ZStack(alignment: .leading) {
-                GeometryReader { proxy in
-                    let width = proxy.size.width
+            ZStack {
+                YearJourneyProgressLineView(progress: progress)
+                    .frame(height: 40)
+                    .position(x: size.width / 2,
+                              y: size.height / 2)
 
-                    // Path
-                    Capsule()
-                        .frame(height: 6)
-                        .opacity(0.3)
-
-                    // 진행도
-                    Capsule()
-                        .frame(width: max(0, min(1, progress)) * width, height: 6)
-
-                    // Traveler
-                    let catX = max(0, min(1, progress)) * width
-                    HStack {
-                        Text("🐈")
-                            .offset(x: catX - 10, y: -18)
-                        Spacer()
-                    }
-
-                    // Goal
-                    HStack {
-                        Spacer()
-                        Text("🐟")
-                            .offset(y: 10)
-                    }
+                VStack {
+                    Spacer()
+                    //                    Text("\(Int(progress * 100))%")
+                    Text("\(dayOfYear) / \(totalDaysInYear)")
+                        .font(.caption)
+                        .opacity(0.8)
+                        .padding(.bottom, 4)
                 }
-                .frame(height: 40)
+                .frame(width: size.width, height: size.height)
             }
+        }
+    }
+}
 
-            // 하단 정보 텍스트
-            Text("\(Int(progress * 100))% of the year")
-                .font(.caption)
-                .opacity(0.7)
+struct YearJourneyProgressLineView: View {
+    let progress: Double
+
+    var body: some View {
+        GeometryReader { proxy in
+            let size = proxy.size
+            let width = size.width
+            let height = size.height
+
+            let clamped = max(0.0, min(1.0, progress))
+
+            let goalReservedWidth: CGFloat = 28
+            let lineWidth = max(0, width - goalReservedWidth)
+
+            let lineY = height / 2
+
+            let travelerX = lineWidth * clamped
+
+            ZStack {
+                Capsule()
+                    .frame(width: lineWidth, height: 8)
+                    .opacity(0.25)
+                    .position(x: lineWidth / 2, y: lineY)
+
+                Capsule()
+                    .frame(width: lineWidth * clamped, height: 8)
+                    .position(x: (lineWidth * clamped) / 2, y: lineY)
+
+                Text("🐈")
+                    .font(.system(size: 18))
+                    .position(
+                        x: travelerX,
+                        y: lineY - 16
+                    )
+
+                Text("🐟")
+                    .font(.system(size: 16))
+                    .position(
+                        x: lineWidth + goalReservedWidth / 2,
+                        y: lineY
+                    )
+            }
         }
     }
 }
@@ -105,12 +152,12 @@ struct YearJourneyWidget: Widget {
         }
         .configurationDisplayName("Year Journey")
         .description("See how far you are into the year.")
-        .supportedFamilies([.systemMedium]) // 일단 Mediunm만
+        .supportedFamilies([.systemMedium])
     }
 }
 
 #Preview(as: .systemMedium) {
     YearJourneyWidget()
 } timeline: {
-    YearJourneyEntry(date: .now, progress: 0.32)
+    YearJourneyEntry(date: .now, progress: 0.32, dayOfYear: 377, totalDaysInYear: 365)
 }
