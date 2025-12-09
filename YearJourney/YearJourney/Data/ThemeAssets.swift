@@ -79,5 +79,5 @@ enum ThemeCatalog {
     ]
 
     /// 기본 테마 (앱 최초 실행 시 사용)
-    static let `default`: ThemeAssets = .catBasic
+    static let defaultTheme: ThemeAssets = .catBasic
 }

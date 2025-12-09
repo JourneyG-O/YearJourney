@@ -55,6 +55,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Data/ProgressCalculator.swift,
+				Data/ThemeAssets.swift,
 			);
 			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
 		};
