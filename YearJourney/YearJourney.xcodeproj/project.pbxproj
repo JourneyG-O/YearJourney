@@ -54,6 +54,7 @@
 		D7B0A9D22ED0722E007CB1EB /* Exceptions for "YearJourney" folder in "YearJourneyWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets.xcassets,
 				Data/ProgressCalculator.swift,
 				Data/Theme/ThemeAssets.swift,
 			);

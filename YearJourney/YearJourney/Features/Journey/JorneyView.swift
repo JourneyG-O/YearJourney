@@ -23,7 +23,7 @@ struct JourneyView: View {
                 .frame(width: 300, height: 300)
 
             // 2) 날짜
-            Text("\(yearInfo.dayOfYear) / \(yearInfo.totalDaysInYeal)")
+            Text("\(yearInfo.dayOfYear) / \(yearInfo.totalDaysInYear)")
                 .font(.largeTitle)
 
             Spacer()
