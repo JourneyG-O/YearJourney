@@ -81,3 +81,10 @@ enum ThemeCatalog {
     /// 기본 테마 (앱 최초 실행 시 사용)
     static let defaultTheme: ThemeAssets = .catBasic
 }
+
+extension ThemeCatalog {
+    static func theme(for id: String?) -> ThemeAssets {
+        guard let id = id else { return defaultTheme }
+        return all.first(where: { $0.id.rawValue == id }) ?? defaultTheme
+    }
+}
