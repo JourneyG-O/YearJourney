@@ -13,26 +13,37 @@ struct YearJourneyEntry: TimelineEntry {
     let progress: Double
     let dayOfYear: Int
     let totalDaysInYear: Int
+    let theme: ThemeAssets
 }
 
 struct Provider: TimelineProvider {
+
+    private func currentTheme() -> ThemeAssets {
+        let id = UserDefaults.standard.string(forKey: "selectedThemeID")
+        return ThemeCatalog.theme(for: id)
+    }
+
     func placeholder(in context: Context) -> YearJourneyEntry {
         let info = ProgressCalculator.yearProgress()
+        let theme = currentTheme()
         return YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
-            totalDaysInYear: info.totalDaysInYeal
+            totalDaysInYear: info.totalDaysInYear,
+            theme: theme
         )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneyEntry) -> ()) {
         let info = ProgressCalculator.yearProgress()
+        let theme = currentTheme()
         let entry = YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
-            totalDaysInYear: info.totalDaysInYeal
+            totalDaysInYear: info.totalDaysInYear,
+            theme: theme
         )
         completion(entry)
     }
@@ -40,12 +51,14 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneyEntry>) -> ()) {
         let now = Date()
         let info = ProgressCalculator.yearProgress(for: now)
+        let theme = currentTheme()
 
         let entry = YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
-            totalDaysInYear: info.totalDaysInYeal
+            totalDaysInYear: info.totalDaysInYear,
+            theme: theme
         )
 
         let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
@@ -61,7 +74,8 @@ struct YearJourneyWidgetEntryView : View {
         YearJourneyMediumWidgetView(
             progress: entry.progress,
             dayOfYear: entry.dayOfYear,
-            totalDaysInYear: entry.totalDaysInYear
+            totalDaysInYear: entry.totalDaysInYear,
+            theme: entry.theme
         )
         .padding()
         .containerBackground(.background, for: .widget)
@@ -72,13 +86,17 @@ struct YearJourneyMediumWidgetView: View {
     let progress: Double
     let dayOfYear: Int
     let totalDaysInYear: Int
+    let theme: ThemeAssets
 
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
 
             ZStack {
-                YearJourneyProgressLineView(progress: progress)
+                YearJourneyProgressLineView(
+                    progress: progress,
+                    theme: theme
+                )
                     .frame(height: 40)
                     .position(x: size.width / 2,
                               y: size.height / 2)
@@ -99,6 +117,13 @@ struct YearJourneyMediumWidgetView: View {
 
 struct YearJourneyProgressLineView: View {
     let progress: Double
+    let theme: ThemeAssets
+
+    @Environment(\.widgetRenderingMode) private var renderingMode
+
+    private var isTintMode: Bool {
+        renderingMode == .accented
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -112,8 +137,11 @@ struct YearJourneyProgressLineView: View {
             let lineWidth = max(0, width - goalReservedWidth)
 
             let lineY = height / 2
-
             let travelerX = lineWidth * clamped
+
+            let companionName = theme.companionImageName(isTintMode: isTintMode)
+            let goalName = isTintMode ? theme.goalTintImageName : theme.goalImageName
+
 
             ZStack {
                 Capsule()
@@ -125,15 +153,19 @@ struct YearJourneyProgressLineView: View {
                     .frame(width: lineWidth * clamped, height: 8)
                     .position(x: (lineWidth * clamped) / 2, y: lineY)
 
-                Text("🐈")
-                    .font(.system(size: 18))
+                Image(companionName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
                     .position(
                         x: travelerX,
                         y: lineY - 16
                     )
 
-                Text("🐟")
-                    .font(.system(size: 16))
+                Image(goalName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
                     .position(
                         x: lineWidth + goalReservedWidth / 2,
                         y: lineY
@@ -159,5 +191,5 @@ struct YearJourneyWidget: Widget {
 #Preview(as: .systemMedium) {
     YearJourneyWidget()
 } timeline: {
-    YearJourneyEntry(date: .now, progress: 0.32, dayOfYear: 377, totalDaysInYear: 365)
+    YearJourneyEntry(date: .now, progress: 0.32, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic)
 }

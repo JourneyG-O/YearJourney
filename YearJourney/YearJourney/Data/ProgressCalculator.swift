@@ -11,7 +11,7 @@ struct YearProgressInfo {
     let date: Date
     let progress: Double
     let dayOfYear: Int
-    let totalDaysInYeal: Int
+    let totalDaysInYear: Int
 }
 
 struct MonthProgressInfo {
@@ -56,7 +56,7 @@ enum ProgressCalculator {
             date: date,
             progress: progress,
             dayOfYear: clampedDay,
-            totalDaysInYeal: totalDaysInYear
+            totalDaysInYear: totalDaysInYear
         )
     }
     
