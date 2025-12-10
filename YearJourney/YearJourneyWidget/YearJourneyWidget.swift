@@ -156,7 +156,7 @@ struct YearJourneyProgressLineView: View {
                 Image(companionName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 28, height: 28)
+                    .frame(width: 60, height: 60)
                     .position(
                         x: travelerX,
                         y: lineY - 16
@@ -165,7 +165,7 @@ struct YearJourneyProgressLineView: View {
                 Image(goalName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 28, height: 28)
+                    .frame(width: 40, height: 40)
                     .position(
                         x: lineWidth + goalReservedWidth / 2,
                         y: lineY
