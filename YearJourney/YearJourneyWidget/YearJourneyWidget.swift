@@ -105,7 +105,7 @@ struct YearJourneyMediumWidgetView: View {
                     Spacer()
                     //                    Text("\(Int(progress * 100))%")
                     Text("\(dayOfYear) / \(totalDaysInYear)")
-                        .font(.caption)
+                        .font(.custom("ComicRelief-Bold", size: 16))
                         .opacity(0.8)
                         .padding(.bottom, 4)
                 }
