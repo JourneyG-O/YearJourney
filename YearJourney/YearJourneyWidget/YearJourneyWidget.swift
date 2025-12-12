@@ -103,8 +103,7 @@ struct YearJourneyMediumWidgetView: View {
 
                 VStack {
                     Spacer()
-                    //                    Text("\(Int(progress * 100))%")
-                    Text("\(dayOfYear) / \(totalDaysInYear)")
+                    Text("\(dayOfYear) / \(totalDaysInYear) (\(Int(progress * 100))%)")
                         .font(.custom("ComicRelief-Bold", size: 16))
                         .opacity(0.8)
                         .padding(.bottom, 4)
@@ -153,13 +152,17 @@ struct YearJourneyProgressLineView: View {
                     .frame(width: lineWidth * clamped, height: 8)
                     .position(x: (lineWidth * clamped) / 2, y: lineY)
 
+                let companionSize: CGFloat = 60
+                let footRatio: CGFloat = 6.0 / 8.0
+                let footAlignOffset = companionSize * (footRatio - 0.5)
+
                 Image(companionName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 60, height: 60)
+                    .frame(width: companionSize, height: companionSize)
                     .position(
                         x: travelerX,
-                        y: lineY - 16
+                        y: lineY - footAlignOffset
                     )
 
                 Image(goalName)
@@ -191,5 +194,5 @@ struct YearJourneyWidget: Widget {
 #Preview(as: .systemMedium) {
     YearJourneyWidget()
 } timeline: {
-    YearJourneyEntry(date: .now, progress: 0.32, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic)
+    YearJourneyEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic)
 }
