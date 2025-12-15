@@ -10,10 +10,10 @@ import SwiftUI
 struct RootView: View {
     var body: some View {
         TabView {
-            JourneyView()
+            TodayView()
                 .tabItem {
                     Image(systemName: "circle")
-                    Text("Journey")
+                    Text("Today")
                 }
 
             ThemesView()
