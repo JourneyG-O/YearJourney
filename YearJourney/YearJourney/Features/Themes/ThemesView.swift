@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ThemesView: View {
+    @StateObject private var themeManager = ThemeManager.shared
+//    @StateObject private var entitlementStore = ThemeEntitlementStore.shared
+
+
     var body: some View {
         NavigationStack {
             List {
