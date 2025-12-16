@@ -8,21 +8,50 @@
 import SwiftUI
 
 struct ThemesView: View {
-    @StateObject private var themeManager = ThemeManager.shared
-//    @StateObject private var entitlementStore = ThemeEntitlementStore.shared
+    @ObservedObject private var themeManager = ThemeManager.shared
+    @ObservedObject private var entitlementStore = ThemeEntitlementStore.shared
 
 
     var body: some View {
-        NavigationStack {
+        VStack(spacing: 8) {
+            header
+
             List {
-                Section("Themes") {
-                    Text("Minimal Cat")
-                    Text("Dog & Bone")
-                    Text("8bit Retro")
+                ForEach(ThemeCatalog.all) { theme in
+                    ThemeRow(
+                        theme: theme,
+                        isSelected: theme.id == themeManager.currentTheme.id,
+                        isOwned: entitlementStore.isOwned(theme),
+                        priceText: entitlementStore.priceText(for: theme),
+                        onSelect: {
+                            guard entitlementStore.isOwned(theme) else { return }
+                            themeManager.selectTheme(theme)
+                        },
+                        onBuy: {
+                            entitlementStore.purchase(theme)
+                            themeManager.selectTheme(theme)
+                        }
+                    )
+                    .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16))
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
             }
-            .navigationTitle("Themes")
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
         }
+        .background(Color(.systemGroupedBackground))
+    }
+
+    private var header: some View {
+        HStack {
+            Text("Themes")
+                .font(.custom("ComicRelief-Bold", size: 30))
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 8)
     }
 }
 
