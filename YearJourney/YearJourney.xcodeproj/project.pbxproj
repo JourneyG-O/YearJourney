@@ -63,7 +63,9 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				Data/ProgressCalculator.swift,
+				Data/Storege/AppGroupStore.swift,
 				Data/Theme/ThemeAssets.swift,
+				Data/Widget/WidgetKeys.swift,
 				"Resources/Fonts/ComicRelief-Bold.ttf",
 				"Resources/Fonts/ComicRelief-Regular.ttf",
 			);
