@@ -14,6 +14,7 @@ struct YearJourneyEntry: TimelineEntry {
     let dayOfYear: Int
     let totalDaysInYear: Int
     let theme: ThemeAssets
+    let config: MediumWidgetConfig
 }
 
 struct Provider: TimelineProvider {
@@ -23,27 +24,37 @@ struct Provider: TimelineProvider {
         return ThemeCatalog.theme(for: id)
     }
 
+    private func currentConfig() -> MediumWidgetConfig {
+        MediumWidgetConfig.load()
+    }
+
     func placeholder(in context: Context) -> YearJourneyEntry {
         let info = ProgressCalculator.yearProgress()
         let theme = currentTheme()
+        let config = currentConfig()
+
         return YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
-            theme: theme
+            theme: theme,
+            config: config
         )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneyEntry) -> ()) {
         let info = ProgressCalculator.yearProgress()
         let theme = currentTheme()
+        let config = currentConfig()
+
         let entry = YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
-            theme: theme
+            theme: theme,
+            config: config
         )
         completion(entry)
     }
@@ -52,13 +63,15 @@ struct Provider: TimelineProvider {
         let now = Date()
         let info = ProgressCalculator.yearProgress(for: now)
         let theme = currentTheme()
+        let config = currentConfig()
 
         let entry = YearJourneyEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
-            theme: theme
+            theme: theme,
+            config: config
         )
 
         let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
@@ -75,7 +88,8 @@ struct YearJourneyWidgetEntryView : View {
             progress: entry.progress,
             dayOfYear: entry.dayOfYear,
             totalDaysInYear: entry.totalDaysInYear,
-            theme: entry.theme
+            theme: entry.theme,
+            config: entry.config
         )
         .padding()
         .containerBackground(.background, for: .widget)
@@ -87,6 +101,21 @@ struct YearJourneyMediumWidgetView: View {
     let dayOfYear: Int
     let totalDaysInYear: Int
     let theme: ThemeAssets
+    let config: MediumWidgetConfig
+
+    private var displayText: String? {
+        switch config.displayMode {
+        case .dayFraction:
+            return "\(dayOfYear) / \(totalDaysInYear)"
+        case .percent:
+            return "\(Int(progress * 100))%"
+        case .dRemaining:
+            let remaining = totalDaysInYear - dayOfYear
+            return "D-\(remaining)"
+        case .off:
+            return nil
+        }
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -103,10 +132,13 @@ struct YearJourneyMediumWidgetView: View {
 
                 VStack {
                     Spacer()
-                    Text("\(dayOfYear) / \(totalDaysInYear) (\(Int(progress * 100))%)")
-                        .font(.custom("ComicRelief-Bold", size: 16))
-                        .opacity(0.8)
-                        .padding(.bottom, 4)
+                    if let text = displayText {
+                        Text(text)
+                            .font(.custom("ComicRelief-Bold", size: 16))
+                            .opacity(0.8)
+                            .padding(.bottom, 4)
+
+                    }
                 }
                 .frame(width: size.width, height: size.height)
             }
@@ -194,5 +226,5 @@ struct YearJourneyWidget: Widget {
 #Preview(as: .systemMedium) {
     YearJourneyWidget()
 } timeline: {
-    YearJourneyEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic)
+    YearJourneyEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: .default)
 }
