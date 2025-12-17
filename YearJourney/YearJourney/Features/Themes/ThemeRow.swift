@@ -49,7 +49,7 @@ struct ThemeRow: View {
             Image(companion)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 36, height: 36)
+                .frame(width: 60, height: 60)
                 .opacity(isOwned ? 1.0 : 0.85)
 
             Text("+")
@@ -59,7 +59,7 @@ struct ThemeRow: View {
             Image(goal)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 36, height: 36)
+                .frame(width: 40, height: 40)
                 .opacity(isOwned ? 1.0 : 0.85)
         }
     }
