@@ -45,7 +45,7 @@ struct ThemesView: View {
 
     private var header: some View {
         HStack {
-            Text("Themes")
+            Text("Companions")
                 .font(.custom("ComicRelief-Bold", size: 30))
             Spacer()
         }

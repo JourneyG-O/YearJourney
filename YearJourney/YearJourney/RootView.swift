@@ -19,7 +19,7 @@ struct RootView: View {
             ThemesView()
                 .tabItem {
                     Image(systemName: "paintpalette")
-                    Text("Themes")
+                    Text("Companions")
                 }
 
             WidgetsView()
