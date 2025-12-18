@@ -8,7 +8,7 @@
 import Foundation
 
 struct SmallWidgetConfig: Codable, Equatable {
-    var displayMode: WidgetDisplayMode
+    var displayMode: SmallWidgetDisplayMode
 
     var backgroundHex: String?
     var barHex: String?

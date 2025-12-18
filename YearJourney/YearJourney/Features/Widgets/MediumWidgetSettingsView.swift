@@ -26,7 +26,7 @@ struct MediumWidgetSettingsView: View {
                 previewCard
 
                 // 2) 섹션(표시 설정) - 다음 커밋에서 채울 예정
-                settingsPlaceholderSection
+                settingsSection
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
@@ -59,22 +59,44 @@ struct MediumWidgetSettingsView: View {
         }
     }
 
-    private var settingsPlaceholderSection: some View {
+    private var settingsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Settings")
+            Text("Display")
                 .font(.custom("ComicRelief-Bold", size: 16))
                 .foregroundStyle(.secondary)
 
-            Text("Next: Display Mode / Colors / Reset")
-                .font(.custom("ComicRelief-Regular", size: 14))
+            Picker("", selection: $draftConfig.displayMode) {
+                Text("N/365").tag(MediumWidgetDisplayMode.dayFraction)
+                Text("%").tag(MediumWidgetDisplayMode.percent)
+                Text("D-").tag(MediumWidgetDisplayMode.dRemaining)
+                Text("Off").tag(MediumWidgetDisplayMode.off)
+            }
+            .pickerStyle(.segmented)
+
+            Text(displayHintText)
+                .font(.custom("ComicRelief-Regular", size: 13))
                 .foregroundStyle(.secondary)
-                .padding(14)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(.secondarySystemGroupedBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .opacity(0.8)
+                .padding(.top, 2)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    private var displayHintText: String {
+        switch draftConfig.displayMode {
+        case .dayFraction: return "Show day index in the year."
+        case .percent: return "Show progress percentage."
+        case .dRemaining: return "Show remaining days."
+        case .off: return "Hide text."
         }
     }
 }
+
+
+
 
 #Preview {
     NavigationStack {

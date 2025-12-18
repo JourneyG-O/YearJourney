@@ -8,7 +8,7 @@
 import Foundation
 
 struct MediumWidgetConfig: Codable, Equatable {
-    var displayMode: WidgetDisplayMode
+    var displayMode: MediumWidgetDisplayMode
 
     var backgroundHex: String?
     var barHex: String?
