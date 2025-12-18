@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct YearJourneyWidgetBundle: WidgetBundle {
     var body: some Widget {
-        YearJourneyWidget()
-        GoalFillWidget()
+        YearJourneyMediumWidget()
+        YearJourneySmallWidget()
     }
 }

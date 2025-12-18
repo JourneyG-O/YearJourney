@@ -39,8 +39,12 @@ struct WidgetsView: View {
                     SmallWidgetSettingsView()
                 } label: {
                     WidgetPreviewCard(title: "Small") {
-                        GoalFillFishView(fillProgress: 0.4, theme: .catBasic)
-                            .padding(16)
+                        YearJourneySmallWidgetView(
+                            fillProgress: 0.4,
+                            theme: .catBasic,
+                            isTintMode: false
+                        )
+                        .padding(16)
                     }
                 }
                 .buttonStyle(.plain)

@@ -8,7 +8,7 @@
 import WidgetKit
 import SwiftUI
 
-struct YearJourneyEntry: TimelineEntry {
+struct YearJourneyMediumEntry: TimelineEntry {
     let date: Date
     let progress: Double
     let dayOfYear: Int
@@ -17,7 +17,7 @@ struct YearJourneyEntry: TimelineEntry {
     let config: MediumWidgetConfig
 }
 
-struct Provider: TimelineProvider {
+struct YearJourneyMediumProvider: TimelineProvider {
 
     private func currentTheme() -> ThemeAssets {
         let id = UserDefaults.standard.string(forKey: "selectedThemeID")
@@ -28,12 +28,12 @@ struct Provider: TimelineProvider {
         MediumWidgetConfig.load()
     }
 
-    func placeholder(in context: Context) -> YearJourneyEntry {
+    func placeholder(in context: Context) -> YearJourneyMediumEntry {
         let info = ProgressCalculator.yearProgress()
         let theme = currentTheme()
         let config = currentConfig()
 
-        return YearJourneyEntry(
+        return YearJourneyMediumEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
@@ -43,12 +43,12 @@ struct Provider: TimelineProvider {
         )
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (YearJourneyEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (YearJourneyMediumEntry) -> ()) {
         let info = ProgressCalculator.yearProgress()
         let theme = currentTheme()
         let config = currentConfig()
 
-        let entry = YearJourneyEntry(
+        let entry = YearJourneyMediumEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
@@ -59,13 +59,13 @@ struct Provider: TimelineProvider {
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneyEntry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneyMediumEntry>) -> ()) {
         let now = Date()
         let info = ProgressCalculator.yearProgress(for: now)
         let theme = currentTheme()
         let config = currentConfig()
 
-        let entry = YearJourneyEntry(
+        let entry = YearJourneyMediumEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
@@ -80,8 +80,8 @@ struct Provider: TimelineProvider {
     }
 }
 
-struct YearJourneyWidgetEntryView : View {
-    var entry: Provider.Entry
+struct YearJourneyMediumWidgetEntryView : View {
+    var entry: YearJourneyMediumProvider.Entry
     @Environment(\.widgetRenderingMode) private var renderingMode
 
     private var isTintMode: Bool { renderingMode == .accented }
@@ -100,12 +100,12 @@ struct YearJourneyWidgetEntryView : View {
     }
 }
 
-struct YearJourneyWidget: Widget {
-    let kind: String = "YearJourneyWidget"
+struct YearJourneyMediumWidget: Widget {
+    let kind: String = "YearJourneyMediumWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            YearJourneyWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: YearJourneyMediumProvider()) { entry in
+            YearJourneyMediumWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Year Journey")
         .description("See how far you are into the year.")
@@ -114,7 +114,7 @@ struct YearJourneyWidget: Widget {
 }
 
 #Preview(as: .systemMedium) {
-    YearJourneyWidget()
+    YearJourneyMediumWidget()
 } timeline: {
-    YearJourneyEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: .default)
+    YearJourneyMediumEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: .default)
 }
