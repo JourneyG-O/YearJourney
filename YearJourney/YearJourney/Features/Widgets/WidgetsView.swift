@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct WidgetsView: View {
 
@@ -19,7 +20,7 @@ struct WidgetsView: View {
                 NavigationLink {
                     MediumWidgetSettingsView()
                 } label: {
-                    WidgetPreviewCard(title: "Medium") {
+                    WidgetPreviewCard(title: "Medium", family: .systemMedium) {
                         YearJourneyMediumWidgetView(
                             progress: 0.72,
                             dayOfYear: 345,
@@ -38,7 +39,7 @@ struct WidgetsView: View {
                 NavigationLink {
                     SmallWidgetSettingsView()
                 } label: {
-                    WidgetPreviewCard(title: "Small") {
+                    WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
                             fillProgress: 0.4,
                             theme: .catBasic,
@@ -70,21 +71,24 @@ struct WidgetsView: View {
 /// 공통 카드 컨테이너 (탭에서 “실제 위젯처럼 보이는 카드”)
 struct WidgetPreviewCard<Content: View>: View {
     let title: String
+    let family: WidgetFamily
     @ViewBuilder let content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        let widgetSize = WidgetPreviewSize.size(for: family)
+
+        VStack(alignment: .center, spacing: 10) {
             Text(title)
                 .font(.custom("ComicRelief-Bold", size: 16))
                 .foregroundStyle(.secondary)
 
             content
-                .frame(maxWidth: .infinity)
+                .frame(width: widgetSize.width, height: widgetSize.height)
                 .background(Color(.secondarySystemGroupedBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .padding(14)
-        .background(Color(.secondarySystemGroupedBackground))
+        .frame(maxWidth: .infinity, alignment: .center) // 가운데 정렬
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 }
