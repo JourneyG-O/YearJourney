@@ -6,35 +6,28 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MediumWidgetSettingsView: View {
-    // TODO: 실제 저장/로드는 다음 커멧이서 연결
+    @Environment(\.dismiss) private var dismiss
+
+    @StateObject private var themeManager = ThemeManager.shared
+
+    @State private var originalConfig: MediumWidgetConfig = .default
     @State private var draftConfig: MediumWidgetConfig = .default
 
-    // 프리뷰용 더미 값 (나중에 실제 계산값/테마로 교체)
-    private let previewProgress: Double = 0.72
-    private let previewDayOfYear: Int = 345
-    private let previewTotalDays: Int = 365
-    private let previewTheme: ThemeAssets = .catBasic
-
-    private var displayHintText: String {
-        switch draftConfig.displayMode {
-        case .dayFraction: return "Show day index in the year."
-        case .percent: return "Show progress percentage."
-        case .dRemaining: return "Show remaining days."
-        case .off: return "Hide text."
-        }
+    private var info: YearProgressInfo {
+        ProgressCalculator.yearProgress()
     }
 
+    private var isDirty: Bool {
+        draftConfig != originalConfig
+    }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-
-                // 1) 위젯 프리뷰
                 previewCard
-
-                // 2) 섹션(표시 설정) - 다음 커밋에서 채울 예정
                 settingsSection
             }
             .padding(.horizontal, 16)
@@ -42,26 +35,48 @@ struct MediumWidgetSettingsView: View {
             .padding(.bottom, 24)
         }
         .background(Color(.systemGroupedBackground))
+        .navigationTitle("Medium")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    draftConfig.save()
+                    WidgetCenter.shared.reloadAllTimelines()
+                    dismiss()
+                } label: {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 17, weight: .semibold))
+                }
+                .disabled(!isDirty)
+                .opacity(isDirty ? 1 : 0.35)
+            }
+        }
+        .onAppear {
+            let loaded = MediumWidgetConfig.load()
+            originalConfig = loaded
+            draftConfig = loaded
+        }
     }
 
     private var previewCard: some View {
-        VStack(spacing: 10) {
+        let theme = themeManager.currentTheme
+
+        return VStack(spacing: 10) {
             Text("Preview")
                 .font(.custom("ComicRelief-Bold", size: 16))
                 .foregroundStyle(.secondary)
 
-            // 실제 위젯 UI 재사용
             YearJourneyMediumWidgetView(
-                progress: previewProgress,
-                dayOfYear: previewDayOfYear,
-                totalDaysInYear: previewTotalDays,
-                theme: previewTheme,
+                progress: info.progress,
+                dayOfYear: info.dayOfYear,
+                totalDaysInYear: info.totalDaysInYear,
+                theme: theme,
                 config: draftConfig,
                 isTintMode: false
             )
+            .frame(height: 170)
             .padding(16)
             .frame(maxWidth: .infinity)
-            .frame(height: 170)
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
@@ -73,7 +88,6 @@ struct MediumWidgetSettingsView: View {
                 .font(.custom("ComicRelief-Bold", size: 16))
                 .foregroundStyle(.secondary)
 
-            // Display Mode
             VStack(alignment: .leading, spacing: 10) {
                 Text("Display")
                     .font(.custom("ComicRelief-Bold", size: 14))
@@ -87,7 +101,7 @@ struct MediumWidgetSettingsView: View {
                 }
                 .pickerStyle(.segmented)
 
-                Text(displayHintText)
+                Text(displayHintText(for: draftConfig.displayMode))
                     .font(.custom("ComicRelief-Regular", size: 13))
                     .foregroundStyle(.secondary)
             }
@@ -96,7 +110,6 @@ struct MediumWidgetSettingsView: View {
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
-            // Reset
             Button {
                 draftConfig = .default
             } label: {
@@ -106,6 +119,15 @@ struct MediumWidgetSettingsView: View {
                     .padding(.vertical, 12)
             }
             .buttonStyle(.borderedProminent)
+        }
+    }
+
+    private func displayHintText(for mode: WidgetDisplayMode) -> String {
+        switch mode {
+        case .dayFraction: return "Show day index in the year."
+        case .percent: return "Show progress percentage."
+        case .dRemaining: return "Show remaining days."
+        case .off: return "Hide text."
         }
     }
 }
