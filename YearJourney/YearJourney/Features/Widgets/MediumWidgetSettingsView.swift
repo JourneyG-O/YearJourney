@@ -41,14 +41,14 @@ struct MediumWidgetSettingsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     draftConfig.save()
-                    WidgetCenter.shared.reloadAllTimelines()
+                    WidgetCenter.shared.reloadTimelines(ofKind: "YearJourneyMediumWidget")
                     dismiss()
                 } label: {
                     Image(systemName: "checkmark")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(.system(size: 16, weight: .semibold))
                 }
                 .disabled(!isDirty)
-                .opacity(isDirty ? 1 : 0.35)
+                .opacity(isDirty ? 1 : 0.4)
             }
         }
         .onAppear {
@@ -119,6 +119,8 @@ struct MediumWidgetSettingsView: View {
                     .padding(.vertical, 12)
             }
             .buttonStyle(.borderedProminent)
+            .disabled(!isDirty)
+            .opacity(isDirty ? 1: 0.4)
         }
     }
 
