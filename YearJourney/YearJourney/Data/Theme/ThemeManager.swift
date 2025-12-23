@@ -8,7 +8,6 @@
 import Foundation
 import WidgetKit
 import Combine
-import YearJourneyShared
 
 final class ThemeManager: ObservableObject {
     static let shared = ThemeManager()

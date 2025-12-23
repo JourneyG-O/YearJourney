@@ -7,7 +7,6 @@
 
 import SwiftUI
 import WidgetKit
-import YearJourneyShared
 
 struct MediumWidgetSettingsView: View {
     @Environment(\.dismiss) private var dismiss
@@ -80,7 +79,7 @@ struct MediumWidgetSettingsView: View {
             )
             .frame(height: 170)
             .padding(16)
-            .frame(maxWidth: CGFloat.infinity)
+            .frame(maxWidth: .infinity)
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .id(draftConfig.displayMode)

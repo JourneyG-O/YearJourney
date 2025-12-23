@@ -9,15 +9,37 @@
 /* Begin PBXBuildFile section */
 		D7B0A9BB2ED05E1C007CB1EB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */; };
 		D7B0A9BD2ED05E1C007CB1EB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */; };
-		D7B799932EFA628300434E56 /* YearJourneyShared in Frameworks */ = {isa = PBXBuildFile; productRef = D7B799922EFA628300434E56 /* YearJourneyShared */; };
-		D7B799952EFA634A00434E56 /* YearJourneyShared in Frameworks */ = {isa = PBXBuildFile; productRef = D7B799942EFA634A00434E56 /* YearJourneyShared */; };
+		D7B0A9C82ED05E1E007CB1EB /* YearJourneyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7B0A9C62ED05E1E007CB1EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7BDAC9B2ECDFC6A0015FC22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B0A9B72ED05E1C007CB1EB;
+			remoteInfo = YearJourneyWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7B0A9CD2ED05E1E007CB1EB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D7B0A9C82ED05E1E007CB1EB /* YearJourneyWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = YearJourneyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		D7B799912EFA5F6300434E56 /* YearJourneyShared */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = YearJourneyShared; sourceTree = "<group>"; };
 		D7BDACA32ECDFC6A0015FC22 /* YearJourney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YearJourney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,7 +63,12 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				Data/ProgressCalculator.swift,
+				Data/Storege/AppGroupStore.swift,
 				Data/Theme/ThemeAssets.swift,
+				Data/Widget/DisplayMode.swift,
+				Data/Widget/MediumWidgetConfig.swift,
+				Data/Widget/SmallWidgetConfig.swift,
+				Data/Widget/WidgetKeys.swift,
 				"Resources/Fonts/ComicRelief-Bold.ttf",
 				"Resources/Fonts/ComicRelief-Regular.ttf",
 				Shared/WidgetUI/YearJourneyMediumWidgetView.swift,
@@ -76,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7B799952EFA634A00434E56 /* YearJourneyShared in Frameworks */,
 				D7B0A9BD2ED05E1C007CB1EB /* SwiftUI.framework in Frameworks */,
 				D7B0A9BB2ED05E1C007CB1EB /* WidgetKit.framework in Frameworks */,
 			);
@@ -86,7 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7B799932EFA628300434E56 /* YearJourneyShared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +130,6 @@
 		D7BDAC9A2ECDFC6A0015FC22 = {
 			isa = PBXGroup;
 			children = (
-				D7B799912EFA5F6300434E56 /* YearJourneyShared */,
 				D7BDACA52ECDFC6A0015FC22 /* YearJourney */,
 				D7B0A9BE2ED05E1C007CB1EB /* YearJourneyWidget */,
 				D7B0A9B92ED05E1C007CB1EB /* Frameworks */,
@@ -142,7 +166,6 @@
 			);
 			name = YearJourneyWidgetExtension;
 			packageProductDependencies = (
-				D7B799942EFA634A00434E56 /* YearJourneyShared */,
 			);
 			productName = YearJourneyWidgetExtension;
 			productReference = D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */;
@@ -155,17 +178,18 @@
 				D7BDAC9F2ECDFC6A0015FC22 /* Sources */,
 				D7BDACA02ECDFC6A0015FC22 /* Frameworks */,
 				D7BDACA12ECDFC6A0015FC22 /* Resources */,
+				D7B0A9CD2ED05E1E007CB1EB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D7B0A9C72ED05E1E007CB1EB /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D7BDACA52ECDFC6A0015FC22 /* YearJourney */,
 			);
 			name = YearJourney;
 			packageProductDependencies = (
-				D7B799922EFA628300434E56 /* YearJourneyShared */,
 			);
 			productName = YearJourney;
 			productReference = D7BDACA32ECDFC6A0015FC22 /* YearJourney.app */;
@@ -242,6 +266,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7B0A9C72ED05E1E007CB1EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;
+			targetProxy = D7B0A9C62ED05E1E007CB1EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D7B0A9CB2ED05E1E007CB1EB /* Debug */ = {
@@ -522,17 +554,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D7B799922EFA628300434E56 /* YearJourneyShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = YearJourneyShared;
-		};
-		D7B799942EFA634A00434E56 /* YearJourneyShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = YearJourneyShared;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D7BDAC9B2ECDFC6A0015FC22 /* Project object */;
 }

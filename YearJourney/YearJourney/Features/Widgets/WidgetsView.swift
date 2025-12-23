@@ -7,7 +7,6 @@
 
 import SwiftUI
 import WidgetKit
-import YearJourneyShared
 
 struct WidgetsView: View {
 

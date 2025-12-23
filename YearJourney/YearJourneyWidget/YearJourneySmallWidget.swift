@@ -7,7 +7,6 @@
 
 import WidgetKit
 import SwiftUI
-import YearJourneyShared
 
 // MARK: - Timeline Entry
 

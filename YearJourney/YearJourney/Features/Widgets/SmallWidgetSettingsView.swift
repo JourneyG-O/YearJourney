@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import YearJourneyShared
 
 struct SmallWidgetSettingsView: View {
 
