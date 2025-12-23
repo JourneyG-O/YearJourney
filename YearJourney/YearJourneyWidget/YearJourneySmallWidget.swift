@@ -21,7 +21,7 @@ struct YearJourneySmallEntry: TimelineEntry {
 struct YearJourneySmallProvider: TimelineProvider {
 
     private func currentTheme() -> ThemeAssets {
-        let id = UserDefaults.standard.string(forKey: "selectedThemeID")
+        let id = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
         return ThemeCatalog.theme(for: id)
     }
 

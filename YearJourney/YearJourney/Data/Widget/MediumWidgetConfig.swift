@@ -22,6 +22,7 @@ struct MediumWidgetConfig: Codable, Equatable {
 }
 
 extension MediumWidgetConfig {
+
     static func load(
         defaults: UserDefaults = AppGroupStore.defaults
     ) -> MediumWidgetConfig {

@@ -10,21 +10,17 @@ import WidgetKit
 import Combine
 
 final class ThemeManager: ObservableObject {
-
-    /// Singleton
     static let shared = ThemeManager()
 
     @Published private(set) var currentTheme: ThemeAssets
 
-    private let storageKey = "selectedThemeID"
     private let userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
 
-        let savedID = userDefaults.string(forKey: storageKey)
-        let theme = ThemeCatalog.theme(for: savedID)
-        self.currentTheme = theme
+        let savedID = userDefaults.string(forKey: WidgetKeys.selectedThemeID)
+        self.currentTheme = ThemeCatalog.theme(for: savedID)
     }
 
     func selectTheme(_ theme: ThemeAssets) {
@@ -32,7 +28,7 @@ final class ThemeManager: ObservableObject {
         currentTheme = theme
 
         // 2) 영구 저장
-        userDefaults.set(theme.id.rawValue, forKey: storageKey)
+        userDefaults.set(theme.id.rawValue, forKey: WidgetKeys.selectedThemeID)
 
         // 3) 위젯들도 새 테마를 반영하도록 요청
         WidgetCenter.shared.reloadAllTimelines()
