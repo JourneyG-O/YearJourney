@@ -16,10 +16,10 @@ final class ThemeManager: ObservableObject {
 
     private let userDefaults: UserDefaults
 
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
+    init(defaults: UserDefaults = AppGroupStore.defaults) {
+        self.userDefaults = defaults
 
-        let savedID = userDefaults.string(forKey: WidgetKeys.selectedThemeID)
+        let savedID = defaults.string(forKey: WidgetKeys.selectedThemeID)
         self.currentTheme = ThemeCatalog.theme(for: savedID)
     }
 

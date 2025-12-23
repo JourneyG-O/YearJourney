@@ -42,6 +42,9 @@ struct MediumWidgetSettingsView: View {
                 Button {
                     draftConfig.save()
                     WidgetCenter.shared.reloadTimelines(ofKind: "YearJourneyMediumWidget")
+                    let loaded = MediumWidgetConfig.load()
+                    originalConfig = loaded
+                    draftConfig = loaded
                     dismiss()
                 } label: {
                     Image(systemName: "checkmark")
@@ -79,6 +82,7 @@ struct MediumWidgetSettingsView: View {
             .frame(maxWidth: .infinity)
             .background(Color(.secondarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .id(draftConfig.displayMode)
         }
     }
 
