@@ -1,18 +1,19 @@
 //
 //  AppGroupStore.swift
-//  YearJourney
+//  YearJourneyShared
 //
-//  Created by KoJeongseok on 12/17/25.
+//  Created by KoJeongseok on 12/23/25.
 //
 
 import Foundation
 
-enum AppGroupStore {
-    static let suiteName = "group.app.stannum.YearJourney"
-    static let defaults: UserDefaults = {
+public enum AppGroupStore {
+    public static let suiteName = "group.app.stannum.YearJourney"
+
+    public static var defaults: UserDefaults {
         guard let defaults = UserDefaults(suiteName: suiteName) else {
             fatalError("App Group UserDefaults not found")
         }
         return defaults
-    }()
+    }
 }
