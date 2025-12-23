@@ -10,6 +10,10 @@ import WidgetKit
 
 struct WidgetsView: View {
 
+    @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
+    @State private var mediumConfig: MediumWidgetConfig = .default
+    @State private var smallConfig: SmallWidgetConfig = .default
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -54,7 +58,17 @@ struct WidgetsView: View {
             }
             .padding(.horizontal, 16)
             .background(Color(.systemGroupedBackground))
+            .onAppear {
+                reloadPreviewState()
+            }
         }
+    }
+
+    private func reloadPreviewState() {
+        let savedThemeID = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
+        theme = ThemeCatalog.theme(for: savedThemeID)
+        mediumConfig = MediumWidgetConfig.load()
+        smallConfig = SmallWidgetConfig.load()
     }
 
     private var header: some View {
@@ -66,6 +80,8 @@ struct WidgetsView: View {
         .padding(.top, 8)
         .padding(.bottom, 8)
     }
+
+
 }
 
 /// 공통 카드 컨테이너 (탭에서 “실제 위젯처럼 보이는 카드”)
