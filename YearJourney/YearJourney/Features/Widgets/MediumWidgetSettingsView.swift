@@ -16,6 +16,8 @@ struct MediumWidgetSettingsView: View {
     @State private var originalConfig: MediumWidgetConfig = .default
     @State private var draftConfig: MediumWidgetConfig = .default
 
+    let family: WidgetFamily
+
     private var info: YearProgressInfo {
         ProgressCalculator.yearProgress()
     }
@@ -35,8 +37,6 @@ struct MediumWidgetSettingsView: View {
             .padding(.bottom, 24)
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle("Medium")
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -63,11 +63,17 @@ struct MediumWidgetSettingsView: View {
 
     private var previewCard: some View {
         let theme = themeManager.currentTheme
+        let widgetSize = WidgetPreviewSize.size(for: family)
 
         return VStack(spacing: 10) {
-            Text("Preview")
-                .font(.custom("ComicRelief-Bold", size: 16))
-                .foregroundStyle(.secondary)
+            HStack {
+                Text("Preview")
+                    .font(.custom("ComicRelief-Bold", size: 16))
+                    .foregroundStyle(.secondary)
+
+                Spacer()
+            }
+
 
             YearJourneyMediumWidgetView(
                 progress: info.progress,
@@ -77,11 +83,10 @@ struct MediumWidgetSettingsView: View {
                 config: draftConfig,
                 isTintMode: false
             )
-            .frame(height: 170)
+            .frame(width: widgetSize.width, height: widgetSize.height)
             .padding(16)
-            .frame(maxWidth: .infinity)
             .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .id(draftConfig.displayMode)
         }
     }
@@ -143,6 +148,6 @@ struct MediumWidgetSettingsView: View {
 
 #Preview {
     NavigationStack {
-        MediumWidgetSettingsView()
+        MediumWidgetSettingsView(family: .systemMedium)
     }
 }

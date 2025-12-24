@@ -110,6 +110,7 @@ struct YearJourneyMediumWidget: Widget {
         .configurationDisplayName("Year Journey")
         .description("See how far you are into the year.")
         .supportedFamilies([.systemMedium])
+        .contentMarginsDisabled()
     }
 }
 

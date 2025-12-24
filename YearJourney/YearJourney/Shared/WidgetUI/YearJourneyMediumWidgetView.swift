@@ -30,32 +30,25 @@ struct YearJourneyMediumWidgetView: View {
     }
 
     var body: some View {
-        GeometryReader { proxy in
-            let size = proxy.size
+        ZStack {
+            YearJourneyProgressLineView(
+                progress: progress,
+                theme: theme,
+                isTintMode: isTintMode
+            )
+            .frame(maxHeight: .infinity)
 
-            ZStack {
-                YearJourneyProgressLineView(
-                    progress: progress,
-                    theme: theme,
-                    isTintMode: isTintMode
-                )
-                    .frame(height: 40)
-                    .position(x: size.width / 2,
-                              y: size.height / 2)
-
+            if let text = displayText {
                 VStack {
                     Spacer()
-                    if let text = displayText {
-                        Text(text)
-                            .font(.custom("ComicRelief-Bold", size: 16))
-                            .opacity(0.8)
-                            .padding(.bottom, 4)
-
-                    }
+                    Text(text)
+                        .font(.custom("ComicRelief-Bold", size: 16))
+                        .opacity(0.8)
+                        .padding(.bottom, 2)
                 }
-                .frame(width: size.width, height: size.height)
             }
         }
+        .padding(16)
     }
 }
 

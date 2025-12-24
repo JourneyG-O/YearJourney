@@ -22,7 +22,7 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
 
                 NavigationLink {
-                    MediumWidgetSettingsView()
+                    MediumWidgetSettingsView(family: .systemMedium)
                 } label: {
                     WidgetPreviewCard(title: "Medium", family: .systemMedium) {
                         YearJourneyMediumWidgetView(
@@ -103,9 +103,8 @@ struct WidgetPreviewCard<Content: View>: View {
                 .background(Color(.secondarySystemGroupedBackground))
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
-        .padding(14)
+        .padding(16)
         .frame(maxWidth: .infinity, alignment: .center) // 가운데 정렬
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 }
 
