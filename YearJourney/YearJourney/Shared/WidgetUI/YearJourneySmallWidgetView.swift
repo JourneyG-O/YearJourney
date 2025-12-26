@@ -30,47 +30,46 @@ struct YearJourneySmallWidgetView: View {
     }
 
     var body: some View {
-        GeometryReader { proxy in
-            let size = proxy.size
-            let clamped = max(0.0, min(1.0, fillProgress))
+        VStack(spacing: 4) {
+            GeometryReader { proxy in
+                let size = proxy.size
+                let clamped = max(0.0, min(1.0, fillProgress))
+                let goalName = isTintMode ? theme.goalTintImageName : theme.goalImageName
 
-            let goalName = isTintMode ? theme.goalTintImageName : theme.goalImageName
+                ZStack {
+                    Image(goalName)
+                        .resizable()
+                        .scaledToFit()
+                        .opacity(0.25)
+                        .position(x: size.width / 2, y: size.height / 2)
 
-            ZStack {
-                // 1) 바닥에 전체 생선 (베이스)
-                Image(goalName)
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(0.25)
-
-                // 2) 아래에서 위로 채워지는 생선
-                Image(goalName)
-                    .resizable()
-                    .scaledToFit()
-                    .mask(
-                        Rectangle()
-                            .frame(
-                                width: size.width,
-                                height: size.height * CGFloat(clamped)
-                            )
-                            .position(
-                                x: size.width / 2,
-                                y: size.height - (size.height * CGFloat(clamped) / 2)
-                            )
-                    )
-                if let text = displayText {
-                    VStack {
-                        Spacer()
-                        Text(text)
-                            .font(.custom("ComicRelief-Bold", size: 16))
-                            .foregroundStyle(.primary)
-                            .opacity(0.8)
-                            .shadow(radius: 2)
-                            .padding(.bottom, 4)
-                    }
+                    Image(goalName)
+                        .resizable()
+                        .scaledToFit()
+                        .mask(
+                            Rectangle()
+                                .frame(
+                                    width: size.width,
+                                    height: size.height * CGFloat(clamped)
+                                )
+                                .position(
+                                    x: size.width / 2,
+                                    y: size.height - (size.height * CGFloat(clamped) / 2)
+                                )
+                        )
+                        .position(x: size.width / 2, y: size.height / 2)
                 }
             }
-            .padding(12)
+            .frame(maxHeight: .infinity)
+
+            if let text = displayText {
+                Text(text)
+                    .font(.custom("ComicRelief-Bold", size: 16))
+                    .foregroundStyle(.primary)
+                    .opacity(0.8)
+                    .padding(.top, 2)
+            }
         }
+        .padding(12)
     }
 }
