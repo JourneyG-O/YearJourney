@@ -41,7 +41,7 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
 
                 NavigationLink {
-                    SmallWidgetSettingsView()
+                    SmallWidgetSettingsView(family: .systemSmall)
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
