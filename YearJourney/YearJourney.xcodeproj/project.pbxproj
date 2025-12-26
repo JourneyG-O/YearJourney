@@ -64,7 +64,7 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				Data/ProgressCalculator.swift,
-				Data/Storege/AppGroupStore.swift,
+				Data/Storage/AppGroupStore.swift,
 				Data/Theme/ThemeAssets.swift,
 				Data/Widget/DisplayMode.swift,
 				Data/Widget/MediumWidgetConfig.swift,
