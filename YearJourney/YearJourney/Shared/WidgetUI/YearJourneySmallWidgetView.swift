@@ -9,9 +9,26 @@ import SwiftUI
 
 struct YearJourneySmallWidgetView: View {
     let fillProgress: Double
+    let dayOfMonth: Int
+    let totalDaysInMonth: Int
     let theme: ThemeAssets
+    let config: SmallWidgetConfig
     let isTintMode: Bool
-    
+
+    private var displayText: String? {
+        switch config.displayMode {
+        case .dayFraction:
+            return "\(dayOfMonth) / \(totalDaysInMonth)"
+        case .percent:
+            return "\(Int(fillProgress * 100))%"
+        case .dRemaining:
+            let remaining = totalDaysInMonth - dayOfMonth
+            return "D-\(remaining)"
+        case .off:
+            return nil
+        }
+    }
+
     var body: some View {
         GeometryReader { proxy in
             let size = proxy.size
@@ -41,6 +58,17 @@ struct YearJourneySmallWidgetView: View {
                                 y: size.height - (size.height * CGFloat(clamped) / 2)
                             )
                     )
+                if let text = displayText {
+                    VStack {
+                        Spacer()
+                        Text(text)
+                            .font(.custom("ComicRelief-Bold", size: 16))
+                            .foregroundStyle(.primary)
+                            .opacity(0.8)
+                            .shadow(radius: 2)
+                            .padding(.bottom, 4)
+                    }
+                }
             }
             .padding(12)
         }

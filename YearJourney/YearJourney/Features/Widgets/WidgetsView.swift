@@ -46,7 +46,10 @@ struct WidgetsView: View {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
                             fillProgress: 0.4,
-                            theme: .catBasic,
+                            dayOfMonth: 10,
+                            totalDaysInMonth: 30,
+                            theme: theme,
+                            config: .default,
                             isTintMode: false
                         )
                         .padding(16)

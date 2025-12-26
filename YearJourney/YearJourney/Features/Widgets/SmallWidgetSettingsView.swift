@@ -75,7 +75,10 @@ struct SmallWidgetSettingsView: View {
 
             YearJourneySmallWidgetView(
                 fillProgress: info.progress,
+                dayOfMonth: info.dayOfMonth,
+                totalDaysInMonth: info.totalDaysInMonth,
                 theme: theme,
+                config: draftConfig,
                 isTintMode: false
             )
             .frame(width: widgetSize.width, height: widgetSize.height)
