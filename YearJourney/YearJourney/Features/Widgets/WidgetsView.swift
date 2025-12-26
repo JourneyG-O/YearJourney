@@ -41,12 +41,15 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
 
                 NavigationLink {
-                    SmallWidgetSettingsView()
+                    SmallWidgetSettingsView(family: .systemSmall)
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
                             fillProgress: 0.4,
-                            theme: .catBasic,
+                            dayOfMonth: 10,
+                            totalDaysInMonth: 30,
+                            theme: theme,
+                            config: .default,
                             isTintMode: false
                         )
                         .padding(16)

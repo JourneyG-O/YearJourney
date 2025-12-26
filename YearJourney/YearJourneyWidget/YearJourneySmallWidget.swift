@@ -12,8 +12,11 @@ import SwiftUI
 
 struct YearJourneySmallEntry: TimelineEntry {
     let date: Date
-    let fillProgress: Double
+    let progress: Double
+    let dayOfMonth: Int
+    let totalDaysInMonth: Int
     let theme: ThemeAssets
+    let config: SmallWidgetConfig
 }
 
 // MARK: - Timeline Provider
@@ -25,38 +28,55 @@ struct YearJourneySmallProvider: TimelineProvider {
         return ThemeCatalog.theme(for: id)
     }
 
+    private func currentConfig() -> SmallWidgetConfig {
+        SmallWidgetConfig.load()
+    }
+
     func placeholder(in context: Context) -> YearJourneySmallEntry {
         return YearJourneySmallEntry(
             date: Date(),
-            fillProgress: 0.3,
-            theme: ThemeCatalog.defaultTheme
+            progress: 0.3,
+            dayOfMonth: 10,
+            totalDaysInMonth: 30,
+            theme: ThemeCatalog.defaultTheme,
+            config: .default
         )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneySmallEntry) -> Void) {
-        let progress = ProgressCalculator.goalFillProgress()
+        let now = Date()
+        let info = ProgressCalculator.monthProgress(for: now)
         let theme = currentTheme()
+        let config = currentConfig()
+
         let entry = YearJourneySmallEntry(
-            date: Date(),
-            fillProgress: progress,
-            theme: theme
+            date: now,
+            progress: info.progress,
+            dayOfMonth: info.dayOfMonth,
+            totalDaysInMonth: info.totalDaysInMonth,
+            theme: theme,
+            config: config
         )
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneySmallEntry>) -> Void) {
-
-        let date = Date()
-        let progress = ProgressCalculator.goalFillProgress(for: date)
+        let now = Date()
+        let info = ProgressCalculator.monthProgress(for: now)
         let theme = currentTheme()
+        let config = currentConfig()
+
         let entry = YearJourneySmallEntry(
-            date: date,
-            fillProgress: progress,
-            theme: theme
+            date: now,
+            progress: info.progress,
+            dayOfMonth: info.dayOfMonth,
+            totalDaysInMonth: info.totalDaysInMonth,
+            theme: theme,
+            config: config
         )
 
         // 1시간마다 업데이트 (추후 조절 가능)
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: date) ?? date
+        let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
@@ -73,8 +93,11 @@ struct YearJourneySmallWidgetEntryView: View {
 
     var body: some View {
         YearJourneySmallWidgetView(
-            fillProgress: entry.fillProgress,
+            fillProgress: entry.progress,
+            dayOfMonth: entry.dayOfMonth,
+            totalDaysInMonth: entry.totalDaysInMonth,
             theme: entry.theme,
+            config: entry.config,
             isTintMode: isTintMode
         )
         .containerBackground(.background, for: .widget)
@@ -90,9 +113,10 @@ struct YearJourneySmallWidget: Widget {
         StaticConfiguration(kind: kind, provider: YearJourneySmallProvider()) { entry in
             YearJourneySmallWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Goal Fill")
-        .description("See how much of this month you've filled.")
+        .configurationDisplayName("Monthly Goal")
+        .description("Check your progress for this month.")
         .supportedFamilies([.systemSmall])
+        .contentMarginsDisabled()
     }
 }
 
@@ -101,8 +125,13 @@ struct YearJourneySmallWidget: Widget {
 #Preview(as: .systemSmall) {
     YearJourneySmallWidget()
 } timeline: {
-    YearJourneySmallEntry(date: .now, fillProgress: 0.1, theme: .catBasic)
-    YearJourneySmallEntry(date: .now, fillProgress: 0.5, theme: .catBasic)
-    YearJourneySmallEntry(date: .now, fillProgress: 0.9, theme: .catBasic)
+    YearJourneySmallEntry(
+        date: .now,
+        progress: 0.15,
+        dayOfMonth: 5,
+        totalDaysInMonth: 30,
+        theme: .catBasic,
+        config: .default
+    )
 }
 
