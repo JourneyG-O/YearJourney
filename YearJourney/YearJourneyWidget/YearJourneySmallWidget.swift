@@ -55,7 +55,7 @@ struct YearJourneySmallProvider: TimelineProvider {
             dayOfMonth: info.dayOfMonth,
             totalDaysInMonth: info.totalDaysInMonth,
             theme: theme,
-            config: .default
+            config: config
         )
         completion(entry)
     }
@@ -70,7 +70,7 @@ struct YearJourneySmallProvider: TimelineProvider {
             date: now,
             progress: info.progress,
             dayOfMonth: info.dayOfMonth,
-            totalDaysInMonth: info.dayOfMonth,
+            totalDaysInMonth: info.totalDaysInMonth,
             theme: theme,
             config: config
         )
