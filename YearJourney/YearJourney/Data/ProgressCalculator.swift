@@ -72,13 +72,7 @@ enum ProgressCalculator {
         
         // 2) 이번 달 시작 / 다음 달 시작
         let startOfMonth = calendar.date(from: DateComponents(year: year, month: month, day: 1)) ?? date
-        let startOfNextMonth: Date = {
-            if month == 12 {
-                return calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1)) ?? date
-            } else {
-                return calendar.date(from: DateComponents(year: year, month: month + 1, day: 1)) ?? date
-            }
-        }()
+        let startOfNextMonth = calendar.date(from: DateComponents(year: year, month: month + 1, day: 1)) ?? date
         
         // 3) 이번 달 총 일수
         let totalDaysInMonth: Int
