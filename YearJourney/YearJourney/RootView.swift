@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct RootView: View {
+
+    @Environment(\.colorScheme) var colorScheme
+
+    init() {
+        UITabBar.appearance().unselectedItemTintColor = UIColor.systemGray
+    }
+
     var body: some View {
         TabView {
             TodayView()
@@ -18,7 +25,7 @@ struct RootView: View {
 
             ThemesView()
                 .tabItem {
-                    Image(systemName: "face.smiling")
+                    Image(systemName: colorScheme == .dark ? "face.smiling" : "face.smiling.inverse")
                     Text("Companions")
                 }
 
@@ -34,6 +41,7 @@ struct RootView: View {
                     Text("Settings")
                 }
         }
+        .tint(.primary)
     }
 }
 
