@@ -49,7 +49,7 @@ struct WidgetsView: View {
                             dayOfMonth: 10,
                             totalDaysInMonth: 30,
                             theme: theme,
-                            config: .default,
+                            config: smallConfig,
                             isTintMode: false
                         )
                         .padding(16)
