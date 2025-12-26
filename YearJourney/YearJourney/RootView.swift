@@ -12,25 +12,25 @@ struct RootView: View {
         TabView {
             TodayView()
                 .tabItem {
-                    Image(systemName: "circle")
+                    Image(systemName: "pawprint.fill")
                     Text("Today")
                 }
 
             ThemesView()
                 .tabItem {
-                    Image(systemName: "paintpalette")
+                    Image(systemName: "face.smiling")
                     Text("Companions")
                 }
 
             WidgetsView()
                 .tabItem {
-                    Image(systemName: "rectangle")
+                    Image(systemName: "rectangle.fill.on.rectangle.fill")
                     Text("Widgets")
                 }
 
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape")
+                    Image(systemName: "gearshape.fill")
                     Text("Settings")
                 }
         }
