@@ -15,8 +15,13 @@ struct LicensesView: View {
                 licenseSection(
                     title: "Comic Relief Font",
                     body: """
-                    Comic Relief font is licensed under the SIL Open Font License.
-                    © The Comic Relief Project Authors.
+                    Copyright © 2013
+                    The Comic Relief Project Authors
+                    https://github.com/loudifier/Comic-Relief
+
+                    Licensed under the SIL Open Font License, Version 1.1.
+                    You may obtain a copy of the license at:
+                    https://openfontlicense.org
                     """
                 )
 
