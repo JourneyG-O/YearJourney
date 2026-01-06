@@ -63,14 +63,14 @@ private extension SettingsView {
 
     var legalSection: some View {
         Section("Legal") {
-            Button {
-                openURL(URL(string: "https://stannum.app/apps/year-journey/legal/terms.html")!)
+            NavigationLink {
+                TermsOfUseView()
             } label: {
                 Label("Terms of Use", systemImage: "doc.text")
             }
 
-            Button {
-                openURL(URL(string: "https://stannum.app/apps/year-journey/legal/privacy.html")!)
+            NavigationLink {
+                PrivacyPolicyView()
             } label: {
                 Label("Privacy Policy", systemImage: "hand.raised")
             }
