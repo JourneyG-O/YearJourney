@@ -38,7 +38,7 @@ struct RootView: View {
             SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape.fill")
-                    Text("Settings")
+                    Text("About")
                 }
         }
         .tint(.primary)

@@ -12,14 +12,29 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                purchasesSection
-                appSection
-                legalSection
+            VStack(spacing: 8) {
+                header
+
+                List {
+                    purchasesSection
+                    appSection
+                    legalSection
+                }
+                .listStyle(.insetGrouped)
             }
-            .listStyle(.insetGrouped)
-            .navigationTitle("About")
+            .background(Color(.systemGroupedBackground))
         }
+    }
+
+    private var header: some View {
+        HStack {
+            Text("About")
+                .font(.custom("ComicRelief-Bold", size: 30))
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 8)
     }
 }
 
