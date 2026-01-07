@@ -85,7 +85,7 @@ struct YearJourneyProgressLineView: View {
                     .frame(width: lineWidth * clamped, height: 8)
                     .position(x: (lineWidth * clamped) / 2, y: lineY)
 
-                let companionSize: CGFloat = 60
+                let companionSize: CGFloat = 85
                 let footRatio: CGFloat = 6.0 / 8.0
                 let footAlignOffset = companionSize * (footRatio - 0.5)
 
