@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ThemeRow: View {
+    @Environment(\.colorScheme) var colorScheme
+
     let theme: ThemeAssets
     let isSelected: Bool
     let isOwned: Bool
@@ -89,9 +91,9 @@ struct ThemeRow: View {
 
     private func rowBackground(isSelected: Bool) -> Color {
         if isSelected {
-            return Color(.secondarySystemBackground)
+            return colorScheme == .light ? Color.white : Color(.secondarySystemBackground)
         } else {
-            return Color(.systemBackground)
+            return Color.clear
         }
     }
 }
