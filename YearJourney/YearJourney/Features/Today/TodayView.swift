@@ -42,8 +42,8 @@ struct TodayView: View {
 
     private enum Metrics {
         static let titleSize: CGFloat = 30
-        static let progressBarHorizontalPadding: CGFloat = 30
-        static let companionHorizontalPadding: CGFloat = 16
+        static let progressBarHorizontalPadding: CGFloat = 36
+        static let companionHorizontalPadding: CGFloat = 30
 
         static let progressInfoTopPadding: CGFloat = 8
         static let dDayTopPadding: CGFloat = 22
