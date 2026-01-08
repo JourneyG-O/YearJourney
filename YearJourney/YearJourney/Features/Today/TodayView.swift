@@ -64,6 +64,7 @@ struct TodayView: View {
                 .padding(.horizontal, Metrics.companionHorizontalPadding)
 
             Spacer(minLength: 0)
+            
 
             YearProgressBarView(progress: info.progress)
                 .padding(.horizontal, Metrics.progressBarHorizontalPadding)
@@ -71,9 +72,6 @@ struct TodayView: View {
 
             progressInfoSection
                 .padding(.top, Metrics.progressInfoTopPadding)
-
-            dDaySection
-                .padding(.top, Metrics.dDayTopPadding)
 
             Spacer()
         }
@@ -104,6 +102,7 @@ struct TodayView: View {
         }
     }
 
+    // D-Day는 보류
     private var dDaySection: some View {
         VStack(spacing: 0) {
             Text("D-\(remainingDays)")
@@ -119,7 +118,7 @@ struct TodayView: View {
         GeometryReader { geo in
             let side = geo.size.width
             let theme = themeManager.currentTheme
-            let companionName = theme.companionImageName(isTintMode: false)
+            let companionName = theme.mainImageName
 
             Image(companionName)
                 .resizable()

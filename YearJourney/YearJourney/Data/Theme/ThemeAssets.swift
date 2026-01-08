@@ -24,6 +24,7 @@ struct ThemeAssets: Identifiable, Codable, Equatable {
     let themeID: ThemeID
     let displayName: String
 
+    let mainImageName: String
     let companionImages: [String]
     let companionTintImages: [String]
 
@@ -53,6 +54,7 @@ extension ThemeAssets {
     static let catBasic = ThemeAssets(
         themeID: .catBasic,
         displayName: "Cat Journey",
+        mainImageName: "cat_companion_main",
         companionImages: [
             "cat_companion_01",
             "cat_companion_02",
