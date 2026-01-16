@@ -97,6 +97,22 @@ extension ThemeAssets {
         )
 }
 
+extension ThemeAssets {
+    func companionImageName(isTintMode: Bool, fixIndex: Int? = nil) -> String {
+        let source = isTintMode ? companionTintImages : companionImages
+
+        guard let first = source.first else {
+            return isTintMode ? goalTintImageName : goalImageName
+        }
+
+        if let index = fixIndex, source.indices.contains(index) {
+            return source[index]
+        }
+
+        return source.randomElement() ?? first
+    }
+}
+
 /// 테마 카탈로그 (목록 모음)
 enum ThemeCatalog {
     static let all: [ThemeAssets] = [

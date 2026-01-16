@@ -81,7 +81,8 @@ struct MediumWidgetSettingsView: View {
                 totalDaysInYear: info.totalDaysInYear,
                 theme: theme,
                 config: draftConfig,
-                isTintMode: false
+                isTintMode: false,
+                isPreview: true
             )
             .frame(width: widgetSize.width, height: widgetSize.height)
             .padding(16)

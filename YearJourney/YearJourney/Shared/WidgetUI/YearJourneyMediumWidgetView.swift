@@ -17,6 +17,7 @@ struct YearJourneyMediumWidgetView: View {
     let theme: ThemeAssets
     let config: MediumWidgetConfig
     let isTintMode: Bool
+    var isPreview: Bool = false
 
     private var displayText: String? {
         switch config.displayMode {
@@ -37,7 +38,8 @@ struct YearJourneyMediumWidgetView: View {
             YearJourneyProgressLineView(
                 progress: progress,
                 theme: theme,
-                isTintMode: isTintMode
+                isTintMode: isTintMode,
+                isPreview: isPreview
             )
             .frame(maxHeight: .infinity)
 
@@ -59,6 +61,7 @@ struct YearJourneyProgressLineView: View {
     let progress: Double
     let theme: ThemeAssets
     let isTintMode: Bool
+    var isPreview: Bool = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -76,7 +79,7 @@ struct YearJourneyProgressLineView: View {
             let travelerX = lineWidth * clamped
 
             // 2. 이미지 이름 설정
-            let companionName = theme.companionImageName(isTintMode: isTintMode)
+            let companionName = theme.companionImageName(isTintMode: isTintMode, fixIndex: isPreview ? 0 : nil)
             let goalName = isTintMode ? theme.goalTintImageName : theme.goalImageName
 
             // 3. 지우개(Mask)용 이미지 이름 구하기

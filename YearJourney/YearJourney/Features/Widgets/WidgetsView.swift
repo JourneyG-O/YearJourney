@@ -33,7 +33,8 @@ struct WidgetsView: View {
                             totalDaysInYear: 365,
                             theme: themeManager.currentTheme,
                             config: mediumConfig,
-                            isTintMode: false
+                            isTintMode: false,
+                            isPreview: true
                         )
                         .padding(16)
                     }
