@@ -10,6 +10,7 @@ import Foundation
 /// 앱에서 사용할 테마 ID
 enum ThemeID: String, Codable, CaseIterable {
     case catBasic
+    case catCheese
     // case dogBasic
     // case ghost
     // case fire
@@ -72,12 +73,35 @@ extension ThemeAssets {
         isPremium: false,
         productID: nil
     )
+
+    static let catCheese = ThemeAssets(
+            themeID: .catCheese,
+            displayName: "Cheese Cat",
+            mainImageName: "cat_cheese_main",
+            companionImages: [
+                "cat_cheese_01",
+                "cat_cheese_02",
+                "cat_cheese_03",
+                "cat_cheese_04"
+            ],
+            companionTintImages: [
+                "cat_companion_01_tint",
+                "cat_companion_02_tint",
+                "cat_companion_03_tint",
+                "cat_companion_04_tint"
+            ],
+            goalImageName: "cat_goal",
+            goalTintImageName: "cat_goal_tint",
+            isPremium: true,
+            productID: nil
+        )
 }
 
 /// 테마 카탈로그 (목록 모음)
 enum ThemeCatalog {
     static let all: [ThemeAssets] = [
-        .catBasic
+        .catBasic,
+        .catCheese
     ]
 
     /// 기본 테마 (앱 최초 실행 시 사용)
