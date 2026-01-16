@@ -10,6 +10,8 @@ import WidgetKit
 
 struct WidgetsView: View {
 
+    @StateObject private var themeManager = ThemeManager.shared
+
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
     @State private var mediumConfig: MediumWidgetConfig = .default
     @State private var smallConfig: SmallWidgetConfig = .default
@@ -29,7 +31,7 @@ struct WidgetsView: View {
                             progress: 0.72,
                             dayOfYear: 345,
                             totalDaysInYear: 365,
-                            theme: .catBasic,
+                            theme: themeManager.currentTheme,
                             config: mediumConfig,
                             isTintMode: false
                         )
@@ -48,7 +50,7 @@ struct WidgetsView: View {
                             fillProgress: 0.4,
                             dayOfMonth: 10,
                             totalDaysInMonth: 30,
-                            theme: theme,
+                            theme: themeManager.currentTheme,
                             config: smallConfig,
                             isTintMode: false
                         )
