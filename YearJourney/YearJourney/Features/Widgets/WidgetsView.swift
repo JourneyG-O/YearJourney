@@ -29,7 +29,7 @@ struct WidgetsView: View {
                     WidgetPreviewCard(title: "Medium", family: .systemMedium) {
                         YearJourneyMediumWidgetView(
                             progress: 0.72,
-                            dayOfYear: 345,
+                            dayOfYear: 263,
                             totalDaysInYear: 365,
                             theme: themeManager.currentTheme,
                             config: mediumConfig,
@@ -48,12 +48,12 @@ struct WidgetsView: View {
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
-                            fillProgress: 0.4,
-                            dayOfMonth: 10,
-                            totalDaysInMonth: 30,
+                            fillProgress: 0.68,
+                            dayOfMonth: 21,          
+                            totalDaysInMonth: 31,
                             theme: themeManager.currentTheme,
                             config: smallConfig,
-                            isTintMode: false
+                            isTintMode: false,
                         )
                         .padding(16)
                     }
