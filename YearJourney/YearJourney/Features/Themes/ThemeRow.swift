@@ -13,20 +13,24 @@ struct ThemeRow: View {
     let theme: ThemeAssets
     let isSelected: Bool
     let isOwned: Bool
-    let priceText: String?
+
+    // 개별 가격 정보 필요 없음
+    // let priceText: String?
 
     let onSelect: () -> Void
-    let onBuy: () -> Void
+    // 개별 구매 액션 대신, 잠긴 걸 눌렀을 때의 액션(Pro 팝업 띄우기)으로 통합됨
 
     var body: some View {
         let background = rowBackground(isSelected: isSelected)
 
         HStack(spacing: 12) {
             previewIcons
+                .layoutPriority(1) // 이미지들이 찌그러지지 않게 우선순위 높임
 
             Text(theme.displayName)
                 .font(.custom("ComicRelief-Bold", size: 18))
                 .lineLimit(1)
+                .layoutPriority(1) // 텍스트도 중요
 
             Spacer()
 
@@ -36,9 +40,9 @@ struct ThemeRow: View {
         .padding(.horizontal, 14)
         .background(background)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous)) // 터치 영역 확보
         .onTapGesture {
-            guard isOwned else { return }
+            // 소유했으면 선택, 아니면 구매 팝업(상위 뷰에서 처리)
             onSelect()
         }
     }
@@ -52,7 +56,9 @@ struct ThemeRow: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 60, height: 60)
-                .opacity(isOwned ? 1.0 : 0.85)
+                // 소유 안 했으면 살짝 흐리게 처리해서 '잠김' 느낌 주기
+                .opacity(isOwned ? 1.0 : 0.6)
+                .grayscale(isOwned ? 0 : 1.0) // (선택) 소유 안 하면 흑백 처리도 좋음
 
             Text("+")
                 .font(.system(size: 16, weight: .semibold))
@@ -62,32 +68,31 @@ struct ThemeRow: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 40)
-                .opacity(isOwned ? 1.0 : 0.85)
+                .opacity(isOwned ? 1.0 : 0.6)
+                .grayscale(isOwned ? 0 : 1.0)
         }
     }
 
     @ViewBuilder
-    private var trailingView: some View {
-        if isSelected {
-            Image(systemName: "checkmark")
-                .font(.system(size: 16, weight: .bold))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-                .foregroundStyle(Color.primary.opacity(0.9))
-        } else if isOwned {
-            EmptyView()
-        } else {
-            BuyButton(title: buyTitle, action: onBuy)
+        private var trailingView: some View {
+            if isOwned {
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 16, weight: .bold))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .foregroundStyle(Color.primary.opacity(0.9))
+                } else {
+                    EmptyView()
+                }
+            } else {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+            }
         }
-    }
-
-    private var buyTitle: String {
-        if let priceText, !priceText.isEmpty {
-            return "Buy \(priceText)"
-        } else {
-            return "Buy"
-        }
-    }
 
     private func rowBackground(isSelected: Bool) -> Color {
         if isSelected {
@@ -95,21 +100,5 @@ struct ThemeRow: View {
         } else {
             return Color.clear
         }
-    }
-}
-
-private struct BuyButton: View {
-    let title: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.custom("ComicRelief-Bold", size: 14))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-        }
-        .buttonStyle(.borderedProminent)
-        .controlSize(.small)
     }
 }
