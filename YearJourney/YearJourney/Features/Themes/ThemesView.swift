@@ -68,14 +68,26 @@ struct ThemesView: View {
                 .font(.custom("ComicRelief-Bold", size: 30))
             Spacer()
 
-            // (선택) 헤더에도 Pro 구매 버튼 하나 두면 좋습니다
-            if !entitlementStore.isProUser {
-                Button("Pro") {
-                    showProUpgradeSheet = true
-                }
-                .font(.custom("ComicRelief-Bold", size: 16))
-                .foregroundStyle(.pink)
+#if DEBUG
+            Button {
+                entitlementStore.debugTogglePro()
+            } label: {
+                Text(entitlementStore.isProUser ? "👑 PRO ON" : "🔒 PRO OFF")
+                    .font(.caption.bold())
+                    .foregroundColor(entitlementStore.isProUser ? .green : .gray)
+                    .padding(6)
+                    .background(Color.black.opacity(0.05))
+                    .cornerRadius(8)
             }
+#endif
+
+            //            if !entitlementStore.isProUser {
+            //                Button("Pro") {
+            //                    showProUpgradeSheet = true
+            //                }
+            //                .font(.custom("ComicRelief-Bold", size: 16))
+            //                .foregroundStyle(.pink)
+            //            }
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)

@@ -30,4 +30,10 @@ final class ThemeEntitlementStore: ObservableObject {
         // TODO: StoreKit 결제 성공 시 true로 변경
         isProUser = true
     }
+
+#if DEBUG
+    func debugTogglePro() {
+        isProUser.toggle()
+    }
+#endif
 }
