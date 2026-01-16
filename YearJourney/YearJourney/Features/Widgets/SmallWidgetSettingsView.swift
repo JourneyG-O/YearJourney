@@ -17,10 +17,6 @@ struct SmallWidgetSettingsView: View {
 
     let family: WidgetFamily
 
-    private var info: MonthProgressInfo {
-        ProgressCalculator.monthProgress()
-    }
-
     private var isDirty: Bool {
         draftConfig != originalConfig
     }
@@ -74,12 +70,12 @@ struct SmallWidgetSettingsView: View {
             }
 
             YearJourneySmallWidgetView(
-                fillProgress: info.progress,
-                dayOfMonth: info.dayOfMonth,
-                totalDaysInMonth: info.totalDaysInMonth,
+                fillProgress: 0.68,
+                dayOfMonth: 21,
+                totalDaysInMonth: 31,
                 theme: theme,
                 config: draftConfig,
-                isTintMode: false
+                isTintMode: true
             )
             .frame(width: widgetSize.width, height: widgetSize.height)
             .padding(16)

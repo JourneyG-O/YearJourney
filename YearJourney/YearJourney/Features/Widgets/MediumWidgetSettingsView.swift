@@ -18,10 +18,6 @@ struct MediumWidgetSettingsView: View {
 
     let family: WidgetFamily
 
-    private var info: YearProgressInfo {
-        ProgressCalculator.yearProgress()
-    }
-
     private var isDirty: Bool {
         draftConfig != originalConfig
     }
@@ -76,9 +72,9 @@ struct MediumWidgetSettingsView: View {
 
 
             YearJourneyMediumWidgetView(
-                progress: info.progress,
-                dayOfYear: info.dayOfYear,
-                totalDaysInYear: info.totalDaysInYear,
+                progress: 0.72,
+                dayOfYear: 263,
+                totalDaysInYear: 365,
                 theme: theme,
                 config: draftConfig,
                 isTintMode: false,
