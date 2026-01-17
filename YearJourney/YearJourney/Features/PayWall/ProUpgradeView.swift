@@ -62,7 +62,6 @@ struct ProUpgradeView: View {
                         }
                         .padding(.horizontal, 24)
                         .padding(.vertical, 20)
-                        .background(Color("CellBackground")) // 또는 .white
                         .cornerRadius(16)
                         .padding(.horizontal)
 

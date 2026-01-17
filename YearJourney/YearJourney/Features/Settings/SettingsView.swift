@@ -10,6 +10,10 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
 
+    // 📡 구매 상태 확인 및 팝업 제어
+    @ObservedObject private var storeManager = StoreManager.shared
+    @State private var showProUpgrade = false
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 8) {
@@ -23,6 +27,10 @@ struct SettingsView: View {
                 .listStyle(.insetGrouped)
             }
             .background(Color(.systemGroupedBackground))
+            // 🎫 구매 화면 띄우기
+            .sheet(isPresented: $showProUpgrade) {
+                ProUpgradeView()
+            }
         }
     }
 
@@ -41,11 +49,67 @@ struct SettingsView: View {
 private extension SettingsView {
 
     private var purchasesSection: some View {
-        Section("Purchases") {
-            NavigationLink {
-                //                RestorePurchasesView()
-            } label : {
+        Section("Membership") { // 섹션 이름을 Purchases -> Membership으로 변경 추천
+
+            // 1. 구매 상태에 따른 분기 처리
+            if !storeManager.isPurchased {
+                // 🔒 아직 안 산 경우: 구매 유도 배너
+                Button {
+                    showProUpgrade = true
+                } label: {
+                    HStack(spacing: 12) {
+                        // 모카 포니 아이콘
+                        Image("pony_mocha_main")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 48, height: 48)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.accentColor.opacity(0.3), lineWidth: 1))
+                            .padding(.vertical, 4)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Journey Pass")
+                                .font(.headline)
+                                .foregroundStyle(.primary)
+                            Text("Unlock all companions")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                    }
+                }
+            } else {
+                // ✅ 이미 산 경우: Pro 배지 표시
+                HStack {
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundStyle(Color.accentColor)
+                        .font(.title2)
+
+                    VStack(alignment: .leading) {
+                        Text("Journey Pass Active")
+                            .font(.headline)
+                        Text("Thank you for your support!")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
+
+            // 2. 구매 복원 버튼 (기존 NavigationLink 대신 동작 버튼으로 변경)
+            // 구매 전이든 후든 복원 버튼은 있는 게 안전합니다.
+            Button {
+                Task {
+                    await storeManager.updateCustomerProductStatus()
+                }
+            } label: {
                 Label("Restore Purchases", systemImage: "arrow.clockwise")
+                    .foregroundStyle(.primary) // 링크 색상 대신 기본색 사용
             }
         }
     }
@@ -64,19 +128,19 @@ private extension SettingsView {
     var legalSection: some View {
         Section("Legal") {
             NavigationLink {
-                TermsOfUseView()
+                // TermsOfUseView()
             } label: {
                 Label("Terms of Use", systemImage: "doc.text")
             }
 
             NavigationLink {
-                PrivacyPolicyView()
+                // PrivacyPolicyView()
             } label: {
                 Label("Privacy Policy", systemImage: "hand.raised")
             }
 
             NavigationLink {
-                LicensesView()
+                // LicensesView()
             } label: {
                 Label("Licenses", systemImage: "text.book.closed")
             }

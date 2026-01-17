@@ -5,35 +5,34 @@
 //  Created by KoJeongseok on 12/16/25.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
-final class ThemeEntitlementStore: ObservableObject {
+class ThemeEntitlementStore: ObservableObject {
     static let shared = ThemeEntitlementStore()
 
-    // 개별 ID 관리 -> 프로 유저 여부 하나로 통합
-    @Published var isProUser: Bool = false
+    // 📡 StoreManager 연결
+    private let storeManager = StoreManager.shared
+    private var cancellables = Set<AnyCancellable>()
 
-    private init() {}
+    private init() {
+        // 🔗 연결 고리: StoreManager의 구매 상태(isPurchased)가 변하면
+        // ThemeEntitlementStore도 "나 변했어!"라고 뷰에게 알림을 보냄
+        storeManager.$isPurchased
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+    }
 
-    /// 소유 여부 확인 로직 단순화
+    // 🔒 소유 여부 확인 (이름을 isOwned로 유지)
     func isOwned(_ theme: ThemeAssets) -> Bool {
-        // 1. 프리미엄이 아니면(무료면) 무조건 소유
-        if theme.isPremium == false { return true }
+        // 1. 무료 테마는 무조건 통과!
+        if !theme.isPremium {
+            return true
+        }
 
-        // 2. 프리미엄이면 프로 유저일 때만 소유
-        return isProUser
+        // 2. 유료 테마라면? 실제 StoreManager의 구매 상태 확인
+        return storeManager.isPurchased
     }
-
-    /// 구매 시 호출 (나중에 StoreKit 연동 시 이 함수에서 실제 결제 로직 수행)
-    func purchasePro() {
-        // TODO: StoreKit 결제 성공 시 true로 변경
-        isProUser = true
-    }
-
-#if DEBUG
-    func debugTogglePro() {
-        isProUser.toggle()
-    }
-#endif
 }
