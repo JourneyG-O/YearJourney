@@ -1,0 +1,59 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "D26AC6A9",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4400",
+      "familyShareable" : false,
+      "internalID" : "74FC27B5",
+      "localizations" : [
+        {
+          "description" : "Unlock all companions forever.",
+          "displayName" : "Journey Pass",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "모든 동반자를 평생 잠금 해제하세요.",
+          "displayName" : "저니 패스",
+          "locale" : "ko"
+        }
+      ],
+      "productID" : "app.stannum.YearJourney.pro.lifetime",
+      "referenceName" : "Lifetime Pass",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
