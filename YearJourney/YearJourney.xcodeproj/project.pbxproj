@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7AF63242F1DF17100D92B27 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7AF63232F1DF17100D92B27 /* StoreKit.framework */; };
 		D7B0A9BB2ED05E1C007CB1EB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */; };
 		D7B0A9BD2ED05E1C007CB1EB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */; };
 		D7B0A9C82ED05E1E007CB1EB /* YearJourneyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		D78272422EFC20CA00DBF2B9 /* YearJourneyWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YearJourneyWidgetExtension.entitlements; sourceTree = "<group>"; };
+		D7AF63232F1DF17100D92B27 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D7B0A9B82ED05E1C007CB1EB /* YearJourneyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = YearJourneyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -113,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7AF63242F1DF17100D92B27 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +125,7 @@
 		D7B0A9B92ED05E1C007CB1EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D7AF63232F1DF17100D92B27 /* StoreKit.framework */,
 				D7B0A9BA2ED05E1C007CB1EB /* WidgetKit.framework */,
 				D7B0A9BC2ED05E1C007CB1EB /* SwiftUI.framework */,
 			);

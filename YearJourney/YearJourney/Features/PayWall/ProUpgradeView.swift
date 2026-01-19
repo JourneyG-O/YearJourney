@@ -56,7 +56,7 @@ struct ProUpgradeView: View {
 
                         // 3. 혜택 리스트
                         VStack(alignment: .leading, spacing: 16) {
-                            FeatureRow(icon: "pawprint.fill", text: "Unlock All Companions (Pony, Cats...)")
+                            FeatureRow(icon: "pawprint.fill", text: "Unlock All Companions")
                             FeatureRow(icon: "infinity", text: "Lifetime Access, No Subscription")
                             FeatureRow(icon: "heart.fill", text: "Support Indie Developer")
                         }
@@ -85,7 +85,7 @@ struct ProUpgradeView: View {
                                             ProgressView()
                                                 .tint(.white)
                                         } else {
-                                            Text("Get Lifetime Pass")
+                                            Text("Get Journey Pass")
                                                 .fontWeight(.bold)
                                             // 가격 표시 (로딩 중엔 빈칸)
                                             if let product = storeManager.journeyPass {

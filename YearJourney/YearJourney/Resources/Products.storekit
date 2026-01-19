@@ -15,7 +15,7 @@
   ],
   "products" : [
     {
-      "displayPrice" : "4400",
+      "displayPrice" : "2.9",
       "familyShareable" : false,
       "internalID" : "74FC27B5",
       "localizations" : [
@@ -31,7 +31,7 @@
         }
       ],
       "productID" : "app.stannum.YearJourney.pro.lifetime",
-      "referenceName" : "Lifetime Pass",
+      "referenceName" : "Journey Pass",
       "type" : "NonConsumable"
     }
   ],
