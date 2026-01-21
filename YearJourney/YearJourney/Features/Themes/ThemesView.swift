@@ -58,19 +58,14 @@ struct ThemesView: View {
                 .font(.custom("ComicRelief-Bold", size: 30))
             Spacer()
 
-            // (선택 사항) 헤더에 Pro 버튼을 작게 두는 것도 좋습니다.
-            // 이미 샀으면 숨깁니다.
             if !StoreManager.shared.isPurchased {
                 Button {
                     showProUpgradeSheet = true
                 } label: {
-                    Text("PRO")
-                        .font(.custom("ComicRelief-Bold", size: 14))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(Color.accentColor)
-                        .cornerRadius(20)
+                    Image("ticket_icon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
                 }
             }
         }
