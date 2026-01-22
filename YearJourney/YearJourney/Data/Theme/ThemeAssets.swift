@@ -13,6 +13,7 @@ enum ThemeID: String, Codable, CaseIterable {
     case catCheese
     case ponyMocha
     case ghostRoo
+    case slimeJelly
     // case dogBasic
     // case ghost
     // case fire
@@ -141,6 +142,28 @@ extension ThemeAssets {
             isPremium: true,
             productID: nil
         )
+
+    static let slimeJelly = ThemeAssets(
+            themeID: .slimeJelly,
+            displayName: "Slime Jelly",
+            mainImageName: "slime_jelly_main",
+            companionImages: [
+                "slime_jelly_01",
+                "slime_jelly_02",
+                "slime_jelly_03",
+                "slime_jelly_04"
+            ],
+            companionTintImages: [
+                "slime_jelly_01_tint",
+                "slime_jelly_02_tint",
+                "slime_jelly_03_tint",
+                "slime_jelly_04_tint"
+            ],
+            goalImageName: "slime_potion",
+            goalTintImageName: "slime_potion_tint",
+            isPremium: true,
+            productID: nil
+        )
 }
 
 extension ThemeAssets {
@@ -165,7 +188,8 @@ enum ThemeCatalog {
         .catBasic,
         .catCheese,
         .ponyMocha,
-        .ghostRoo
+        .ghostRoo,
+        .slimeJelly
     ]
 
     /// 기본 테마 (앱 최초 실행 시 사용)
