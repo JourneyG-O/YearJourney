@@ -12,6 +12,7 @@ enum ThemeID: String, Codable, CaseIterable {
     case catBasic
     case catCheese
     case ponyMocha
+    case ghostRoo
     // case dogBasic
     // case ghost
     // case fire
@@ -118,6 +119,28 @@ extension ThemeAssets {
             isPremium: true,
             productID: nil
         )
+
+    static let ghostRoo = ThemeAssets(
+            themeID: .ghostRoo,
+            displayName: "Ghost Roo",
+            mainImageName: "ghost_roo_main",
+            companionImages: [
+                "ghost_roo_01",
+                "ghost_roo_02",
+                "ghost_roo_03",
+                "ghost_roo_04"
+            ],
+            companionTintImages: [
+                "ghost_roo_01_tint",
+                "ghost_roo_02_tint",
+                "ghost_roo_03_tint",
+                "ghost_roo_04_tint"
+            ],
+            goalImageName: "ghost_pumpkin",
+            goalTintImageName: "ghost_pumpkin_tint",
+            isPremium: true,
+            productID: nil
+        )
 }
 
 extension ThemeAssets {
@@ -141,7 +164,8 @@ enum ThemeCatalog {
     static let all: [ThemeAssets] = [
         .catBasic,
         .catCheese,
-        .ponyMocha
+        .ponyMocha,
+        .ghostRoo
     ]
 
     /// 기본 테마 (앱 최초 실행 시 사용)
