@@ -57,29 +57,29 @@ struct ThemeAssets: Identifiable, Codable, Equatable {
 extension ThemeAssets {
     static let catBasic = ThemeAssets(
         themeID: .catBasic,
-        displayName: "Cat Journey",
-        mainImageName: "cat_companion_main",
+        displayName: "Journey",
+        mainImageName: "cat_journey_main",
         companionImages: [
-            "cat_companion_01",
-            "cat_companion_02",
-            "cat_companion_03",
-            "cat_companion_04"
+            "cat_journey_01",
+            "cat_journey_02",
+            "cat_journey_03",
+            "cat_journey_04"
         ],
         companionTintImages: [
-            "cat_companion_01_tint",
-            "cat_companion_02_tint",
-            "cat_companion_03_tint",
-            "cat_companion_04_tint"
+            "cat_journey_01_tint",
+            "cat_journey_02_tint",
+            "cat_journey_03_tint",
+            "cat_journey_04_tint"
         ],
-        goalImageName: "cat_goal",
-        goalTintImageName: "cat_goal_tint",
+        goalImageName: "cat_fish",
+        goalTintImageName: "cat_fish_tint",
         isPremium: false,
         productID: nil
     )
 
     static let catCheese = ThemeAssets(
             themeID: .catCheese,
-            displayName: "Cheese Cat",
+            displayName: "Cheese",
             mainImageName: "cat_cheese_main",
             companionImages: [
                 "cat_cheese_01",
@@ -88,20 +88,20 @@ extension ThemeAssets {
                 "cat_cheese_04"
             ],
             companionTintImages: [
-                "cat_companion_01_tint",
-                "cat_companion_02_tint",
-                "cat_companion_03_tint",
-                "cat_companion_04_tint"
+                "cat_journey_01_tint",
+                "cat_journey_02_tint",
+                "cat_journey_03_tint",
+                "cat_journey_04_tint"
             ],
-            goalImageName: "cat_goal",
-            goalTintImageName: "cat_goal_tint",
+            goalImageName: "cat_fish",
+            goalTintImageName: "cat_fish_tint",
             isPremium: true,
             productID: nil
         )
 
     static let ponyMocha = ThemeAssets(
             themeID: .ponyMocha,
-            displayName: "Mocha Pony",
+            displayName: "Mocha",
             mainImageName: "pony_mocha_main",
             companionImages: [
                 "pony_mocha_01",
@@ -115,15 +115,15 @@ extension ThemeAssets {
                 "pony_mocha_03_tint",
                 "pony_mocha_04_tint"
             ],
-            goalImageName: "pony_goal",
-            goalTintImageName: "pony_goal_tint",
+            goalImageName: "pony_carrot",
+            goalTintImageName: "pony_carrot_tint",
             isPremium: true,
             productID: nil
         )
 
     static let ghostRoo = ThemeAssets(
             themeID: .ghostRoo,
-            displayName: "Ghost Roo",
+            displayName: "Roo",
             mainImageName: "ghost_roo_main",
             companionImages: [
                 "ghost_roo_01",
@@ -145,7 +145,7 @@ extension ThemeAssets {
 
     static let slimeJelly = ThemeAssets(
             themeID: .slimeJelly,
-            displayName: "Slime Jelly",
+            displayName: "Jelly",
             mainImageName: "slime_jelly_main",
             companionImages: [
                 "slime_jelly_01",
