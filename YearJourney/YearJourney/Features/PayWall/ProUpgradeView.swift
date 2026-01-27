@@ -18,7 +18,8 @@ struct PaywallView: View {
     var body: some View {
         ZStack {
             // 배경: 완전한 블랙
-            Color.black.ignoresSafeArea()
+            Color(red: 0.11, green: 0.11, blue: 0.12)
+                .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 // 상단 여백 (X 버튼 제거됨)
@@ -122,7 +123,6 @@ struct PaywallView: View {
                 }
             }
         }
-        .glassEffect()
         .onAppear {
             isAnimating = true
             Task { await storeManager.loadProducts() }
