@@ -21,6 +21,10 @@ struct TodayView: View {
         max(0, info.totalDaysInYear - info.dayOfYear)
     }
 
+    private var companionName: String {
+        themeManager.currentTheme.displayName
+    }
+
     // MARK: - Style
 
     private var backgroundColor: Color {
@@ -51,6 +55,8 @@ struct TodayView: View {
         static let progressInfoFontSize: CGFloat = 18
         static let dDayFontSize: CGFloat = 36
         static let dDayTracking: CGFloat = 1.0
+
+        static let companionNameSize: CGFloat = 24
     }
 
     var body: some View {
@@ -62,6 +68,13 @@ struct TodayView: View {
             companionView
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.horizontal, Metrics.companionHorizontalPadding)
+                .overlay(alignment: .bottom) { // 이미지의 바닥을 기준으로 배치
+                        Text(companionName)
+                        .font(.custom("ComicRelief-Bold", size: Metrics.companionNameSize))
+                        .foregroundColor(.primary)
+                        .opacity(0.9)
+                        .offset(y: -20)
+                    }
 
             Spacer(minLength: 0)
             
@@ -123,7 +136,6 @@ struct TodayView: View {
             Image(companionName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: side, height: side)
                 .frame(width: side, height: side)
         }
     }
