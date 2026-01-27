@@ -12,7 +12,7 @@ struct ThemesView: View {
     @ObservedObject private var entitlementStore = ThemeEntitlementStore.shared
 
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
-    @State private var showProUpgradeSheet = false
+    @State private var showPaywall = false
 
     var body: some View {
         VStack(spacing: 8) {
@@ -33,7 +33,7 @@ struct ThemesView: View {
                                 themeManager.selectTheme(theme)
                             } else {
                                 // 소유 안 했으면 -> "Pro 버전 구매하세요" 팝업 띄우기
-                                showProUpgradeSheet = true
+                                showPaywall = true
                             }
                         }
                     )
@@ -47,8 +47,11 @@ struct ThemesView: View {
         }
         .background(Color(.systemGroupedBackground))
         // ✅ 진짜 결제 화면 연결!
-        .sheet(isPresented: $showProUpgradeSheet) {
-            ProUpgradeView() // 이제 임시 텍스트가 아니라 진짜 UI가 뜹니다.
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .presentationDetents([.fraction(0.65), .large])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(24)
         }
     }
 
@@ -60,7 +63,7 @@ struct ThemesView: View {
 
             if !StoreManager.shared.isPurchased {
                 Button {
-                    showProUpgradeSheet = true
+                    showPaywall = true
                 } label: {
                     Image("ticket_icon")
                         .resizable()

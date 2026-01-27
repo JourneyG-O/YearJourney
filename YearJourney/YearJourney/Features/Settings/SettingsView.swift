@@ -12,7 +12,7 @@ struct SettingsView: View {
 
     // 📡 구매 상태 확인 및 팝업 제어
     @ObservedObject private var storeManager = StoreManager.shared
-    @State private var showProUpgrade = false
+    @State private var showPaywall = false
 
     var body: some View {
         NavigationStack {
@@ -28,8 +28,11 @@ struct SettingsView: View {
             }
             .background(Color(.systemGroupedBackground))
             // 🎫 구매 화면 띄우기
-            .sheet(isPresented: $showProUpgrade) {
-                ProUpgradeView()
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+                    .presentationDetents([.fraction(0.65), .large])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(24)
             }
         }
     }
@@ -55,7 +58,7 @@ private extension SettingsView {
             if !storeManager.isPurchased {
                 // 🔒 아직 안 산 경우: 구매 유도 배너
                 Button {
-                    showProUpgrade = true
+                    showPaywall = true
                 } label: {
                     HStack(spacing: 12) {
                         // 모카 포니 아이콘
