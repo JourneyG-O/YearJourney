@@ -56,7 +56,7 @@ struct PaywallView: View {
                     Image("img_ticket") // TicketView()를 쓰고 계시다면 그걸로 교체
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 280)
+                        .frame(width: 180, height: 160)
                         .shadow(color: Color(red: 1.0, green: 0.84, blue: 0.0).opacity(0.4), radius: 25, x: 0, y: 0)
                         .offset(y: isAnimating ? -10 : 10)
                         .animation(
