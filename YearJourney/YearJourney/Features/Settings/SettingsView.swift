@@ -156,26 +156,29 @@ private extension SettingsView {
 
     // 3. 법적 고지 섹션
     var legalSection: some View {
-        Section("Legal") {
-            NavigationLink {
-                // TermsOfUseView() - 필요시 연결
-            } label: {
-                Label("Terms of Use", systemImage: "doc.text")
-            }
+            Section("Legal") {
+                // ✅ TermsOfUseView 연결
+                NavigationLink {
+                    TermsOfUseView()
+                } label: {
+                    Label("Terms of Use", systemImage: "doc.text")
+                }
 
-            NavigationLink {
-                // PrivacyPolicyView() - 필요시 연결
-            } label: {
-                Label("Privacy Policy", systemImage: "hand.raised")
-            }
+                // ✅ PrivacyPolicyView 연결
+                NavigationLink {
+                    PrivacyPolicyView()
+                } label: {
+                    Label("Privacy Policy", systemImage: "hand.raised")
+                }
 
-            NavigationLink {
-                // LicensesView() - 필요시 연결
-            } label: {
-                Label("Licenses", systemImage: "text.book.closed")
+                // ✅ LicensesView 연결
+                NavigationLink {
+                    LicensesView()
+                } label: {
+                    Label("Licenses", systemImage: "text.book.closed")
+                }
             }
         }
-    }
 }
 
 // 앱 버전 정보 가져오는 헬퍼
