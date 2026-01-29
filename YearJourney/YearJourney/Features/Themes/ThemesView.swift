@@ -10,6 +10,7 @@ import SwiftUI
 struct ThemesView: View {
     @ObservedObject private var themeManager = ThemeManager.shared
     @ObservedObject private var entitlementStore = ThemeEntitlementStore.shared
+    @ObservedObject private var storeManager = StoreManager.shared
 
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
     @State private var showPaywall = false
@@ -61,16 +62,16 @@ struct ThemesView: View {
                 .font(.custom("ComicRelief-Bold", size: 30))
             Spacer()
 
-            if !StoreManager.shared.isPurchased {
-                Button {
-                    showPaywall = true
-                } label: {
-                    Image("ticket_icon")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                }
+            Button {
+                showPaywall = true
+            } label: {
+                Image(storeManager.isPurchased ? "ticket_mini_gold" : "ticket_mini_gray")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .shadow(color: storeManager.isPurchased ? .orange.opacity(0.4) : .clear, radius: 5)
             }
+            .disabled(storeManager.isPurchased)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)

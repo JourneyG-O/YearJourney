@@ -61,14 +61,11 @@ private extension SettingsView {
                     showPaywall = true
                 } label: {
                     HStack(spacing: 12) {
-                        // 모카 포니 아이콘
-                        Image("pony_mocha_main")
+                        Image(storeManager.isPurchased ? "ticket_mini_gold" : "ticket_mini_gray")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 48, height: 48)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.accentColor.opacity(0.3), lineWidth: 1))
-                            .padding(.vertical, 4)
+                            .frame(width: 80)
+                            .shadow(color: storeManager.isPurchased ? .orange.opacity(0.3) : .clear, radius: 4)
 
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Journey Pass")

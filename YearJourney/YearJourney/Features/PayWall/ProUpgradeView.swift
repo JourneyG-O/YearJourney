@@ -53,7 +53,7 @@ struct PaywallView: View {
                     }
 
                     // 2. 티켓 이미지 (주인공)
-                    Image("img_ticket") // TicketView()를 쓰고 계시다면 그걸로 교체
+                    Image("ticket_main") // TicketView()를 쓰고 계시다면 그걸로 교체
                         .resizable()
                         .scaledToFit()
                         .frame(width: 180, height: 160)
