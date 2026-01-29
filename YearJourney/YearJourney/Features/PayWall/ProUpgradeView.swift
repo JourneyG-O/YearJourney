@@ -13,7 +13,13 @@ struct PaywallView: View {
     @ObservedObject private var storeManager = StoreManager.shared
     @State private var isAnimating = false
 
-    let companions = ["pony_carrot", "ghost_pumpkin", "cat_fish", "slime_potion"]
+    let companions = [
+        "ghost_roo_paywall", // 중앙 상단 (대장!)
+        "cat_cheese_paywall",
+        "cat_journey_paywall",
+        "pony_mocha_paywall",
+        "slime_jelly_paywall"
+    ]
 
     var body: some View {
         ZStack {
@@ -131,13 +137,12 @@ struct PaywallView: View {
 
     // [좌표 수정] 티켓(중심점 0,0)을 기준으로 배치
     private func companionOffset(index: Int) -> (x: CGFloat, y: CGFloat) {
-        // 티켓 너비가 280이므로, x가 +/- 140 정도면 티켓 양 끝입니다.
-        // y가 마이너스면 위쪽, 플러스면 아래쪽입니다.
         switch index {
-        case 0: return (-130, -50) // 왼쪽 상단 (티켓 뒤에서 뺴꼼)
-        case 1: return (130, -60)  // 오른쪽 상단
-        case 2: return (-120, 60)  // 왼쪽 하단
-        case 3: return (120, 50)   // 오른쪽 하단
+        case 0: return (0, -110)    // 모카: 중앙 상단 (가장 높게)
+        case 1: return (-130, -60)  // 치즈: 왼쪽 상단
+        case 2: return (130, -70)   // 루: 오른쪽 상단
+        case 3: return (-120, 60)   // 포니: 왼쪽 하단
+        case 4: return (120, 50)    // 젤리: 오른쪽 하단
         default: return (0, 0)
         }
     }
