@@ -13,9 +13,12 @@ struct PaywallView: View {
     @ObservedObject private var storeManager = StoreManager.shared
     @State private var isAnimating = false
 
+    // ✅ [추가] 축하 효과 상태 관리
+    @State private var showCelebration = false
+
     // 5명의 동반자 리스트
     let companions = [
-        "ghost_roo_paywall",    // index 0: 중앙 상단 (가장 높음)
+        "ghost_roo_paywall",    // index 0: 중앙 상단
         "cat_cheese_paywall",   // index 1: 좌측 상단
         "cat_journey_paywall",  // index 2: 우측 상단
         "pony_mocha_paywall",   // index 3: 좌측 하단
@@ -28,28 +31,34 @@ struct PaywallView: View {
             Color(red: 0.11, green: 0.11, blue: 0.12)
                 .ignoresSafeArea()
 
+            // ✅ [추가] 축하 효과가 켜지면 배경에 팡파레! (가장 위에 표시)
+            if showCelebration {
+                ConfettiView()
+                    .zIndex(10)
+            }
+
             VStack(spacing: 0) {
-                // [핵심 수정] 상단 여백을 확실하게 줍니다 (80pt)
-                // 유령이 위로 둥둥 떠도 잘리지 않게 확보하는 안전 공간입니다.
+                // 상단 안전 여백 (80pt)
                 Spacer().frame(height: 80)
 
                 // 2. 메인 콘텐츠 (티켓 + 동반자들)
                 ZStack {
-                    // 동반자들 (구매 안 했을 때만 보임)
-                    if !storeManager.isPurchased {
+                    // ✅ [수정] 결제가 완료되어도 '축하 중'이면 캐릭터가 사라지지 않음
+                    if !storeManager.isPurchased || showCelebration {
                         ForEach(0..<companions.count, id: \.self) { index in
                             Image(companions[index])
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 70) // 캐릭터 크기
+                                .frame(height: 70)
                                 .offset(
                                     x: companionOffset(index: index).x,
                                     y: companionOffset(index: index).y
                                 )
-                                .zIndex(-1) // 티켓 뒤로 배치
-                                .rotationEffect(.degrees(isAnimating ? 3 : -3)) // 살랑살랑 흔들기
+                                .zIndex(-1)
+                                // ✅ [수정] 축하 중일 때는 더 신나게 흔들기 (각도 3 -> 10)
+                                .rotationEffect(.degrees(showCelebration ? (isAnimating ? 10 : -10) : (isAnimating ? 3 : -3)))
                                 .animation(
-                                    .easeInOut(duration: 2.0)
+                                    .easeInOut(duration: showCelebration ? 0.5 : 2.0) // 축하 땐 더 빠르게 흔듦
                                     .repeatForever(autoreverses: true)
                                     .delay(Double(index) * 0.2),
                                     value: isAnimating
@@ -63,29 +72,27 @@ struct PaywallView: View {
                         .scaledToFit()
                         .frame(width: 180, height: 160)
                         .shadow(color: Color(red: 1.0, green: 0.84, blue: 0.0).opacity(0.4), radius: 25, x: 0, y: 0)
-                        .offset(y: isAnimating ? -10 : 10) // 둥둥 뜨는 효과
+                        .offset(y: isAnimating ? -10 : 10)
                         .animation(
                             .easeInOut(duration: 2.5).repeatForever(autoreverses: true),
                             value: isAnimating
                         )
                 }
-                // 티켓 아래 여백
                 .padding(.bottom, 40)
 
-                // 3. 혜택 리스트 (타이틀 제거됨)
+                // 3. 혜택 리스트
                 VStack(alignment: .leading, spacing: 16) {
                     BenefitRow(text: "한 번 결제로 평생 소장")
                     BenefitRow(text: "모든 동반자 잠금 해제")
                     BenefitRow(text: "앞으로 추가될 친구들도 무료")
                 }
-                .frame(maxWidth: .infinity) // 중앙 정렬을 위해 너비 확장
+                .frame(maxWidth: .infinity)
 
-                // 4. 유동적 여백 (화면이 길수록 이 부분이 늘어남)
+                // 4. 유동적 여백
                 Spacer()
 
                 // 5. 하단 버튼 그룹
                 VStack(spacing: 20) {
-                    // 구매 버튼
                     Button {
                         Task { try? await storeManager.purchase() }
                     } label: {
@@ -93,27 +100,32 @@ struct PaywallView: View {
                             if storeManager.isLoading {
                                 ProgressView().tint(.black)
                             } else {
-                                Text("Journey Pass 시작하기")
+                                // ✅ [수정] 축하 상태에 따라 텍스트 변경
+                                Text(showCelebration ? "환영합니다! 🎉" : "Journey Pass 시작하기")
                                     .font(.custom("ComicRelief-Bold", size: 18))
 
-                                if let product = storeManager.journeyPass {
+                                // 가격은 축하 중이 아닐 때만 표시
+                                if !showCelebration, let product = storeManager.journeyPass {
                                     Text("• \(product.displayPrice)")
                                         .font(.custom("ComicRelief-Regular", size: 16))
                                 }
                             }
                         }
-                        .foregroundStyle(.black)
+                        // ✅ [수정] 축하 상태에 따라 버튼 스타일 변경 (흰색 -> 초록색)
+                        .foregroundStyle(showCelebration ? .white : .black)
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .background(Color.white)
+                        .background(showCelebration ? Color(red: 0.2, green: 0.8, blue: 0.2) : Color.white)
                         .cornerRadius(16)
                         .shadow(color: .white.opacity(0.1), radius: 10, x: 0, y: 0)
+                        .scaleEffect(showCelebration ? 1.05 : 1.0) // 축하 시 살짝 커짐
+                        .animation(.spring(), value: showCelebration)
                     }
                     .padding(.horizontal, 30)
-                    .disabled(storeManager.isLoading || storeManager.isPurchased)
+                    .disabled(storeManager.isLoading || (storeManager.isPurchased && !showCelebration))
 
-                    // 복원 버튼 (구매 안 했을 때만 표시)
-                    if !storeManager.isPurchased {
+                    // 복원 버튼
+                    if !storeManager.isPurchased && !showCelebration {
                         Button("구매 기록 복원") {
                             Task { await storeManager.updateCustomerProductStatus() }
                         }
@@ -121,28 +133,40 @@ struct PaywallView: View {
                         .foregroundStyle(.white.opacity(0.5))
                     }
                 }
-                .padding(.bottom, 20) // 바닥에서 살짝 띄움
+                .padding(.bottom, 20)
             }
         }
         .onAppear {
             isAnimating = true
             Task { await storeManager.loadProducts() }
         }
+        // ✅ [핵심] 결제 성공 감지 로직 추가
+        .onChange(of: storeManager.isPurchased) { oldValue, newValue in
+            if newValue {
+                // 1. 축하 모드 ON
+                withAnimation {
+                    showCelebration = true
+                }
+
+                // 2. 2초 뒤 자동 닫기
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    dismiss()
+                }
+            }
+        }
     }
 
-    // 캐릭터 위치 잡는 함수 (티켓 중심 기준)
     private func companionOffset(index: Int) -> (x: CGFloat, y: CGFloat) {
         switch index {
-        case 0: return (0, -110)    // 중앙 상단 (가장 높음, 여백 80pt로 커버 가능)
-        case 1: return (-130, -60)  // 좌측 상단
-        case 2: return (130, -70)   // 우측 상단
-        case 3: return (-120, 60)   // 좌측 하단
-        case 4: return (120, 50)    // 우측 하단
+        case 0: return (0, -110)
+        case 1: return (-130, -60)
+        case 2: return (130, -70)
+        case 3: return (-120, 60)
+        case 4: return (120, 50)
         default: return (0, 0)
         }
     }
 
-    // 혜택 리스트 한 줄 디자인 (발바닥 + 텍스트)
     @ViewBuilder
     private func BenefitRow(text: String) -> some View {
         HStack(spacing: 12) {
