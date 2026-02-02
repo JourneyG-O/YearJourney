@@ -34,7 +34,7 @@ struct SettingsView: View {
             // 🎫 결제 화면(Paywall) 띄우기
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
-                    .presentationDetents([.fraction(0.65), .large]) // 살짝 작게 시작해서 크게 확장 가능
+                    .presentationDetents([.fraction(0.65), .large])
                     .presentationDragIndicator(.visible)
                     .presentationCornerRadius(24)
             }

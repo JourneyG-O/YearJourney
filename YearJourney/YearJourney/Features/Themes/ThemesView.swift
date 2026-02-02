@@ -68,7 +68,7 @@ struct ThemesView: View {
                 Image(storeManager.isPurchased ? "ticket_mini_gold" : "ticket_mini_gray")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 80, height: 80)
+                    .frame(width: 60)
                     .shadow(color: storeManager.isPurchased ? .orange.opacity(0.4) : .clear, radius: 5)
             }
             .disabled(storeManager.isPurchased)
