@@ -82,9 +82,9 @@ struct PaywallView: View {
 
                 // 3. 혜택 리스트
                 VStack(alignment: .leading, spacing: 16) {
-                    BenefitRow(text: "한 번 결제로 평생 소장")
-                    BenefitRow(text: "모든 동반자 잠금 해제")
-                    BenefitRow(text: "앞으로 추가될 친구들도 무료")
+                    BenefitRow(text: "Pay once, keep forever")
+                    BenefitRow(text: "Unlock all companions")
+                    BenefitRow(text: "Future companions are free")
                 }
                 .frame(maxWidth: .infinity)
 
@@ -101,7 +101,7 @@ struct PaywallView: View {
                                 ProgressView().tint(.black)
                             } else {
                                 // ✅ [수정] 축하 상태에 따라 텍스트 변경
-                                Text(showCelebration ? "환영합니다! 🎉" : "Journey Pass 시작하기")
+                                Text(showCelebration ? "Welcome Aboard! 🎉" : "Get Journey Pass")
                                     .font(.custom("ComicRelief-Bold", size: 18))
 
                                 // 가격은 축하 중이 아닐 때만 표시
@@ -126,7 +126,7 @@ struct PaywallView: View {
 
                     // 복원 버튼
                     if !storeManager.isPurchased && !showCelebration {
-                        Button("구매 기록 복원") {
+                        Button("Restore Purchase") {
                             Task { await storeManager.updateCustomerProductStatus() }
                         }
                         .font(.custom("ComicRelief-Regular", size: 13))
