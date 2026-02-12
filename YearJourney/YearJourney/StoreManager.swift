@@ -25,9 +25,12 @@ final class StoreManager: ObservableObject {
     private var updates: Task<Void, Never>? = nil
 
     private init() {
-        // 앱이 켜지자마자 구매 내역 변동 사항을 감시 시작
-        updates = newTransactionListenerTask()
-    }
+            updates = newTransactionListenerTask()
+
+            Task {
+                await updateCustomerProductStatus()
+            }
+        }
 
     deinit {
         updates?.cancel()
