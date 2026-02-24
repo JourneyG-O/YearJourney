@@ -37,7 +37,7 @@ struct MediumWidgetSettingsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     draftConfig.save()
-                    WidgetCenter.shared.reloadTimelines(ofKind: "YearJourneyMediumWidget")
+                    WidgetCenter.shared.reloadAllTimelines()
                     let loaded = MediumWidgetConfig.load()
                     originalConfig = loaded
                     draftConfig = loaded

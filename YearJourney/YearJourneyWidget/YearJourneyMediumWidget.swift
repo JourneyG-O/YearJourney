@@ -74,8 +74,20 @@ struct YearJourneyMediumProvider: TimelineProvider {
             config: config
         )
 
-        let nextUpdate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+        // Schedule: booster at +5 minutes for quicker reflection after reloads, and hourly cadence thereafter
+        let boosterDate = Calendar.current.date(byAdding: .minute, value: 5, to: now) ?? now
+        let hourlyDate = Calendar.current.date(byAdding: .hour, value: 1, to: now) ?? now
+
+        let boosterEntry = YearJourneyMediumEntry(
+            date: boosterDate,
+            progress: info.progress,
+            dayOfYear: info.dayOfYear,
+            totalDaysInYear: info.totalDaysInYear,
+            theme: theme,
+            config: config
+        )
+
+        let timeline = Timeline(entries: [entry, boosterEntry], policy: .after(hourlyDate))
         completion(timeline)
     }
 }
