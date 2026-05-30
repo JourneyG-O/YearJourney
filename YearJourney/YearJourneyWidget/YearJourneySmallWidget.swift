@@ -16,7 +16,7 @@ struct YearJourneySmallEntry: TimelineEntry {
     let dayOfMonth: Int
     let totalDaysInMonth: Int
     let theme: ThemeAssets
-    let config: SmallWidgetConfig
+    let config: WidgetConfig
 }
 
 // MARK: - Timeline Provider
@@ -28,8 +28,8 @@ struct YearJourneySmallProvider: TimelineProvider {
         return ThemeCatalog.theme(for: id)
     }
 
-    private func currentConfig() -> SmallWidgetConfig {
-        SmallWidgetConfig.load()
+    private func currentConfig() -> WidgetConfig {
+        WidgetConfig.load(for: .small)
     }
 
     func placeholder(in context: Context) -> YearJourneySmallEntry {
@@ -39,7 +39,7 @@ struct YearJourneySmallProvider: TimelineProvider {
             dayOfMonth: 10,
             totalDaysInMonth: 30,
             theme: ThemeCatalog.defaultTheme,
-            config: .default
+            config: WidgetConfig.defaultConfig(for: .small)
         )
     }
 
@@ -131,7 +131,7 @@ struct YearJourneySmallWidget: Widget {
         dayOfMonth: 5,
         totalDaysInMonth: 30,
         theme: .catBasic,
-        config: .default
+        config: WidgetConfig.defaultConfig(for: .small)
     )
 }
 

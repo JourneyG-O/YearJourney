@@ -1,25 +1,55 @@
 //
-//  SmallWidgetSettingsView.swift
+//  WidgetSettingsView.swift
 //  YearJourney
-//
-//  Created by KoJeongseok on 12/17/25.
 //
 
 import SwiftUI
 import WidgetKit
 
-struct SmallWidgetSettingsView: View {
+struct WidgetSettingsView: View {
+    let kind: WidgetKind
+
     @Environment(\.dismiss) private var dismiss
     @StateObject private var themeManager = ThemeManager.shared
 
-    @State private var originalConfig: SmallWidgetConfig = .default
-    @State private var draftConfig: SmallWidgetConfig = .default
+    @State private var originalConfig: WidgetConfig
+    @State private var draftConfig: WidgetConfig
 
-    let family: WidgetFamily
+    init(kind: WidgetKind) {
+        self.kind = kind
+        let config = WidgetConfig.load(for: kind)
+        _originalConfig = State(initialValue: config)
+        _draftConfig = State(initialValue: config)
+    }
+
+    // MARK: - Computed Properties
 
     private var isDirty: Bool {
         draftConfig != originalConfig
     }
+
+    private var widgetFamily: WidgetFamily {
+        switch kind {
+        case .small: return .systemSmall
+        case .medium: return .systemMedium
+        }
+    }
+
+    private var widgetKindString: String {
+        switch kind {
+        case .small: return "YearJourneySmallWidget"
+        case .medium: return "YearJourneyMediumWidget"
+        }
+    }
+
+    private var dayFractionLabel: String {
+        switch kind {
+        case .small: return "N/28-31"
+        case .medium: return "N/365"
+        }
+    }
+
+    // MARK: - Body
 
     var body: some View {
         ScrollView {
@@ -35,9 +65,9 @@ struct SmallWidgetSettingsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    draftConfig.save()
-                    WidgetCenter.shared.reloadTimelines(ofKind: "YearJourneySmallWidget")
-                    let loaded = SmallWidgetConfig.load()
+                    draftConfig.save(for: kind)
+                    WidgetCenter.shared.reloadTimelines(ofKind: widgetKindString)
+                    let loaded = WidgetConfig.load(for: kind)
                     originalConfig = loaded
                     draftConfig = loaded
                     dismiss()
@@ -49,39 +79,52 @@ struct SmallWidgetSettingsView: View {
                 .opacity(isDirty ? 1 : 0.4)
             }
         }
-        .onAppear {
-            let loaded = SmallWidgetConfig.load()
-            originalConfig = loaded
-            draftConfig = loaded
-        }
     }
 
+    // MARK: - Sections
+
     private var previewCard: some View {
-        let theme = themeManager.currentTheme
-        let widgetSize = WidgetPreviewSize.size(for: family)
+        let widgetSize = WidgetPreviewSize.size(for: widgetFamily)
 
         return VStack(spacing: 10) {
             HStack {
                 Text("Preview")
                     .font(.custom("ComicRelief-Bold", size: 16))
                     .foregroundStyle(.secondary)
-
                 Spacer()
             }
 
+            widgetPreviewView
+                .frame(width: widgetSize.width, height: widgetSize.height)
+                .padding(16)
+                .background(Color(.secondarySystemGroupedBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .id(draftConfig.displayMode)
+        }
+    }
+
+    @ViewBuilder
+    private var widgetPreviewView: some View {
+        switch kind {
+        case .small:
             YearJourneySmallWidgetView(
                 fillProgress: 0.68,
                 dayOfMonth: 21,
                 totalDaysInMonth: 31,
-                theme: theme,
+                theme: themeManager.currentTheme,
                 config: draftConfig,
                 isTintMode: true
             )
-            .frame(width: widgetSize.width, height: widgetSize.height)
-            .padding(16)
-            .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .id(draftConfig.displayMode)
+        case .medium:
+            YearJourneyMediumWidgetView(
+                progress: 0.72,
+                dayOfYear: 263,
+                totalDaysInYear: 365,
+                theme: themeManager.currentTheme,
+                config: draftConfig,
+                isTintMode: false,
+                isPreview: true
+            )
         }
     }
 
@@ -97,7 +140,7 @@ struct SmallWidgetSettingsView: View {
                     .foregroundStyle(.secondary)
 
                 Picker("Display Mode", selection: $draftConfig.displayMode) {
-                    Text("N/28-31").tag(WidgetDisplayMode.dayFraction)
+                    Text(dayFractionLabel).tag(WidgetDisplayMode.dayFraction)
                     Text("%").tag(WidgetDisplayMode.percent)
                     Text("D-").tag(WidgetDisplayMode.dRemaining)
                     Text("Off").tag(WidgetDisplayMode.off)
@@ -114,7 +157,7 @@ struct SmallWidgetSettingsView: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
             Button {
-                draftConfig = .default
+                draftConfig = WidgetConfig.defaultConfig(for: kind)
             } label: {
                 Text("Reset to Default")
                     .font(.custom("ComicRelief-Bold", size: 14))
@@ -123,22 +166,28 @@ struct SmallWidgetSettingsView: View {
             }
             .buttonStyle(.borderedProminent)
             .disabled(!isDirty)
-            .opacity(isDirty ? 1: 0.4)
+            .opacity(isDirty ? 1 : 0.4)
         }
     }
 
+    // MARK: - Methods
+
     private func displayHintText(for mode: WidgetDisplayMode) -> String {
         switch mode {
-        case .dayFraction: return "Show day index in the month."
-        case .percent: return "Show progress percentage."
-        case .dRemaining: return "Show remaining days."
-        case .off: return "Hide text."
+        case .dayFraction:
+            return kind == .small ? "Show day index in the month." : "Show day index in the year."
+        case .percent:
+            return "Show progress percentage."
+        case .dRemaining:
+            return "Show remaining days."
+        case .off:
+            return "Hide text."
         }
     }
 }
 
 #Preview {
     NavigationStack {
-//        SmallWidgetSettingsView()
+        WidgetSettingsView(kind: .medium)
     }
 }

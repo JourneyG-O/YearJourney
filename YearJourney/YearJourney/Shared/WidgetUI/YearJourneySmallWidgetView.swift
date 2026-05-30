@@ -12,7 +12,7 @@ struct YearJourneySmallWidgetView: View {
     let dayOfMonth: Int
     let totalDaysInMonth: Int
     let theme: ThemeAssets
-    let config: SmallWidgetConfig
+    let config: WidgetConfig
     let isTintMode: Bool
 
     private var displayText: String? {

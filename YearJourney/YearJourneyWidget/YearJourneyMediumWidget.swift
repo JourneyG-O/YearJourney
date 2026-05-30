@@ -14,7 +14,7 @@ struct YearJourneyMediumEntry: TimelineEntry {
     let dayOfYear: Int
     let totalDaysInYear: Int
     let theme: ThemeAssets
-    let config: MediumWidgetConfig
+    let config: WidgetConfig
 }
 
 struct YearJourneyMediumProvider: TimelineProvider {
@@ -24,8 +24,8 @@ struct YearJourneyMediumProvider: TimelineProvider {
         return ThemeCatalog.theme(for: id)
     }
 
-    private func currentConfig() -> MediumWidgetConfig {
-        MediumWidgetConfig.load()
+    private func currentConfig() -> WidgetConfig {
+        WidgetConfig.load(for: .medium)
     }
 
     func placeholder(in context: Context) -> YearJourneyMediumEntry {
@@ -117,5 +117,5 @@ struct YearJourneyMediumWidget: Widget {
 #Preview(as: .systemMedium) {
     YearJourneyMediumWidget()
 } timeline: {
-    YearJourneyMediumEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: .default)
+    YearJourneyMediumEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: WidgetConfig.defaultConfig(for: .medium))
 }

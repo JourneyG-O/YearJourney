@@ -9,7 +9,7 @@ struct YearJourneyMediumWidgetView: View {
     let dayOfYear: Int
     let totalDaysInYear: Int
     let theme: ThemeAssets
-    let config: MediumWidgetConfig
+    let config: WidgetConfig
     let isTintMode: Bool
     var isPreview: Bool = false
 

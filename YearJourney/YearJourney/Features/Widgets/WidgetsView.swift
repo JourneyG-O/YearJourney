@@ -13,8 +13,8 @@ struct WidgetsView: View {
     @StateObject private var themeManager = ThemeManager.shared
 
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
-    @State private var mediumConfig: MediumWidgetConfig = .default
-    @State private var smallConfig: SmallWidgetConfig = .default
+    @State private var mediumConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .medium)
+    @State private var smallConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .small)
 
     var body: some View {
         NavigationStack {
@@ -24,7 +24,7 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
 
                 NavigationLink {
-                    MediumWidgetSettingsView(family: .systemMedium)
+                    WidgetSettingsView(kind: .medium)
                 } label: {
                     WidgetPreviewCard(title: "Medium", family: .systemMedium) {
                         YearJourneyMediumWidgetView(
@@ -44,7 +44,7 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
 
                 NavigationLink {
-                    SmallWidgetSettingsView(family: .systemSmall)
+                    WidgetSettingsView(kind: .small)
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
@@ -73,8 +73,8 @@ struct WidgetsView: View {
     private func reloadPreviewState() {
         let savedThemeID = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
         theme = ThemeCatalog.theme(for: savedThemeID)
-        mediumConfig = MediumWidgetConfig.load()
-        smallConfig = SmallWidgetConfig.load()
+        mediumConfig = WidgetConfig.load(for: .medium)
+        smallConfig = WidgetConfig.load(for: .small)
     }
 
     private var header: some View {
