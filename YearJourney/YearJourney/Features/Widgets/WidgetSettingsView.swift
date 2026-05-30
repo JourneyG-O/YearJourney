@@ -10,7 +10,7 @@ struct WidgetSettingsView: View {
     let kind: WidgetKind
 
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var themeManager = ThemeManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
 
     @State private var originalConfig: WidgetConfig
     @State private var draftConfig: WidgetConfig

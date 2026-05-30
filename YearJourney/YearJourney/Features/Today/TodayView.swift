@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodayView: View {
-    @StateObject private var themeManager = ThemeManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - Data

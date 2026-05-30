@@ -10,7 +10,7 @@ import WidgetKit
 
 struct WidgetsView: View {
 
-    @StateObject private var themeManager = ThemeManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
 
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
     @State private var mediumConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .medium)

@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ThemesView: View {
-    @ObservedObject private var themeManager = ThemeManager.shared
-    @ObservedObject private var entitlementStore = ThemeEntitlementStore.shared
-    @ObservedObject private var storeManager = StoreManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var storeManager: StoreManager
 
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
     @State private var showPaywall = false
@@ -22,7 +21,7 @@ struct ThemesView: View {
             List {
                 ForEach(ThemeCatalog.all) { theme in
                     // StoreManager와 연결된 entitlementStore가 진짜 권한을 확인합니다.
-                    let isOwned = entitlementStore.isOwned(theme)
+                    let isOwned = !theme.isPremium || storeManager.isPurchased
 
                     ThemeRow(
                         theme: theme,

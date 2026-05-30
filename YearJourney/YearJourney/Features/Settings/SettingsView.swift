@@ -10,8 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
 
-    // 📡 StoreManager 연결
-    @ObservedObject private var storeManager = StoreManager.shared
+    @EnvironmentObject private var storeManager: StoreManager
 
     // 팝업 및 상태 관리 변수
     @State private var showPaywall = false

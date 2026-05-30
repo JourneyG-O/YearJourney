@@ -10,14 +10,14 @@ import SwiftUI
 @main
 struct YearJourneyApp: App {
     @StateObject private var storeManager = StoreManager.shared
+    @StateObject private var themeManager = ThemeManager.shared
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(storeManager)
-
+                .environmentObject(themeManager)
                 .task {
-                    print("🚀 앱 시작: 구매 내역 확인 중...")
                     await storeManager.updateCustomerProductStatus()
                 }
         }
