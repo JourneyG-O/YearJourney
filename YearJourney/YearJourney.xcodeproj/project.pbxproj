@@ -75,6 +75,7 @@
 				"Resources/Fonts/ComicRelief-Bold.ttf",
 				"Resources/Fonts/ComicRelief-Regular.ttf",
 				Shared/WidgetUI/YearJourneyMediumWidgetView.swift,
+				Shared/WidgetUI/YearJourneyProgressLineView.swift,
 				Shared/WidgetUI/YearJourneySmallWidgetView.swift,
 			);
 			target = D7B0A9B72ED05E1C007CB1EB /* YearJourneyWidgetExtension */;

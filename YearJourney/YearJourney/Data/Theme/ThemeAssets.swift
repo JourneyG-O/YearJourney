@@ -38,15 +38,6 @@ struct ThemeAssets: Identifiable, Codable, Equatable {
     let isPremium: Bool
     let productID: String? // StoreKit IAP Product ID (무료 테마면 nil)
 
-    /// 동반자 이미지를 안전하게 하나 선택해서 변환
-    func companionImageName(isTintMode: Bool) -> String {
-        let source = isTintMode ? companionTintImages : companionImages
-        guard let first = source.first else {
-            return isTintMode ? goalTintImageName : goalImageName
-        }
-        return source.randomElement() ?? first
-    }
-
     /// 목표 이미지를 안전하게 하나 선택해서 변환
     func goalImageName(isTintMode: Bool) -> String {
         isTintMode ? goalTintImageName : goalImageName
