@@ -3,7 +3,7 @@
 //  YearJourney
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 @MainActor
@@ -16,8 +16,8 @@ final class PaywallViewModel: ObservableObject {
     private let storeManager: StoreManager
     private var cancellables = Set<AnyCancellable>()
 
-    init(storeManager: StoreManager = .shared) {
-        self.storeManager = storeManager
+    init() {
+        self.storeManager = StoreManager.shared
         observePurchaseState()
     }
 
