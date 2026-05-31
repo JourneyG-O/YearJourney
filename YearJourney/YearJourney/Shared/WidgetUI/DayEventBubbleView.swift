@@ -17,21 +17,22 @@ struct DayEventBubbleView: View {
 
     // MARK: - Layout constants
 
-    private var dotSizes: [CGFloat]   { compact ? [5, 4, 3]  : [9, 7, 5]  }
-    private var dotSpacing: CGFloat    { compact ? 2          : 3          }
-    private var dotShift: CGFloat      { compact ? 5          : 8          }
-    private var emojiSize: CGFloat     { compact ? 13         : 22         }
+    private var dotSizes: [CGFloat]   { compact ? [20, 16, 12] : [36, 28, 20] }
+    private var dotSpacing: CGFloat    { compact ? -6         : -10        }
+    private var dotShift: CGFloat      { compact ? 10          : 20        }
+    private var emojiSize: CGFloat     { compact ? 16         : 30         }
     private var titleFontSize: CGFloat { compact ? 8          : 11         }
     private var dDayFontSize: CGFloat  { compact ? 11         : 15         }
     private var hPad: CGFloat          { compact ? 7          : 12         }
     private var vPad: CGFloat          { compact ? 5          : 8          }
-    private var radius: CGFloat        { compact ? 10         : 16         }
+    private var radius: CGFloat        { compact ? 20         : 32         }
 
     // MARK: - Body
 
     var body: some View {
         VStack(alignment: .center, spacing: dotSpacing) {
             mainBubble
+                .shadow(color: .black.opacity(0.2), radius: 6, x: 0, y: 3)
             thoughtDots
         }
     }
@@ -98,4 +99,83 @@ struct DayEventBubbleView: View {
     private var dDayLabel: String {
         activeEvent.daysRemaining == 0 ? "D-Day!" : "D-\(activeEvent.daysRemaining)"
     }
+}
+
+// MARK: - Preview
+
+#Preview {
+    let sample = ActiveDayEvent(
+        event: DayEvent(
+            title: "버스데이",
+            emoji: "🎂",
+            month: 6, day: 9,
+            year: nil,
+            daysBeforeToShow: nil,
+            isRecurring: true
+        ),
+        daysRemaining: 7
+    )
+
+    ScrollView {
+        VStack(spacing: 32) {
+
+            // ── TodayView 스타일 ──────────────────────────────
+            Group {
+                Text("TodayView (compact: false)")
+                    .font(.caption).foregroundStyle(.secondary)
+
+                HStack(spacing: 40) {
+                    VStack(spacing: 6) {
+                        Text("showOnRight: true").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
+                                           showTitle: true, useGlass: true, compact: false)
+                    }
+                    VStack(spacing: 6) {
+                        Text("showOnRight: false").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: false,
+                                           showTitle: true, useGlass: true, compact: false)
+                    }
+                }
+
+                HStack(spacing: 40) {
+                    VStack(spacing: 6) {
+                        Text("showTitle: false").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
+                                           showTitle: false, useGlass: true, compact: false)
+                    }
+                }
+            }
+
+            Divider()
+
+            // ── Widget 스타일 ─────────────────────────────────
+            Group {
+                Text("Widget (compact: true)")
+                    .font(.caption).foregroundStyle(.secondary)
+
+                HStack(spacing: 40) {
+                    VStack(spacing: 6) {
+                        Text("showOnRight: true").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
+                                           showTitle: true, useGlass: false, compact: true)
+                    }
+                    VStack(spacing: 6) {
+                        Text("showOnRight: false").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: false,
+                                           showTitle: true, useGlass: false, compact: true)
+                    }
+                }
+
+                HStack(spacing: 40) {
+                    VStack(spacing: 6) {
+                        Text("showTitle: false").font(.caption2).foregroundStyle(.tertiary)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
+                                           showTitle: false, useGlass: false, compact: true)
+                    }
+                }
+            }
+        }
+        .padding(24)
+    }
+    .background(Color(.systemGroupedBackground))
 }
