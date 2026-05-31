@@ -16,6 +16,7 @@ struct YearJourneyMediumWidgetView: View {
     let config: WidgetConfig
     let isTintMode: Bool
     var isPreview: Bool = false
+    var activeDayEvent: ActiveDayEvent? = nil
 
     // MARK: - Computed Properties
 
@@ -42,7 +43,8 @@ struct YearJourneyMediumWidgetView: View {
                 progress: progress,
                 theme: theme,
                 isTintMode: isTintMode,
-                isPreview: isPreview
+                isPreview: isPreview,
+                activeDayEvent: activeDayEvent
             )
             .frame(height: 60)
 

@@ -15,6 +15,7 @@ struct YearJourneyMediumEntry: TimelineEntry {
     let totalDaysInYear: Int
     let theme: ThemeAssets
     let config: WidgetConfig
+    let activeDayEvent: ActiveDayEvent?
 }
 
 struct YearJourneyMediumProvider: TimelineProvider {
@@ -28,33 +29,35 @@ struct YearJourneyMediumProvider: TimelineProvider {
         WidgetConfig.load(for: .medium)
     }
 
+    private func currentDayEvent() -> ActiveDayEvent? {
+        guard AppGroupStore.defaults.bool(forKey: WidgetKeys.isPurchased) else { return nil }
+        let events = DayEventStore.load()
+        return DayEventCalculator.activeEvent(from: events)
+    }
+
     func placeholder(in context: Context) -> YearJourneyMediumEntry {
         let info = ProgressCalculator.yearProgress()
-        let theme = currentTheme()
-        let config = currentConfig()
-
         return YearJourneyMediumEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
-            theme: theme,
-            config: config
+            theme: currentTheme(),
+            config: currentConfig(),
+            activeDayEvent: nil
         )
     }
 
     func getSnapshot(in context: Context, completion: @escaping (YearJourneyMediumEntry) -> ()) {
         let info = ProgressCalculator.yearProgress()
-        let theme = currentTheme()
-        let config = currentConfig()
-
         let entry = YearJourneyMediumEntry(
             date: info.date,
             progress: info.progress,
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
-            theme: theme,
-            config: config
+            theme: currentTheme(),
+            config: currentConfig(),
+            activeDayEvent: currentDayEvent()
         )
         completion(entry)
     }
@@ -64,6 +67,7 @@ struct YearJourneyMediumProvider: TimelineProvider {
         let info = ProgressCalculator.yearProgress(for: now)
         let theme = currentTheme()
         let config = currentConfig()
+        let activeEvent = currentDayEvent()
 
         let entry = YearJourneyMediumEntry(
             date: info.date,
@@ -71,10 +75,10 @@ struct YearJourneyMediumProvider: TimelineProvider {
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
             theme: theme,
-            config: config
+            config: config,
+            activeDayEvent: activeEvent
         )
 
-        // Schedule: booster at +5 minutes for quicker reflection after reloads, and hourly cadence thereafter
         let boosterDate = Calendar.current.date(byAdding: .minute, value: 5, to: now) ?? now
         let hourlyDate = Calendar.current.date(byAdding: .hour, value: 1, to: now) ?? now
 
@@ -84,7 +88,8 @@ struct YearJourneyMediumProvider: TimelineProvider {
             dayOfYear: info.dayOfYear,
             totalDaysInYear: info.totalDaysInYear,
             theme: theme,
-            config: config
+            config: config,
+            activeDayEvent: activeEvent
         )
 
         let timeline = Timeline(entries: [entry, boosterEntry], policy: .after(hourlyDate))
@@ -92,7 +97,7 @@ struct YearJourneyMediumProvider: TimelineProvider {
     }
 }
 
-struct YearJourneyMediumWidgetEntryView : View {
+struct YearJourneyMediumWidgetEntryView: View {
     var entry: YearJourneyMediumProvider.Entry
     @Environment(\.widgetRenderingMode) private var renderingMode
 
@@ -105,7 +110,8 @@ struct YearJourneyMediumWidgetEntryView : View {
             totalDaysInYear: entry.totalDaysInYear,
             theme: entry.theme,
             config: entry.config,
-            isTintMode: isTintMode
+            isTintMode: isTintMode,
+            activeDayEvent: entry.activeDayEvent
         )
         .padding()
         .containerBackground(.background, for: .widget)
@@ -129,5 +135,13 @@ struct YearJourneyMediumWidget: Widget {
 #Preview(as: .systemMedium) {
     YearJourneyMediumWidget()
 } timeline: {
-    YearJourneyMediumEntry(date: .now, progress: 0.98, dayOfYear: 377, totalDaysInYear: 365, theme: .catBasic, config: WidgetConfig.defaultConfig(for: .medium))
+    YearJourneyMediumEntry(
+        date: .now,
+        progress: 0.3,
+        dayOfYear: 110,
+        totalDaysInYear: 365,
+        theme: .catBasic,
+        config: WidgetConfig.defaultConfig(for: .medium),
+        activeDayEvent: nil
+    )
 }

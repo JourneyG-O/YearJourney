@@ -77,6 +77,7 @@
 				Resources/Assets.xcassets,
 				"Resources/Fonts/ComicRelief-Bold.ttf",
 				"Resources/Fonts/ComicRelief-Regular.ttf",
+				Shared/WidgetUI/WidgetDayEventBubbleView.swift,
 				Shared/WidgetUI/YearJourneyMediumWidgetView.swift,
 				Shared/WidgetUI/YearJourneyProgressLineView.swift,
 				Shared/WidgetUI/YearJourneySmallWidgetView.swift,
