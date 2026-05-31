@@ -1,5 +1,5 @@
 //
-//  JourneyView.swift
+//  TodayView.swift
 //  YearJourney
 //
 //  Created by KoJeongseok on 11/20/25.
@@ -11,14 +11,12 @@ struct TodayView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.colorScheme) private var colorScheme
 
+    @State private var activeDayEvent: ActiveDayEvent? = nil
+
     // MARK: - Data
 
     private var info: YearProgressInfo {
         ProgressCalculator.yearProgress()
-    }
-
-    private var remainingDays: Int {
-        max(0, info.totalDaysInYear - info.dayOfYear)
     }
 
     private var companionName: String {
@@ -28,36 +26,28 @@ struct TodayView: View {
     // MARK: - Style
 
     private var backgroundColor: Color {
-        if colorScheme == .dark {
-            return Color(red: 0.12, green: 0.12, blue: 0.13)
-        } else {
-            return Color(.systemGroupedBackground)
-        }
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
     }
 
     // MARK: - Layout Tokens
 
     private enum Spacing {
-        static let xs: CGFloat = 4
         static let s: CGFloat = 8
         static let m: CGFloat = 16
-        static let l: CGFloat = 24
     }
 
     private enum Metrics {
         static let titleSize: CGFloat = 30
         static let progressBarHorizontalPadding: CGFloat = 36
         static let companionHorizontalPadding: CGFloat = 30
-
         static let progressInfoTopPadding: CGFloat = 8
-        static let dDayTopPadding: CGFloat = 22
-
         static let progressInfoFontSize: CGFloat = 18
-        static let dDayFontSize: CGFloat = 36
-        static let dDayTracking: CGFloat = 1.0
-
         static let companionNameSize: CGFloat = 24
     }
+
+    // MARK: - Body
 
     var body: some View {
         VStack {
@@ -68,16 +58,22 @@ struct TodayView: View {
             companionView
                 .aspectRatio(1, contentMode: .fit)
                 .padding(.horizontal, Metrics.companionHorizontalPadding)
-                .overlay(alignment: .bottom) { // 이미지의 바닥을 기준으로 배치
-                        Text(companionName)
+                .overlay(alignment: .bottom) {
+                    Text(companionName)
                         .font(.custom("ComicRelief-Bold", size: Metrics.companionNameSize))
                         .foregroundColor(.primary)
                         .opacity(0.9)
                         .offset(y: -20)
+                }
+                .overlay(alignment: .topTrailing) {
+                    if let active = activeDayEvent {
+                        DayEventBubbleView(activeEvent: active)
+                            .padding(.trailing, -8)
+                            .padding(.top, 8)
                     }
+                }
 
             Spacer(minLength: 0)
-            
 
             YearProgressBarView(progress: info.progress)
                 .padding(.horizontal, Metrics.progressBarHorizontalPadding)
@@ -89,6 +85,7 @@ struct TodayView: View {
             Spacer()
         }
         .background(backgroundColor)
+        .onAppear { reloadDayEvent() }
     }
 
     // MARK: - Sections
@@ -98,7 +95,6 @@ struct TodayView: View {
             Text("Today")
                 .font(.custom("ComicRelief-Bold", size: Metrics.titleSize))
             Spacer()
-
             Text(Date.now, format: .dateTime.month(.abbreviated).day())
                 .font(.custom("ComicRelief-Bold", size: 14))
                 .opacity(0.6)
@@ -108,21 +104,9 @@ struct TodayView: View {
     }
 
     private var progressInfoSection: some View {
-        VStack(spacing: 0) {
-            Text("\(info.dayOfYear) / \(info.totalDaysInYear)")
-                .font(.custom("ComicRelief-Bold", size: Metrics.progressInfoFontSize))
-                .opacity(0.85)
-        }
-    }
-
-    // D-Day는 보류
-    private var dDaySection: some View {
-        VStack(spacing: 0) {
-            Text("D-\(remainingDays)")
-                .font(.custom("ComicRelief-Bold", size: Metrics.dDayFontSize))
-                .tracking(Metrics.dDayTracking)
-                .opacity(0.85)
-        }
+        Text("\(info.dayOfYear) / \(info.totalDaysInYear)")
+            .font(.custom("ComicRelief-Bold", size: Metrics.progressInfoFontSize))
+            .opacity(0.85)
     }
 
     // MARK: - Companion
@@ -130,17 +114,22 @@ struct TodayView: View {
     private var companionView: some View {
         GeometryReader { geo in
             let side = geo.size.width
-            let theme = themeManager.currentTheme
-            let companionName = theme.mainImageName
-
-            Image(companionName)
+            Image(themeManager.currentTheme.mainImageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: side, height: side)
         }
     }
+
+    // MARK: - Methods
+
+    private func reloadDayEvent() {
+        let events = DayEventStore.load()
+        activeDayEvent = DayEventCalculator.activeEvent(from: events)
+    }
 }
 
 #Preview {
     TodayView()
+        .environmentObject(ThemeManager.shared)
 }
