@@ -25,4 +25,8 @@ enum WidgetKeys {
     static let smallBarColor = "widget.small.colors.bar"
     static let smallTextColor = "widget.small.colors.text"
     static let smallConfig = "widget.small.config"
+
+    // D-Day
+    static let dayEvents = "dayEvents"
+    static let isPurchased = "store.isPurchased"
 }
