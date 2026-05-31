@@ -66,9 +66,15 @@ struct TodayView: View {
                 }
                 .overlay(alignment: .topTrailing) {
                     if let active = dayEventManager.activeEvent {
-                        DayEventBubbleView(activeEvent: active)
-                            .padding(.trailing, -8)
-                            .padding(.top, 8)
+                        DayEventBubbleView(
+                            activeEvent: active,
+                            showOnRight: true,
+                            showTitle: true,
+                            useGlass: true,
+                            compact: false
+                        )
+                        .padding(.trailing, -8)
+                        .padding(.top, 8)
                     }
                 }
 

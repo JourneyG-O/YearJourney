@@ -79,10 +79,12 @@ struct YearJourneyProgressLineView: View {
                 // MARK: Layer 4 — D-Day bubble
                 if let event = activeDayEvent {
                     let showOnRight = clampedProgress < 0.5
-                    WidgetDayEventBubbleView(
+                    DayEventBubbleView(
                         activeEvent: event,
                         showOnRight: showOnRight,
-                        showTitle: showDayEventTitle
+                        showTitle: showDayEventTitle,
+                        useGlass: false,
+                        compact: true
                     )
                     .fixedSize()
                     .position(
