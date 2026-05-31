@@ -9,9 +9,8 @@ import SwiftUI
 
 struct TodayView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var dayEventManager: DayEventManager
     @Environment(\.colorScheme) private var colorScheme
-
-    @State private var activeDayEvent: ActiveDayEvent? = nil
 
     // MARK: - Data
 
@@ -66,7 +65,7 @@ struct TodayView: View {
                         .offset(y: -20)
                 }
                 .overlay(alignment: .topTrailing) {
-                    if let active = activeDayEvent {
+                    if let active = dayEventManager.activeEvent {
                         DayEventBubbleView(activeEvent: active)
                             .padding(.trailing, -8)
                             .padding(.top, 8)
@@ -85,7 +84,6 @@ struct TodayView: View {
             Spacer()
         }
         .background(backgroundColor)
-        .onAppear { reloadDayEvent() }
     }
 
     // MARK: - Sections
@@ -121,15 +119,11 @@ struct TodayView: View {
         }
     }
 
-    // MARK: - Methods
 
-    private func reloadDayEvent() {
-        let events = DayEventStore.load()
-        activeDayEvent = DayEventCalculator.activeEvent(from: events)
-    }
 }
 
 #Preview {
     TodayView()
         .environmentObject(ThemeManager.shared)
+        .environmentObject(DayEventManager.shared)
 }

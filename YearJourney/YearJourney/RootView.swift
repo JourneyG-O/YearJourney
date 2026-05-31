@@ -29,6 +29,12 @@ struct RootView: View {
                     Text("Companions")
                 }
 
+            DayEventListView()
+                .tabItem {
+                    Image(systemName: "calendar.badge.clock")
+                    Text("D-Day")
+                }
+
             WidgetsView()
                 .tabItem {
                     Image(systemName: "rectangle.fill.on.rectangle.fill")

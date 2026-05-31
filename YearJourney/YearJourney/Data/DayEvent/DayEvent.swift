@@ -12,6 +12,6 @@ struct DayEvent: Codable, Identifiable, Equatable {
     var month: Int       // 1–12
     var day: Int         // 1–31
     var year: Int?       // nil when isRecurring is true
-    var daysBeforeToShow: Int
+    var daysBeforeToShow: Int?   // nil = 항상 표시
     var isRecurring: Bool
 }

@@ -21,7 +21,11 @@ enum DayEventCalculator {
             guard let remaining = daysRemaining(for: event, from: date, calendar: calendar) else {
                 return nil
             }
-            guard remaining >= 0, remaining <= event.daysBeforeToShow else { return nil }
+            guard remaining >= 0 else { return nil }
+            // nil = 항상 표시, otherwise check time window
+            if let window = event.daysBeforeToShow {
+                guard remaining <= window else { return nil }
+            }
             return ActiveDayEvent(event: event, daysRemaining: remaining)
         }
 
