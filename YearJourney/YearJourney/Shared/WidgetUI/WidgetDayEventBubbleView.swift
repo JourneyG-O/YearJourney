@@ -9,7 +9,8 @@ import SwiftUI
 // Positioned left or right of the companion based on progress.
 struct WidgetDayEventBubbleView: View {
     let activeEvent: ActiveDayEvent
-    let showOnRight: Bool  // true when progress < 0.5
+    let showOnRight: Bool   // true when progress < 0.5
+    let showTitle: Bool
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
@@ -31,7 +32,7 @@ struct WidgetDayEventBubbleView: View {
                 .font(.system(size: 13))
 
             VStack(alignment: .leading, spacing: 0) {
-                if activeEvent.event.showTitle {
+                if showTitle {
                     Text(activeEvent.event.title)
                         .font(.system(size: 8, weight: .medium))
                         .lineLimit(1)

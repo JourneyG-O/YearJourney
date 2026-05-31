@@ -11,6 +11,7 @@ struct YearJourneyProgressLineView: View {
     let isTintMode: Bool
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
+    var showDayEventTitle: Bool = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -78,7 +79,7 @@ struct YearJourneyProgressLineView: View {
                 // MARK: Layer 4 — D-Day bubble (Pro only, passed from entry)
                 if let event = activeDayEvent {
                     let showOnRight = clampedProgress < 0.5
-                    WidgetDayEventBubbleView(activeEvent: event, showOnRight: showOnRight)
+                    WidgetDayEventBubbleView(activeEvent: event, showOnRight: showOnRight, showTitle: showDayEventTitle)
                         .position(
                             x: showOnRight
                                 ? travelerX + companionSize / 2 + 4

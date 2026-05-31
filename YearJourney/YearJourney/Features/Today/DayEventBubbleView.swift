@@ -25,12 +25,10 @@ struct DayEventBubbleView: View {
                 .font(.system(size: 22))
 
             VStack(alignment: .leading, spacing: 1) {
-                if activeEvent.event.showTitle {
-                    Text(activeEvent.event.title)
-                        .font(.system(size: 11, weight: .medium))
-                        .lineLimit(1)
-                        .foregroundStyle(.primary)
-                }
+                Text(activeEvent.event.title)
+                    .font(.system(size: 11, weight: .medium))
+                    .lineLimit(1)
+                    .foregroundStyle(.primary)
                 Text(dDayLabel)
                     .font(.custom("ComicRelief-Bold", size: 15))
                     .foregroundStyle(.primary)
