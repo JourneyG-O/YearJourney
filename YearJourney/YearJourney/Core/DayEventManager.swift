@@ -3,6 +3,7 @@
 //  YearJourney
 //
 
+import Combine
 import SwiftUI
 import WidgetKit
 
@@ -10,7 +11,7 @@ import WidgetKit
 final class DayEventManager: ObservableObject {
     static let shared = DayEventManager()
 
-    @Published private(set) var events: [DayEvent] = []
+    @Published var events: [DayEvent] = []
 
     var activeEvent: ActiveDayEvent? {
         DayEventCalculator.activeEvent(from: events)
