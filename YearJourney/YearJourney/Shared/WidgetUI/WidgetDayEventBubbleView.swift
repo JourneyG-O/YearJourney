@@ -45,7 +45,7 @@ struct WidgetDayEventBubbleView: View {
         }
         .padding(.horizontal, 7)
         .padding(.vertical, 5)
-        .glassEffect(in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 
     private func dots(reversed: Bool) -> some View {
@@ -53,8 +53,8 @@ struct WidgetDayEventBubbleView: View {
         return HStack(spacing: 3) {
             ForEach(sizes, id: \.self) { size in
                 Circle()
+                    .fill(.ultraThinMaterial)
                     .frame(width: size, height: size)
-                    .glassEffect()
             }
         }
         .padding(.horizontal, 2)

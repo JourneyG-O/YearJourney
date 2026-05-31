@@ -18,12 +18,11 @@ struct YearJourneyMediumWidgetView: View {
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
 
-    // config.showDayEvent가 false면 nil로 처리해 버블 렌더링 차단
+    // MARK: - Computed Properties
+
     private var resolvedDayEvent: ActiveDayEvent? {
         config.showDayEvent ? activeDayEvent : nil
     }
-
-    // MARK: - Computed Properties
 
     private var displayText: String? {
         switch config.displayMode {

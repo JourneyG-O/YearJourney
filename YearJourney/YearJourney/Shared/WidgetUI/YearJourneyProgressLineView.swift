@@ -76,17 +76,21 @@ struct YearJourneyProgressLineView: View {
                     .frame(width: companionSize, height: companionSize)
                     .position(x: travelerX, y: lineTopY - centerToFootDistance)
 
-                // MARK: Layer 4 — D-Day bubble (Pro only, passed from entry)
+                // MARK: Layer 4 — D-Day bubble
                 if let event = activeDayEvent {
                     let showOnRight = clampedProgress < 0.5
-                    WidgetDayEventBubbleView(activeEvent: event, showOnRight: showOnRight, showTitle: showDayEventTitle)
-                        .position(
-                            x: showOnRight
-                                ? travelerX + companionSize / 2 + 4
-                                : travelerX - companionSize / 2 - 4,
-                            y: lineTopY - centerToFootDistance - 8
-                        )
-                        .fixedSize()
+                    WidgetDayEventBubbleView(
+                        activeEvent: event,
+                        showOnRight: showOnRight,
+                        showTitle: showDayEventTitle
+                    )
+                    .fixedSize()
+                    .position(
+                        x: showOnRight
+                            ? travelerX + companionSize / 2 + 4
+                            : travelerX - companionSize / 2 - 4,
+                        y: lineTopY - centerToFootDistance - 8
+                    )
                 }
             }
         }

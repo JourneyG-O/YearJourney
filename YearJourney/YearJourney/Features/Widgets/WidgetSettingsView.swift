@@ -123,7 +123,8 @@ struct WidgetSettingsView: View {
                 theme: themeManager.currentTheme,
                 config: draftConfig,
                 isTintMode: false,
-                isPreview: true
+                isPreview: true,
+                activeDayEvent: nil
             )
         }
     }
