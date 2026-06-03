@@ -13,8 +13,6 @@ struct DayEventBubbleView: View {
     var showTitle: Bool = true
     var compact: Bool = false
 
-    @Environment(\.colorScheme) private var colorScheme
-
     // MARK: - Layout constants
 
     // bubbleHeight만 조절하면 28:19 비율 그대로 유지
@@ -30,7 +28,6 @@ struct DayEventBubbleView: View {
         ZStack {
             Image("ui_speech_bubble")
                 .resizable()
-                .colorMultiply(colorScheme == .dark ? Color(.secondarySystemBackground) : .white)
                 .frame(width: bubbleWidth, height: bubbleHeight)
                 .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
                 .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
@@ -40,14 +37,14 @@ struct DayEventBubbleView: View {
                     Text(activeEvent.event.title)
                         .font(.system(size: titleFontSize, weight: .medium))
                         .lineLimit(1)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.black)
                 }
                 HStack(spacing: 3) {
                     Text(activeEvent.event.emoji)
                         .font(.system(size: emojiSize))
                     Text(dDayLabel)
                         .font(.custom("ComicRelief-Bold", size: dDayFontSize))
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.black)
                 }
             }
             .padding(.bottom, bubbleHeight * 0.15)
