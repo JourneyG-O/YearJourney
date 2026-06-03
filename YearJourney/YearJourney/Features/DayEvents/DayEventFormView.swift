@@ -7,6 +7,7 @@ import SwiftUI
 
 struct DayEventFormView: View {
     @EnvironmentObject private var dayEventManager: DayEventManager
+    @EnvironmentObject private var storeManager: StoreManager
     @Environment(\.dismiss) private var dismiss
 
     var editing: DayEvent? = nil
@@ -23,6 +24,8 @@ struct DayEventFormView: View {
     // MARK: - UI state
 
     @State private var showEmojiPicker = false
+    @State private var showUpgradeAlert = false
+    @State private var showPaywall = false
     @FocusState private var titleFocused: Bool
 
     // MARK: - Init
@@ -109,6 +112,25 @@ struct DayEventFormView: View {
                 EmojiPickerView(selectedEmoji: $emoji)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+                    .presentationDetents([.fraction(0.65), .large])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(24)
+            }
+            .onChange(of: showPaywall) { _, isShowing in
+                if !isShowing { dismiss() }
+            }
+            .alert("Saved! 🎉", isPresented: $showUpgradeAlert) {
+                Button("Get Journey Pass") {
+                    showPaywall = true
+                }
+                Button("Got it", role: .cancel) {
+                    dismiss()
+                }
+            } message: {
+                Text("Your D-Day is now visible in the app.\nTo show the bubble in your widget, you'll need a Journey Pass.")
             }
         }
     }
@@ -234,7 +256,12 @@ struct DayEventFormView: View {
         } else {
             dayEventManager.add(event)
         }
-        dismiss()
+
+        if storeManager.isPurchased {
+            dismiss()
+        } else {
+            showUpgradeAlert = true
+        }
     }
 }
 
