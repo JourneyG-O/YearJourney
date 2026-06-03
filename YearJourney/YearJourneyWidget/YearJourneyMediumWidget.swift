@@ -103,6 +103,11 @@ struct YearJourneyMediumWidgetEntryView: View {
 
     private var isTintMode: Bool { renderingMode == .accented }
 
+    private var bubbleTapURL: URL? {
+        guard let event = entry.activeDayEvent else { return nil }
+        return URL(string: "yearjourney://dday/\(event.event.id.uuidString)")
+    }
+
     var body: some View {
         YearJourneyMediumWidgetView(
             progress: entry.progress,
@@ -111,7 +116,8 @@ struct YearJourneyMediumWidgetEntryView: View {
             theme: entry.theme,
             config: entry.config,
             isTintMode: isTintMode,
-            activeDayEvent: entry.activeDayEvent
+            activeDayEvent: entry.activeDayEvent,
+            bubbleTapURL: bubbleTapURL
         )
         .padding()
         .containerBackground(.background, for: .widget)

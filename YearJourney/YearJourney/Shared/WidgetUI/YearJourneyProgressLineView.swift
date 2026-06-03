@@ -11,6 +11,7 @@ struct YearJourneyProgressLineView: View {
     let isTintMode: Bool
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
+    var bubbleTapURL: URL? = nil
 
     var body: some View {
         GeometryReader { proxy in
@@ -78,12 +79,20 @@ struct YearJourneyProgressLineView: View {
                 // MARK: Layer 4 — D-Day bubble
                 if let event = activeDayEvent {
                     let showOnRight = clampedProgress < 0.5
-                    DayEventBubbleView(
+                    let bubble = DayEventBubbleView(
                         activeEvent: event,
                         showOnRight: showOnRight,
                         compact: true
                     )
                     .fixedSize()
+
+                    Group {
+                        if let url = bubbleTapURL {
+                            Link(destination: url) { bubble }
+                        } else {
+                            bubble
+                        }
+                    }
                     .position(
                         x: showOnRight
                             ? travelerX + companionSize / 2 + 4

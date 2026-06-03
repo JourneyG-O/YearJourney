@@ -10,6 +10,9 @@ import SwiftUI
 struct RootView: View {
 
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var dayEventManager: DayEventManager
+
+    @State private var deepLinkEvent: DayEvent? = nil
 
     init() {
         UITabBar.appearance().unselectedItemTintColor = UIColor.systemGray
@@ -48,6 +51,25 @@ struct RootView: View {
                 }
         }
         .tint(.primary)
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+        .sheet(item: $deepLinkEvent) { event in
+            DayEventFormView(editing: event)
+        }
+    }
+
+    // MARK: - Deep Link
+
+    // yearjourney://dday/{eventId}
+    private func handleDeepLink(_ url: URL) {
+        guard url.scheme == "yearjourney",
+              url.host == "dday",
+              let uuidString = url.pathComponents.last,
+              let uuid = UUID(uuidString: uuidString),
+              let event = dayEventManager.events.first(where: { $0.id == uuid })
+        else { return }
+        deepLinkEvent = event
     }
 }
 

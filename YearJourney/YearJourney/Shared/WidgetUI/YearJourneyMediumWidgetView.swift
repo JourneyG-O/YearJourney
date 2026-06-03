@@ -17,6 +17,7 @@ struct YearJourneyMediumWidgetView: View {
     let isTintMode: Bool
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
+    var bubbleTapURL: URL? = nil
 
     // MARK: - Computed Properties
 
@@ -48,7 +49,8 @@ struct YearJourneyMediumWidgetView: View {
                 theme: theme,
                 isTintMode: isTintMode,
                 isPreview: isPreview,
-                activeDayEvent: resolvedDayEvent
+                activeDayEvent: resolvedDayEvent,
+                bubbleTapURL: bubbleTapURL
             )
             .frame(height: 60)
 
