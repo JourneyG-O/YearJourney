@@ -174,7 +174,7 @@ struct DayEventFormView: View {
     private var calendarCard: some View {
         VStack(alignment: .leading, spacing: 4) {
             if !dateSelected {
-                Text("날짜를 선택해주세요")
+                Text("Select a date")
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 4)
@@ -193,7 +193,7 @@ struct DayEventFormView: View {
     private var optionsCard: some View {
         VStack(alignment: .leading, spacing: 0) {
             Toggle(isOn: $isRecurring) {
-                Text("매년 반복")
+                Text("Repeat Yearly")
                     .font(.custom("ComicRelief-Bold", size: 16))
             }
             .padding(.horizontal, 14)
@@ -202,13 +202,13 @@ struct DayEventFormView: View {
             Divider().padding(.horizontal, 14)
 
             HStack {
-                Text("표시")
+                Text("Show")
                     .font(.custom("ComicRelief-Bold", size: 16))
                 Spacer()
                 Picker("", selection: $daysBeforeToShow) {
-                    Text("항상 표시").tag(nil as Int?)
+                    Text("Always").tag(nil as Int?)
                     ForEach([3, 7, 14, 30, 60], id: \.self) { days in
-                        Text("\(days)일 전").tag(days as Int?)
+                        Text("\(days) days before").tag(days as Int?)
                     }
                 }
                 .pickerStyle(.menu)
@@ -228,7 +228,7 @@ struct DayEventFormView: View {
                 dismiss()
             }
         } label: {
-            Text("이벤트 삭제")
+            Text("Delete Event")
                 .font(.custom("ComicRelief-Bold", size: 16))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
@@ -309,11 +309,11 @@ struct EmojiPickerView: View {
                 }
                 .padding(16)
             }
-            .navigationTitle("이모지 선택")
+            .navigationTitle("Choose Emoji")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("닫기") { dismiss() }
+                    Button("Close") { dismiss() }
                 }
             }
         }

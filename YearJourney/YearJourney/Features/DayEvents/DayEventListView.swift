@@ -106,7 +106,7 @@ private struct DayEventRow: View {
         let dateText = event.isRecurring
             ? String(format: "%d / %d", event.month, event.day)
             : String(format: "%d / %d / %d", event.year ?? 0, event.month, event.day)
-        let recurText = event.isRecurring ? "매년" : "1회"
+        let recurText = event.isRecurring ? "Yearly" : "Once"
         return "\(dateText)  ·  \(recurText)"
     }
 }
