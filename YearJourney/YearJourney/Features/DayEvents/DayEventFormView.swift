@@ -122,7 +122,7 @@ struct DayEventFormView: View {
                 titleFocused = false
                 showEmojiPicker = true
             } label: {
-                ZStack(alignment: .bottomTrailing) {
+                ZStack(alignment: .topTrailing) {
                     Text(emoji)
                         .font(.system(size: 64))
                     Image(systemName: "pencil.circle.fill")
