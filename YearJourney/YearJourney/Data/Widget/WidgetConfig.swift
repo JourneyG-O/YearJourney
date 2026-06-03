@@ -10,9 +10,7 @@ struct WidgetConfig: Equatable {
     var backgroundHex: String?
     var barHex: String?
     var textHex: String?
-    // Medium only — D-Day bubble display settings
-    var showDayEvent: Bool
-    var showDayEventTitle: Bool
+    var showDayEvent: Bool  // Medium only — D-Day bubble on/off
 
     static func defaultConfig(for kind: WidgetKind) -> WidgetConfig {
         switch kind {
@@ -20,13 +18,13 @@ struct WidgetConfig: Equatable {
             return WidgetConfig(
                 displayMode: .percent,
                 backgroundHex: nil, barHex: nil, textHex: nil,
-                showDayEvent: false, showDayEventTitle: false
+                showDayEvent: false
             )
         case .medium:
             return WidgetConfig(
                 displayMode: .dayFraction,
                 backgroundHex: nil, barHex: nil, textHex: nil,
-                showDayEvent: false, showDayEventTitle: false
+                showDayEvent: true   // ① 기본값 true
             )
         }
     }
@@ -36,7 +34,7 @@ struct WidgetConfig: Equatable {
 extension WidgetConfig: Codable {
     enum CodingKeys: String, CodingKey {
         case displayMode, backgroundHex, barHex, textHex
-        case showDayEvent, showDayEventTitle
+        case showDayEvent
     }
 
     init(from decoder: Decoder) throws {
@@ -45,9 +43,7 @@ extension WidgetConfig: Codable {
         backgroundHex = try c.decodeIfPresent(String.self, forKey: .backgroundHex)
         barHex = try c.decodeIfPresent(String.self, forKey: .barHex)
         textHex = try c.decodeIfPresent(String.self, forKey: .textHex)
-        // New fields — default to false when loading older saved data
-        showDayEvent = (try? c.decode(Bool.self, forKey: .showDayEvent)) ?? false
-        showDayEventTitle = (try? c.decode(Bool.self, forKey: .showDayEventTitle)) ?? false
+        showDayEvent = (try? c.decode(Bool.self, forKey: .showDayEvent)) ?? true
     }
 }
 

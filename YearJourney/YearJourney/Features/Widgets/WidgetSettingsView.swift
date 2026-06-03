@@ -185,19 +185,11 @@ struct WidgetSettingsView: View {
                 Text("Show D-Day bubble")
                     .font(.custom("ComicRelief-Bold", size: 14))
             }
-
-            if draftConfig.showDayEvent {
-                Toggle(isOn: $draftConfig.showDayEventTitle) {
-                    Text("Show event title")
-                        .font(.custom("ComicRelief-Bold", size: 14))
-                }
-            }
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .animation(.easeInOut(duration: 0.2), value: draftConfig.showDayEvent)
     }
 
     // MARK: - Methods

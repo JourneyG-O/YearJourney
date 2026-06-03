@@ -11,7 +11,6 @@ struct YearJourneyProgressLineView: View {
     let isTintMode: Bool
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
-    var showDayEventTitle: Bool = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -82,7 +81,6 @@ struct YearJourneyProgressLineView: View {
                     DayEventBubbleView(
                         activeEvent: event,
                         showOnRight: showOnRight,
-                        showTitle: showDayEventTitle,
                         compact: true
                     )
                     .fixedSize()

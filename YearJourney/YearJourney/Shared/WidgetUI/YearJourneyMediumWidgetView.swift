@@ -48,8 +48,7 @@ struct YearJourneyMediumWidgetView: View {
                 theme: theme,
                 isTintMode: isTintMode,
                 isPreview: isPreview,
-                activeDayEvent: resolvedDayEvent,
-                showDayEventTitle: config.showDayEventTitle
+                activeDayEvent: resolvedDayEvent
             )
             .frame(height: 60)
 

@@ -10,16 +10,13 @@ import SwiftUI
 struct DayEventBubbleView: View {
     let activeEvent: ActiveDayEvent
     var showOnRight: Bool = true
-    var showTitle: Bool = true
     var compact: Bool = false
 
     // MARK: - Layout constants
 
-    // bubbleHeight만 조절하면 28:19 비율 그대로 유지
     private var bubbleHeight: CGFloat  { compact ? 50  : 76  }
     private var bubbleWidth: CGFloat   { bubbleHeight * 28 / 19 }
     private var emojiSize: CGFloat     { compact ? 13  : 20  }
-    private var titleFontSize: CGFloat { compact ? 8   : 11  }
     private var dDayFontSize: CGFloat  { compact ? 11  : 14  }
 
     // MARK: - Body
@@ -34,20 +31,12 @@ struct DayEventBubbleView: View {
                 .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
                 .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
 
-            VStack(alignment: .leading, spacing: 1) {
-                if showTitle {
-                    Text(activeEvent.event.title)
-                        .font(.system(size: titleFontSize, weight: .medium))
-                        .lineLimit(1)
-                        .foregroundStyle(Color.black)
-                }
-                HStack(spacing: 3) {
-                    Text(activeEvent.event.emoji)
-                        .font(.system(size: emojiSize))
-                    Text(dDayLabel)
-                        .font(.custom("ComicRelief-Bold", size: dDayFontSize))
-                        .foregroundStyle(Color.black)
-                }
+            HStack(spacing: 3) {
+                Text(activeEvent.event.emoji)
+                    .font(.system(size: emojiSize))
+                Text(dDayLabel)
+                    .font(.custom("ComicRelief-Bold", size: dDayFontSize))
+                    .foregroundStyle(Color.black)
             }
         }
         .frame(width: bubbleWidth, height: bubbleHeight)
@@ -85,13 +74,11 @@ struct DayEventBubbleView: View {
                 HStack(spacing: 40) {
                     VStack(spacing: 6) {
                         Text("showOnRight: true").font(.caption2).foregroundStyle(.tertiary)
-                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
-                                           showTitle: true, compact: false)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true, compact: false)
                     }
                     VStack(spacing: 6) {
                         Text("showOnRight: false").font(.caption2).foregroundStyle(.tertiary)
-                        DayEventBubbleView(activeEvent: sample, showOnRight: false,
-                                           showTitle: true, compact: false)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: false, compact: false)
                     }
                 }
             }
@@ -105,13 +92,11 @@ struct DayEventBubbleView: View {
                 HStack(spacing: 40) {
                     VStack(spacing: 6) {
                         Text("showOnRight: true").font(.caption2).foregroundStyle(.tertiary)
-                        DayEventBubbleView(activeEvent: sample, showOnRight: true,
-                                           showTitle: true, compact: true)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: true, compact: true)
                     }
                     VStack(spacing: 6) {
                         Text("showOnRight: false").font(.caption2).foregroundStyle(.tertiary)
-                        DayEventBubbleView(activeEvent: sample, showOnRight: false,
-                                           showTitle: true, compact: true)
+                        DayEventBubbleView(activeEvent: sample, showOnRight: false, compact: true)
                     }
                 }
             }

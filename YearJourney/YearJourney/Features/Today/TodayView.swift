@@ -69,7 +69,6 @@ struct TodayView: View {
                         DayEventBubbleView(
                             activeEvent: active,
                             showOnRight: true,
-                            showTitle: true,
                             compact: false
                         )
                         .padding(.trailing, -8)
