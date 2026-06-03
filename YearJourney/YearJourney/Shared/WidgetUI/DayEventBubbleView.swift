@@ -26,9 +26,11 @@ struct DayEventBubbleView: View {
 
     var body: some View {
         ZStack {
-            Image("ui_speech_bubble")
+            Image(systemName: "message.fill")
                 .resizable()
+                .scaledToFit()
                 .frame(width: bubbleWidth, height: bubbleHeight)
+                .foregroundStyle(.white)
                 .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
                 .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
 

@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "ui_speech_bubble.pdf",
-      "idiom" : "universal"
+      "filename" : "ui_speech_bubble.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "ui_speech_bubble@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "ui_speech_bubble@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
