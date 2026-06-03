@@ -30,6 +30,7 @@ struct DayEventListView: View {
                     }
                 }
                 .listStyle(.insetGrouped)
+                .scrollContentBackground(.hidden)
             }
             .background(Color(.systemGroupedBackground))
 
