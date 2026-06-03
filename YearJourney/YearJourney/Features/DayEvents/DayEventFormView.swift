@@ -142,7 +142,7 @@ struct DayEventFormView: View {
                 .background(Color(.tertiarySystemGroupedBackground),
                             in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
-        .padding(.vertical, 20)
+        .padding(.vertical, 36)
         .padding(.horizontal, 16)
         .frame(maxWidth: .infinity)
         .background(Color(.secondarySystemGroupedBackground),
