@@ -18,23 +18,29 @@ struct DayEventListView: View {
             VStack(spacing: 0) {
                 header
 
-                List {
-                    ForEach(dayEventManager.events) { event in
-                        DayEventRow(event: event)
-                            .contentShape(Rectangle())
-                            .onTapGesture { editingEvent = event }
-                            .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                if dayEventManager.events.isEmpty {
+                    emptyState
+                } else {
+                    List {
+                        ForEach(dayEventManager.events) { event in
+                            DayEventRow(event: event)
+                                .contentShape(Rectangle())
+                                .onTapGesture { editingEvent = event }
+                                .listRowInsets(EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16))
+                        }
+                        .onDelete { indexSet in
+                            indexSet.forEach { dayEventManager.delete(id: dayEventManager.events[$0].id) }
+                        }
                     }
-                    .onDelete { indexSet in
-                        indexSet.forEach { dayEventManager.delete(id: dayEventManager.events[$0].id) }
-                    }
+                    .listStyle(.insetGrouped)
+                    .scrollContentBackground(.hidden)
                 }
-                .listStyle(.insetGrouped)
-                .scrollContentBackground(.hidden)
             }
             .background(Color(.systemGroupedBackground))
 
-            addButton
+            if !dayEventManager.events.isEmpty {
+                addButton
+            }
         }
         .sheet(isPresented: $showAddForm) {
             DayEventFormView()
@@ -55,6 +61,24 @@ struct DayEventListView: View {
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .padding(.bottom, 8)
+    }
+
+    private var emptyState: some View {
+        Spacer()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay {
+                Button {
+                    showAddForm = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 32, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 80, height: 80)
+                        .background(Color.primary)
+                        .clipShape(Circle())
+                        .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
+                }
+            }
     }
 
     private var addButton: some View {
