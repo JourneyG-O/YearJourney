@@ -11,10 +11,17 @@ import WidgetKit
 struct WidgetsView: View {
 
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var dayEventManager: DayEventManager
 
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
     @State private var mediumConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .medium)
     @State private var smallConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .small)
+
+    private var yearInfo: YearProgressInfo { ProgressCalculator.yearProgress() }
+    private var monthInfo: MonthProgressInfo { ProgressCalculator.monthProgress() }
+    private var activeEvent: ActiveDayEvent? {
+        mediumConfig.showDayEvent ? dayEventManager.activeEvent : nil
+    }
 
     var body: some View {
         NavigationStack {
@@ -28,13 +35,14 @@ struct WidgetsView: View {
                 } label: {
                     WidgetPreviewCard(title: "Medium", family: .systemMedium) {
                         YearJourneyMediumWidgetView(
-                            progress: 0.72,
-                            dayOfYear: 263,
-                            totalDaysInYear: 365,
+                            progress: yearInfo.progress,
+                            dayOfYear: yearInfo.dayOfYear,
+                            totalDaysInYear: yearInfo.totalDaysInYear,
                             theme: themeManager.currentTheme,
                             config: mediumConfig,
                             isTintMode: false,
-                            isPreview: true
+                            isPreview: true,
+                            activeDayEvent: activeEvent
                         )
                         .padding(16)
                     }
@@ -48,12 +56,12 @@ struct WidgetsView: View {
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall) {
                         YearJourneySmallWidgetView(
-                            fillProgress: 0.68,
-                            dayOfMonth: 21,          
-                            totalDaysInMonth: 31,
+                            fillProgress: monthInfo.progress,
+                            dayOfMonth: monthInfo.dayOfMonth,
+                            totalDaysInMonth: monthInfo.totalDaysInMonth,
                             theme: themeManager.currentTheme,
                             config: smallConfig,
-                            isTintMode: false,
+                            isTintMode: false
                         )
                         .padding(16)
                     }

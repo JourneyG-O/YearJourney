@@ -11,6 +11,7 @@ struct WidgetSettingsView: View {
 
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var dayEventManager: DayEventManager
 
     @State private var originalConfig: WidgetConfig
     @State private var draftConfig: WidgetConfig
@@ -23,6 +24,12 @@ struct WidgetSettingsView: View {
     }
 
     // MARK: - Computed Properties
+
+    private var yearInfo: YearProgressInfo { ProgressCalculator.yearProgress() }
+    private var monthInfo: MonthProgressInfo { ProgressCalculator.monthProgress() }
+    private var activeEvent: ActiveDayEvent? {
+        (kind == .medium && draftConfig.showDayEvent) ? dayEventManager.activeEvent : nil
+    }
 
     private var isDirty: Bool {
         draftConfig != originalConfig
@@ -108,23 +115,23 @@ struct WidgetSettingsView: View {
         switch kind {
         case .small:
             YearJourneySmallWidgetView(
-                fillProgress: 0.68,
-                dayOfMonth: 21,
-                totalDaysInMonth: 31,
+                fillProgress: monthInfo.progress,
+                dayOfMonth: monthInfo.dayOfMonth,
+                totalDaysInMonth: monthInfo.totalDaysInMonth,
                 theme: themeManager.currentTheme,
                 config: draftConfig,
                 isTintMode: true
             )
         case .medium:
             YearJourneyMediumWidgetView(
-                progress: 0.72,
-                dayOfYear: 263,
-                totalDaysInYear: 365,
+                progress: yearInfo.progress,
+                dayOfYear: yearInfo.dayOfYear,
+                totalDaysInYear: yearInfo.totalDaysInYear,
                 theme: themeManager.currentTheme,
                 config: draftConfig,
                 isTintMode: false,
                 isPreview: true,
-                activeDayEvent: nil
+                activeDayEvent: activeEvent
             )
         }
     }
