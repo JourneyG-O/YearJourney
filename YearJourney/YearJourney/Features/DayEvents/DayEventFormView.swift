@@ -122,8 +122,14 @@ struct DayEventFormView: View {
                 titleFocused = false
                 showEmojiPicker = true
             } label: {
-                Text(emoji)
-                    .font(.system(size: 64))
+                ZStack(alignment: .bottomTrailing) {
+                    Text(emoji)
+                        .font(.system(size: 64))
+                    Image(systemName: "pencil.circle.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(.secondary)
+                        .offset(x: 6, y: 6)
+                }
             }
             .buttonStyle(.plain)
 
