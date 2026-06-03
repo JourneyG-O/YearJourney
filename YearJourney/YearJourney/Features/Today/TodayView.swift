@@ -12,6 +12,8 @@ struct TodayView: View {
     @EnvironmentObject private var dayEventManager: DayEventManager
     @Environment(\.colorScheme) private var colorScheme
 
+    @State private var showSettings = false
+
     // MARK: - Data
 
     private var info: YearProgressInfo {
@@ -88,6 +90,9 @@ struct TodayView: View {
             Spacer()
         }
         .background(backgroundColor)
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
     }
 
     // MARK: - Sections
@@ -97,9 +102,13 @@ struct TodayView: View {
             Text("Today")
                 .font(.custom("ComicRelief-Bold", size: Metrics.titleSize))
             Spacer()
-            Text(Date.now, format: .dateTime.month(.abbreviated).day())
-                .font(.custom("ComicRelief-Bold", size: 14))
-                .opacity(0.6)
+            Button {
+                showSettings = true
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(.primary.opacity(0.6))
+            }
         }
         .padding(.horizontal, Spacing.m)
         .padding(.top, Spacing.s)

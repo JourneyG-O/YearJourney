@@ -43,12 +43,6 @@ struct RootView: View {
                     Image(systemName: "rectangle.fill.on.rectangle.fill")
                     Text("Widgets")
                 }
-
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("About")
-                }
         }
         .tint(.primary)
         .onOpenURL { url in
