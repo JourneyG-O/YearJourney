@@ -46,7 +46,7 @@ struct DayEventFormView: View {
             _selectedDate = State(initialValue: Date())
             _dateSelected = State(initialValue: false)
             _isRecurring = State(initialValue: false)
-            _daysBeforeToShow = State(initialValue: nil)
+            _daysBeforeToShow = State(initialValue: 7)
         }
     }
 
@@ -173,15 +173,20 @@ struct DayEventFormView: View {
 
             Divider().padding(.horizontal, 14)
 
-            Picker("표시 시작", selection: $daysBeforeToShow) {
-                Text("항상 표시").tag(nil as Int?)
-                ForEach([3, 7, 14, 30, 60], id: \.self) { days in
-                    Text("\(days)일 전").tag(days as Int?)
+            HStack {
+                Text("표시")
+                    .font(.custom("ComicRelief-Bold", size: 16))
+                Spacer()
+                Picker("", selection: $daysBeforeToShow) {
+                    Text("항상 표시").tag(nil as Int?)
+                    ForEach([3, 7, 14, 30, 60], id: \.self) { days in
+                        Text("\(days)일 전").tag(days as Int?)
+                    }
                 }
+                .pickerStyle(.menu)
             }
-            .font(.custom("ComicRelief-Bold", size: 16))
             .padding(.horizontal, 14)
-            .padding(.vertical, 4)
+            .padding(.vertical, 12)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.secondarySystemGroupedBackground),
