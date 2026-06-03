@@ -45,7 +45,7 @@ struct DayEventFormView: View {
             _title = State(initialValue: "")
             _selectedDate = State(initialValue: Date())
             _dateSelected = State(initialValue: false)
-            _isRecurring = State(initialValue: true)
+            _isRecurring = State(initialValue: false)
             _daysBeforeToShow = State(initialValue: nil)
         }
     }
@@ -83,6 +83,7 @@ struct DayEventFormView: View {
                 .padding(.bottom, 8)
             }
             .background(Color(.systemGroupedBackground))
+            .scrollDismissesKeyboard(.immediately)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -102,10 +103,6 @@ struct DayEventFormView: View {
                     }
                     .disabled(!isValid)
                     .opacity(isValid ? 1 : 0.4)
-                }
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("완료") { titleFocused = false }
                 }
             }
             .sheet(isPresented: $showEmojiPicker) {
@@ -173,14 +170,6 @@ struct DayEventFormView: View {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-
-            if isRecurring {
-                Text("선택한 연도는 저장되지 않아요.")
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 14)
-                    .padding(.bottom, 10)
-            }
 
             Divider().padding(.horizontal, 14)
 
