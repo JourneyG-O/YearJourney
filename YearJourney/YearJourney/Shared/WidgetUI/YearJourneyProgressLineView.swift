@@ -90,7 +90,7 @@ struct YearJourneyProgressLineView: View {
                         x: showOnRight
                             ? travelerX + companionSize / 2 + 4
                             : travelerX - companionSize / 2 - 4,
-                        y: lineTopY - centerToFootDistance - 8
+                        y: lineTopY - centerToFootDistance - 30
                     )
                 }
             }

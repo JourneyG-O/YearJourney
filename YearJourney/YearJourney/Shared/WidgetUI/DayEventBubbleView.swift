@@ -13,41 +13,46 @@ struct DayEventBubbleView: View {
     var showTitle: Bool = true
     var compact: Bool = false
 
+    @Environment(\.colorScheme) private var colorScheme
+
     // MARK: - Layout constants
 
-    private var emojiSize: CGFloat     { compact ? 13 : 22 }
-    private var titleFontSize: CGFloat { compact ? 8  : 11 }
-    private var dDayFontSize: CGFloat  { compact ? 11 : 15 }
-    private var hPad: CGFloat          { compact ? 10 : 16 }
-    private var vPad: CGFloat          { compact ? 6  : 10 }
+    // bubbleHeight만 조절하면 28:19 비율 그대로 유지
+    private var bubbleHeight: CGFloat  { compact ? 50  : 76  }
+    private var bubbleWidth: CGFloat   { bubbleHeight * 28 / 19 }
+    private var emojiSize: CGFloat     { compact ? 13  : 20  }
+    private var titleFontSize: CGFloat { compact ? 8   : 11  }
+    private var dDayFontSize: CGFloat  { compact ? 11  : 14  }
 
     // MARK: - Body
 
     var body: some View {
-        HStack(spacing: compact ? 4 : 6) {
-            Text(activeEvent.event.emoji)
-                .font(.system(size: emojiSize))
+        ZStack {
+            Image("ui_speech_bubble")
+                .resizable()
+                .colorMultiply(colorScheme == .dark ? Color(.secondarySystemBackground) : .white)
+                .frame(width: bubbleWidth, height: bubbleHeight)
+                .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
+                .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
 
             VStack(alignment: .leading, spacing: 1) {
                 if showTitle {
                     Text(activeEvent.event.title)
                         .font(.system(size: titleFontSize, weight: .medium))
                         .lineLimit(1)
+                        .foregroundStyle(.primary)
                 }
-                Text(dDayLabel)
-                    .font(.custom("ComicRelief-Bold", size: dDayFontSize))
+                HStack(spacing: 3) {
+                    Text(activeEvent.event.emoji)
+                        .font(.system(size: emojiSize))
+                    Text(dDayLabel)
+                        .font(.custom("ComicRelief-Bold", size: dDayFontSize))
+                        .foregroundStyle(.primary)
+                }
             }
+            .padding(.bottom, bubbleHeight * 0.15)
         }
-        .padding(.horizontal, hPad)
-        .padding(.vertical, vPad)
-        .background {
-            Image("ui_speech_bubble")
-                .resizable(capInsets: EdgeInsets(
-                    top: 0, leading: 12,
-                    bottom: 0, trailing: 11
-                ))
-                .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
-        }
+        .frame(width: bubbleWidth, height: bubbleHeight)
     }
 
     // MARK: - Helpers
@@ -75,7 +80,6 @@ struct DayEventBubbleView: View {
     ScrollView {
         VStack(spacing: 32) {
 
-            // ── TodayView 스타일 ──────────────────────────────
             Group {
                 Text("TodayView (compact: false)")
                     .font(.caption).foregroundStyle(.secondary)
@@ -96,7 +100,6 @@ struct DayEventBubbleView: View {
 
             Divider()
 
-            // ── Widget 스타일 ─────────────────────────────────
             Group {
                 Text("Widget (compact: true)")
                     .font(.caption).foregroundStyle(.secondary)
