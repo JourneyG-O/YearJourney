@@ -64,6 +64,7 @@ struct YearJourneyMediumWidgetView: View {
             Spacer()
         }
         .padding(16)
+        .offset(y: resolvedDayEvent != nil ? 16 : 0)
     }
 }
 

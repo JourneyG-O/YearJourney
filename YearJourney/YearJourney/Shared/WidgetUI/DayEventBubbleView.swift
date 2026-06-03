@@ -49,7 +49,6 @@ struct DayEventBubbleView: View {
                         .foregroundStyle(Color.black)
                 }
             }
-            .padding(.bottom, bubbleHeight * 0.15)
         }
         .frame(width: bubbleWidth, height: bubbleHeight)
     }
