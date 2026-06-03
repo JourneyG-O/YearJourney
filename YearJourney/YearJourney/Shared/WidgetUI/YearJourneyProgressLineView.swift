@@ -83,7 +83,6 @@ struct YearJourneyProgressLineView: View {
                         activeEvent: event,
                         showOnRight: showOnRight,
                         showTitle: showDayEventTitle,
-                        useGlass: false,
                         compact: true
                     )
                     .fixedSize()

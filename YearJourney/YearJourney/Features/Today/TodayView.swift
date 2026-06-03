@@ -70,7 +70,6 @@ struct TodayView: View {
                             activeEvent: active,
                             showOnRight: true,
                             showTitle: true,
-                            useGlass: true,
                             compact: false
                         )
                         .padding(.trailing, -8)
