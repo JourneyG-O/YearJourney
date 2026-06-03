@@ -31,7 +31,7 @@ struct DayEventBubbleView: View {
                 .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
                 .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
 
-            HStack(spacing: 3) {
+            VStack(spacing: 0) {
                 Text(activeEvent.event.emoji)
                     .font(.system(size: emojiSize))
                 Text(dDayLabel)
