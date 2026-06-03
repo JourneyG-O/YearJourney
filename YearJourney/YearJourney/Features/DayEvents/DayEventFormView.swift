@@ -11,16 +11,21 @@ struct DayEventFormView: View {
 
     var editing: DayEvent? = nil
 
+    // MARK: - Form state
+
     @State private var emoji: String
     @State private var title: String
     @State private var selectedDate: Date
+    @State private var dateSelected: Bool  // true only when user explicitly picks a date
     @State private var isRecurring: Bool
     @State private var daysBeforeToShow: Int?
 
-    @FocusState private var emojiFieldFocused: Bool
-    @FocusState private var titleFieldFocused: Bool
+    // MARK: - UI state
 
-    private let dayOptions: [Int?] = [nil, 3, 7, 14, 30, 60]
+    @State private var showEmojiPicker = false
+    @FocusState private var titleFocused: Bool
+
+    // MARK: - Init
 
     init(editing: DayEvent? = nil) {
         self.editing = editing
@@ -32,34 +37,52 @@ struct DayEventFormView: View {
             c.month = event.month
             c.day = event.day
             _selectedDate = State(initialValue: Calendar.current.date(from: c) ?? Date())
+            _dateSelected = State(initialValue: true)
             _isRecurring = State(initialValue: event.isRecurring)
             _daysBeforeToShow = State(initialValue: event.daysBeforeToShow)
         } else {
             _emoji = State(initialValue: "🎉")
             _title = State(initialValue: "")
             _selectedDate = State(initialValue: Date())
+            _dateSelected = State(initialValue: false)
             _isRecurring = State(initialValue: true)
             _daysBeforeToShow = State(initialValue: nil)
         }
     }
 
-    // MARK: - Computed
+    // MARK: - Validation
+    // 타이틀 + 날짜 직접 선택까지 완료해야 저장 가능
 
     private var isValid: Bool {
-        !title.trimmingCharacters(in: .whitespaces).isEmpty && !emoji.isEmpty
+        !title.trimmingCharacters(in: .whitespaces).isEmpty && dateSelected
+    }
+
+    // Custom binding: DatePicker 값이 바뀌면 dateSelected = true
+    private var dateBinding: Binding<Date> {
+        Binding(
+            get: { selectedDate },
+            set: {
+                selectedDate = $0
+                dateSelected = true
+            }
+        )
     }
 
     // MARK: - Body
 
     var body: some View {
         NavigationStack {
-            List {
-                emojiTitleSection
-                calendarSection
-                optionsSection
-                if editing != nil { deleteSection }
+            ScrollView {
+                VStack(spacing: 16) {
+                    headerCard
+                    calendarCard
+                    optionsCard
+                    if editing != nil { deleteCard }
+                }
+                .padding(16)
+                .padding(.bottom, 8)
             }
-            .listStyle(.insetGrouped)
+            .background(Color(.systemGroupedBackground))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -80,65 +103,86 @@ struct DayEventFormView: View {
                     .disabled(!isValid)
                     .opacity(isValid ? 1 : 0.4)
                 }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("완료") { titleFocused = false }
+                }
+            }
+            .sheet(isPresented: $showEmojiPicker) {
+                EmojiPickerView(selectedEmoji: $emoji)
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
             }
         }
     }
 
-    // MARK: - Sections
+    // MARK: - Cards
 
-    private var emojiTitleSection: some View {
-        Section {
-            // Large emoji display — tap to focus emoji field
-            HStack {
-                Spacer()
-                Button {
-                    titleFieldFocused = false
-                    emojiFieldFocused = true
-                } label: {
-                    Text(emoji.isEmpty ? "🎉" : emoji)
-                        .font(.system(size: 64))
-                }
-                .buttonStyle(.plain)
-                Spacer()
+    // 미리알림 스타일 — 이모지(탭 가능) + 타이틀 입력
+    private var headerCard: some View {
+        VStack(spacing: 16) {
+            Button {
+                titleFocused = false
+                showEmojiPicker = true
+            } label: {
+                Text(emoji)
+                    .font(.system(size: 64))
             }
-            .padding(.vertical, 8)
-
-            // Invisible emoji field (focused when emoji area tapped)
-            TextField("", text: $emoji)
-                .focused($emojiFieldFocused)
-                .frame(height: 0)
-                .opacity(0)
-                .onChange(of: emoji) { _, new in
-                    if new.count > 1 { emoji = String(new.prefix(1)) }
-                }
+            .buttonStyle(.plain)
 
             TextField("Title", text: $title)
-                .font(.custom("ComicRelief-Bold", size: 16))
+                .font(.custom("ComicRelief-Bold", size: 17))
                 .multilineTextAlignment(.center)
-                .focused($titleFieldFocused)
+                .focused($titleFocused)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(Color(.tertiarySystemGroupedBackground),
+                            in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
+        .padding(.vertical, 20)
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    private var calendarSection: some View {
-        Section {
-            DatePicker("Date", selection: $selectedDate, displayedComponents: [.date])
+    private var calendarCard: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            if !dateSelected {
+                Text("날짜를 선택해주세요")
+                    .font(.system(size: 13))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 4)
+            }
+
+            DatePicker("", selection: dateBinding, displayedComponents: [.date])
                 .datePickerStyle(.graphical)
                 .labelsHidden()
         }
+        .padding(14)
+        .frame(maxWidth: .infinity)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    private var optionsSection: some View {
-        Section {
+    private var optionsCard: some View {
+        VStack(alignment: .leading, spacing: 0) {
             Toggle(isOn: $isRecurring) {
                 Text("매년 반복")
                     .font(.custom("ComicRelief-Bold", size: 16))
             }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
 
             if isRecurring {
                 Text("선택한 연도는 저장되지 않아요.")
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
+                    .padding(.horizontal, 14)
+                    .padding(.bottom, 10)
             }
+
+            Divider().padding(.horizontal, 14)
 
             Picker("표시 시작", selection: $daysBeforeToShow) {
                 Text("항상 표시").tag(nil as Int?)
@@ -147,24 +191,31 @@ struct DayEventFormView: View {
                 }
             }
             .font(.custom("ComicRelief-Bold", size: 16))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 4)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    private var deleteSection: some View {
-        Section {
-            Button(role: .destructive) {
-                if let event = editing {
-                    dayEventManager.delete(id: event.id)
-                    dismiss()
-                }
-            } label: {
-                Text("이벤트 삭제")
-                    .frame(maxWidth: .infinity, alignment: .center)
+    private var deleteCard: some View {
+        Button(role: .destructive) {
+            if let event = editing {
+                dayEventManager.delete(id: event.id)
+                dismiss()
             }
+        } label: {
+            Text("이벤트 삭제")
+                .font(.custom("ComicRelief-Bold", size: 16))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
         }
+        .background(Color(.secondarySystemGroupedBackground),
+                    in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    // MARK: - Methods
+    // MARK: - Save
 
     private func save() {
         let c = Calendar.current.dateComponents([.year, .month, .day], from: selectedDate)
@@ -184,5 +235,60 @@ struct DayEventFormView: View {
             dayEventManager.add(event)
         }
         dismiss()
+    }
+}
+
+// MARK: - Emoji Picker
+
+struct EmojiPickerView: View {
+    @Binding var selectedEmoji: String
+    @Environment(\.dismiss) private var dismiss
+
+    private let emojis: [String] = [
+        "🎂","🎁","🎉","🎊","🎈","🥳",
+        "✈️","🚀","🏖️","⛺","🗺️","🎡",
+        "📚","🎓","📝","✏️","💼","🖥️",
+        "❤️","💕","💝","🤝","💌","🌹",
+        "🏃","🏋️","⚽","🎾","🏊","🚴",
+        "🌸","🌺","🌻","🌈","⭐","🌙",
+        "🍕","🍰","🍜","🍣","☕","🍷",
+        "🐶","🐱","🐻","🐼","🦊","🐨",
+        "💊","🏥","🩺","🧸","🎮","🎵"
+    ]
+
+    private let columns = Array(repeating: GridItem(.flexible()), count: 6)
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(emojis, id: \.self) { item in
+                        Button {
+                            selectedEmoji = item
+                            dismiss()
+                        } label: {
+                            Text(item)
+                                .font(.system(size: 36))
+                                .padding(6)
+                                .background(
+                                    selectedEmoji == item
+                                        ? Color.accentColor.opacity(0.15)
+                                        : Color.clear,
+                                    in: RoundedRectangle(cornerRadius: 10)
+                                )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(16)
+            }
+            .navigationTitle("이모지 선택")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("닫기") { dismiss() }
+                }
+            }
+        }
     }
 }
