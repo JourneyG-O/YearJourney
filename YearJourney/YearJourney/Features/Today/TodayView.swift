@@ -73,7 +73,7 @@ struct TodayView: View {
                             showOnRight: true,
                             compact: false
                         )
-                        .padding(.trailing, -8)
+                        .padding(.trailing, 30)
                         .padding(.top, 8)
                     }
                 }
