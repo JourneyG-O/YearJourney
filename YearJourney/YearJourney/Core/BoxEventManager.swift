@@ -27,8 +27,8 @@ enum BoxEventManager {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let triggeredVersion = AppGroupStore.defaults.string(forKey: WidgetKeys.boxEventVersion) ?? ""
 
-        // 조건 1: 앱 버전이 올라간 기존 위젯 사용자
-        if currentVersion != triggeredVersion && currentThemeID != nil {
+        // 조건 1: 박스 이벤트가 한 번도 발동된 적 없거나 앱 버전이 올라간 경우
+        if currentVersion != triggeredVersion {
             return true
         }
 
