@@ -71,18 +71,31 @@ struct YearJourneyLockScreenProvider: TimelineProvider {
 
 struct YearJourneyLockScreenEntryView: View {
     var entry: YearJourneyLockScreenProvider.Entry
-    @Environment(\.widgetRenderingMode) private var renderingMode
-
-    private var isTintMode: Bool { renderingMode == .accented }
 
     var body: some View {
-        YearJourneyProgressLineView(
-            progress: entry.progress,
-            theme: entry.theme,
-            isTintMode: isTintMode,
-            isPreview: false
-        )
-        .padding(.vertical, 4)
+        HStack(spacing: 10) {
+            // 동반자 이미지 — renderingMode(.original)로 색상 보존
+            Image(entry.theme.mainImageName)
+                .renderingMode(.original)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 48, height: 48)
+
+            // 프로그레스바
+            GeometryReader { proxy in
+                let filled = proxy.size.width * CGFloat(max(0, min(1, entry.progress)))
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(.primary.opacity(0.2))
+                        .frame(height: 8)
+                    Capsule()
+                        .fill(.primary)
+                        .frame(width: filled, height: 8)
+                }
+                .frame(maxHeight: .infinity)
+            }
+        }
+        .padding(.horizontal, 4)
         .containerBackground(.background, for: .widget)
     }
 }
