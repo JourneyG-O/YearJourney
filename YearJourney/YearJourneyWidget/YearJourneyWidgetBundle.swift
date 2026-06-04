@@ -13,6 +13,5 @@ struct YearJourneyWidgetBundle: WidgetBundle {
     var body: some Widget {
         YearJourneyMediumWidget()
         YearJourneySmallWidget()
-        YearJourneyLockScreenWidget()
     }
 }
