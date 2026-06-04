@@ -14,10 +14,7 @@ enum ThemeID: String, Codable, CaseIterable {
     case ponyMocha
     case ghostRoo
     case slimeJelly
-    // case dogBasic
-    // case ghost
-    // case fire
-    // case pixelJourney
+    case boxCat         // 이벤트 전용 — 일반 선택 불가
 }
 
 /// 하나의 테마가 가지고 있는 모든 이미지 리소스 정보
@@ -155,6 +152,27 @@ extension ThemeAssets {
             isPremium: true,
             productID: nil
         )
+
+    // 이벤트 전용 — 상자 안에 들어간 Journey
+    static let boxCat = ThemeAssets(
+        themeID: .boxCat,
+        displayName: "Box",
+        mainImageName: "cat_box_main",
+        companionImages: [
+            "cat_box_01",
+            "cat_box_02",
+            "cat_box_03"
+        ],
+        companionTintImages: [
+            "cat_box_01_tint",
+            "cat_box_02_tint",
+            "cat_box_03_tint"
+        ],
+        goalImageName: "cat_fish",
+        goalTintImageName: "cat_fish_tint",
+        isPremium: false,
+        productID: nil
+    )
 }
 
 extension ThemeAssets {
@@ -175,12 +193,18 @@ extension ThemeAssets {
 
 /// 테마 카탈로그 (목록 모음)
 enum ThemeCatalog {
+    /// 일반 선택 가능한 테마 목록 (ThemesView에 노출)
     static let all: [ThemeAssets] = [
         .catBasic,
         .catCheese,
         .ponyMocha,
         .ghostRoo,
         .slimeJelly
+    ]
+
+    /// 이벤트 전용 테마 (ThemesView에 노출 안 함)
+    static let eventOnly: [ThemeAssets] = [
+        .boxCat
     ]
 
     /// 기본 테마 (앱 최초 실행 시 사용)
@@ -190,6 +214,7 @@ enum ThemeCatalog {
 extension ThemeCatalog {
     static func theme(for id: String?) -> ThemeAssets {
         guard let id = id else { return defaultTheme }
-        return all.first(where: { $0.id.rawValue == id }) ?? defaultTheme
+        let allIncludingEvent = all + eventOnly
+        return allIncludingEvent.first(where: { $0.id.rawValue == id }) ?? defaultTheme
     }
 }
