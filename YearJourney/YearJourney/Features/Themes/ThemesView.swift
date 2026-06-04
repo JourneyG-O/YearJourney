@@ -14,10 +14,31 @@ struct ThemesView: View {
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
     @State private var showPaywall = false
 
+    // 박스 이벤트 활성 중에는 테마 변경 불가
+    private var isBoxEventActive: Bool {
+        themeManager.currentTheme.themeID == .boxCat && !BoxEventManager.isBoxEventShown
+    }
+
     var body: some View {
         VStack(spacing: 8) {
             header
 
+            if isBoxEventActive {
+                Spacer()
+                VStack(spacing: 12) {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 36))
+                        .foregroundStyle(.secondary)
+                    Text("A new update is waiting for you!")
+                        .font(.custom("ComicRelief-Bold", size: 16))
+                    Text("Open the app to discover what's new.")
+                        .font(.system(size: 14))
+                        .foregroundStyle(.secondary)
+                }
+                .multilineTextAlignment(.center)
+                .padding()
+                Spacer()
+            } else {
             List {
                 ForEach(ThemeCatalog.all) { theme in
                     // StoreManager와 연결된 entitlementStore가 진짜 권한을 확인합니다.
@@ -44,6 +65,7 @@ struct ThemesView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
+            } // end else
         }
         .background(Color(.systemGroupedBackground))
         // ✅ 진짜 결제 화면 연결!

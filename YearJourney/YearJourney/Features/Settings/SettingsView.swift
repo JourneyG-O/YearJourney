@@ -24,6 +24,9 @@ struct SettingsView: View {
                     purchasesSection
                     appSection
                     legalSection
+                    #if DEBUG
+                    debugSection
+                    #endif
                 }
                 .listStyle(.insetGrouped)
             }
@@ -137,6 +140,19 @@ private extension SettingsView {
             }
         }
     }
+
+    #if DEBUG
+    var debugSection: some View {
+        Section("Debug") {
+            Button("Reset Box Event") {
+                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventShown)
+                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventVersion)
+                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
+            }
+            .foregroundStyle(.orange)
+        }
+    }
+    #endif
 
     var legalSection: some View {
         Section("Legal") {
