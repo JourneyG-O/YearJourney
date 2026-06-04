@@ -73,40 +73,11 @@ struct YearJourneyLockScreenEntryView: View {
     var entry: YearJourneyLockScreenProvider.Entry
 
     var body: some View {
-        GeometryReader { proxy in
-            let height = proxy.size.height
-            let width  = proxy.size.width
-            let progress = max(0.0, min(1.0, entry.progress))
-            let companionSize = height * 0.9
-            let barWidth = width - companionSize - 8
-
-            HStack(spacing: 8) {
-                Spacer().frame(width: barWidth * progress)
-
-                Image(entry.theme.companionImageName(isTintMode: false))
-                    .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: companionSize, height: companionSize)
-
-                Spacer()
-            }
-            .frame(maxHeight: .infinity, alignment: .center)
-            .overlay(alignment: .bottom) {
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(Color.primary.opacity(0.25))
-                        .frame(height: 5)
-                    Capsule()
-                        .fill(Color.primary)
-                        .frame(width: barWidth * progress, height: 5)
-                }
-                .padding(.leading, 0)
-                .frame(width: barWidth)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        }
-        .padding(.horizontal, 4)
+        YearJourneyLockScreenProgressView(
+            progress: entry.progress,
+            theme: entry.theme
+        )
+        .padding(4)
         .containerBackground(.background, for: .widget)
     }
 }
