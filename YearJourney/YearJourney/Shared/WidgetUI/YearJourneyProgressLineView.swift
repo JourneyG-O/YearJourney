@@ -12,6 +12,8 @@ struct YearJourneyProgressLineView: View {
     var isPreview: Bool = false
     var activeDayEvent: ActiveDayEvent? = nil
     var bubbleTapURL: URL? = nil
+    var showGoalImage: Bool = true
+    var useOriginalRendering: Bool = false
 
     var body: some View {
         GeometryReader { proxy in
@@ -63,14 +65,17 @@ struct YearJourneyProgressLineView: View {
                 }
 
                 // MARK: Layer 2 — Goal image
-                Image(goalName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: goalSize, height: goalSize)
-                    .position(x: lineWidth, y: lineTopY - centerToBottomDistance)
+                if showGoalImage {
+                    Image(goalName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: goalSize, height: goalSize)
+                        .position(x: lineWidth, y: lineTopY - centerToBottomDistance)
+                }
 
                 // MARK: Layer 3 — Companion image
                 Image(companionName)
+                    .renderingMode(useOriginalRendering ? .original : .automatic)
                     .resizable()
                     .scaledToFit()
                     .frame(width: companionSize, height: companionSize)
