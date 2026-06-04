@@ -21,6 +21,11 @@ struct YearJourneyApp: App {
                 .environmentObject(dayEventManager)
                 .task {
                     await storeManager.updateCustomerProductStatus()
+
+                    // 상자 이벤트 조건 체크 — 충족 시 자동으로 boxCat 테마 적용
+                    if BoxEventManager.shouldActivateBoxTheme() {
+                        BoxEventManager.activate(themeManager: themeManager)
+                    }
                 }
         }
     }

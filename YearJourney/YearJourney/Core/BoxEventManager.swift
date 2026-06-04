@@ -24,7 +24,7 @@ enum BoxEventManager {
         let currentThemeID = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
         if currentThemeID == ThemeID.boxCat.rawValue { return false }
 
-        let currentVersion = AppVersion.string
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let triggeredVersion = AppGroupStore.defaults.string(forKey: WidgetKeys.boxEventVersion) ?? ""
 
         // 조건 1: 앱 버전이 올라간 기존 위젯 사용자
@@ -48,7 +48,8 @@ enum BoxEventManager {
         let currentID = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
             ?? ThemeID.catBasic.rawValue
         AppGroupStore.defaults.set(currentID, forKey: WidgetKeys.boxEventOriginalThemeID)
-        AppGroupStore.defaults.set(AppVersion.string, forKey: WidgetKeys.boxEventVersion)
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        AppGroupStore.defaults.set(version, forKey: WidgetKeys.boxEventVersion)
         themeManager.selectTheme(.boxCat)
     }
 
