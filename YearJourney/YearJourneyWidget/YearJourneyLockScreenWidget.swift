@@ -78,8 +78,7 @@ struct YearJourneyLockScreenEntryView: View {
             theme: entry.theme,
             isTintMode: false,
             isPreview: false,
-            showGoalImage: false,
-            useOriginalRendering: true
+            showGoalImage: false
         )
         .padding(.vertical, 4)
         .containerBackground(.background, for: .widget)
