@@ -78,6 +78,7 @@
 				"Resources/Fonts/ComicRelief-Bold.ttf",
 				"Resources/Fonts/ComicRelief-Regular.ttf",
 				Shared/WidgetUI/DayEventBubbleView.swift,
+				Shared/WidgetUI/YearJourneyLockScreenProgressView.swift,
 				Shared/WidgetUI/YearJourneyMediumWidgetView.swift,
 				Shared/WidgetUI/YearJourneyProgressLineView.swift,
 				Shared/WidgetUI/YearJourneySmallWidgetView.swift,

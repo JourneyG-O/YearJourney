@@ -73,14 +73,11 @@ struct YearJourneyLockScreenEntryView: View {
     var entry: YearJourneyLockScreenProvider.Entry
 
     var body: some View {
-        YearJourneyProgressLineView(
+        YearJourneyLockScreenProgressView(
             progress: entry.progress,
-            theme: entry.theme,
-            isTintMode: false,
-            isPreview: false,
-            showGoalImage: false
+            theme: entry.theme
         )
-        .padding(.vertical, 4)
+        .padding(4)
         .containerBackground(.background, for: .widget)
     }
 }
