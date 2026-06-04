@@ -50,7 +50,8 @@ struct YearJourneyLockScreenProgressView: View {
                 .position(x: lineStart + lineWidth / 2, y: lineY)
 
                 // MARK: Companion
-                Image(theme.companionImageName(isTintMode: true))
+                Image(theme.companionImageName(isTintMode: false))
+                    .renderingMode(.original)
                     .resizable()
                     .scaledToFit()
                     .frame(width: companionSize, height: companionSize)
