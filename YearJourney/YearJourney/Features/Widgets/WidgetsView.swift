@@ -33,7 +33,8 @@ struct WidgetsView: View {
                 NavigationLink {
                     WidgetSettingsView(kind: .medium)
                 } label: {
-                    WidgetPreviewCard(title: "Medium", family: .systemMedium) {
+                    WidgetPreviewCard(title: "Medium", family: .systemMedium,
+                                      widgetBackground: themeManager.currentTheme.widgetBackground) {
                         YearJourneyMediumWidgetView(
                             progress: yearInfo.progress,
                             dayOfYear: yearInfo.dayOfYear,
@@ -54,7 +55,8 @@ struct WidgetsView: View {
                 NavigationLink {
                     WidgetSettingsView(kind: .small)
                 } label: {
-                    WidgetPreviewCard(title: "Small", family: .systemSmall) {
+                    WidgetPreviewCard(title: "Small", family: .systemSmall,
+                                      widgetBackground: themeManager.currentTheme.widgetBackground) {
                         YearJourneySmallWidgetView(
                             fillProgress: monthInfo.progress,
                             dayOfMonth: monthInfo.dayOfMonth,
@@ -102,6 +104,7 @@ struct WidgetsView: View {
 struct WidgetPreviewCard<Content: View>: View {
     let title: String
     let family: WidgetFamily
+    var widgetBackground: AnyShapeStyle = AnyShapeStyle(Color(.secondarySystemGroupedBackground))
     @ViewBuilder let content: Content
 
     var body: some View {
@@ -114,7 +117,7 @@ struct WidgetPreviewCard<Content: View>: View {
 
             content
                 .frame(width: widgetSize.width, height: widgetSize.height)
-                .background(Color(.secondarySystemGroupedBackground))
+                .background(widgetBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .padding(16)
