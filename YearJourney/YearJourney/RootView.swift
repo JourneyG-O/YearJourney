@@ -43,7 +43,7 @@ struct RootView: View {
                     Image(systemName: "calendar.badge.clock")
                     Text("D-Day")
                 }
-                .badge(showDayTabBadge ? 1 : 0)
+                .badge(showDayTabBadge ? "" : nil)
                 .tag(2)
 
             WidgetsView()
