@@ -14,6 +14,7 @@ enum ThemeID: String, Codable, CaseIterable {
     case ponyMocha
     case ghostRoo
     case slimeJelly
+    case catUnderwater
     case boxCat         // 이벤트 전용 — 일반 선택 불가
 }
 
@@ -153,6 +154,28 @@ extension ThemeAssets {
             productID: nil
         )
 
+    static let catUnderwater = ThemeAssets(
+        themeID: .catUnderwater,
+        displayName: "Underwater",
+        mainImageName: "cat_underwater_main",
+        companionImages: [
+            "cat_underwater_01",
+            "cat_underwater_02",
+            "cat_underwater_03",
+            "cat_underwater_04"
+        ],
+        companionTintImages: [
+            "cat_underwater_01_tint",
+            "cat_underwater_02_tint",
+            "cat_underwater_03_tint",
+            "cat_underwater_04_tint"
+        ],
+        goalImageName: "cat_fish",
+        goalTintImageName: "cat_fish_tint",
+        isPremium: true,
+        productID: nil
+    )
+
     // 이벤트 전용 — 상자 안에 들어간 Journey
     static let boxCat = ThemeAssets(
         themeID: .boxCat,
@@ -199,7 +222,8 @@ enum ThemeCatalog {
         .catCheese,
         .ponyMocha,
         .ghostRoo,
-        .slimeJelly
+        .slimeJelly,
+        .catUnderwater
     ]
 
     /// 이벤트 전용 테마 (ThemesView에 노출 안 함)
