@@ -12,13 +12,27 @@ struct BoxEventOnboardingView: View {
 
     @State private var currentPage = 0
     @State private var showPaywall = false
+    @State private var showOceanBackground = false
 
     private var totalPages: Int { storeManager.isPurchased ? 3 : 4 }
+
+    private let oceanGradient = LinearGradient(
+        colors: [Color(red: 0.0, green: 0.15, blue: 0.38), Color(red: 0.0, green: 0.30, blue: 0.55)],
+        startPoint: .bottom,
+        endPoint: .top
+    )
 
     // MARK: - Body
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            // 배경 레이어 — page3에서 페이드인
+            Color(.systemGroupedBackground)
+                .ignoresSafeArea()
+            oceanGradient
+                .ignoresSafeArea()
+                .opacity(showOceanBackground ? 1 : 0)
+
             TabView(selection: $currentPage) {
                 page1.tag(0)
                 page2.tag(1)
@@ -31,8 +45,18 @@ struct BoxEventOnboardingView: View {
 
             bottomControls
         }
-        .background(Color(.systemGroupedBackground))
+        .ignoresSafeArea()
         .interactiveDismissDisabled()
+        .onChange(of: currentPage) { _, page in
+            if page == 2 {
+                // 슬라이드 완료 후 배경 페이드인
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    withAnimation(.easeIn(duration: 0.5)) { showOceanBackground = true }
+                }
+            } else {
+                withAnimation(.easeOut(duration: 0.25)) { showOceanBackground = false }
+            }
+        }
         .sheet(isPresented: $showPaywall) {
             PaywallView()
                 .presentationDetents([.fraction(0.65), .large])
@@ -68,10 +92,7 @@ struct BoxEventOnboardingView: View {
             title: "New Companion Arrived",
             subtitle: "Journey found a new adventure underwater.\nUnlock new companions with Journey Pass.",
             floatingAnimation: true,
-            backgroundColors: [
-                Color(red: 0.0, green: 0.15, blue: 0.38),
-                Color(red: 0.0, green: 0.30, blue: 0.55)
-            ]
+            lightText: true
         )
     }
 
@@ -189,61 +210,48 @@ struct OnboardingPageView: View {
     let title: String
     let subtitle: String
     var floatingAnimation: Bool = false
-    var backgroundColors: [Color] = []
+    var lightText: Bool = false
 
     @State private var isFloating = false
 
-    private var hasCustomBackground: Bool { !backgroundColors.isEmpty }
-
     var body: some View {
-        ZStack {
-            if hasCustomBackground {
-                LinearGradient(
-                    colors: backgroundColors,
-                    startPoint: .bottom,
-                    endPoint: .top
+        VStack(spacing: 0) {
+            Spacer()
+
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 280)
+                .padding(.horizontal, 40)
+                .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
+                .animation(
+                    floatingAnimation
+                        ? .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
+                        : .default,
+                    value: isFloating
                 )
-                .ignoresSafeArea()
-            }
-
-            VStack(spacing: 0) {
-                Spacer()
-
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 280)
-                    .padding(.horizontal, 40)
-                    .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
-                    .animation(
-                        floatingAnimation
-                            ? .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
-                            : .default,
-                        value: isFloating
-                    )
-                    .onAppear {
-                        if floatingAnimation { isFloating = true }
-                    }
-
-                Spacer(minLength: 40)
-
-                VStack(spacing: 12) {
-                    Text(title)
-                        .font(.custom("ComicRelief-Bold", size: 24))
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(hasCustomBackground ? .white : .primary)
-
-                    Text(subtitle)
-                        .font(.system(size: 15))
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4)
-                        .foregroundStyle(hasCustomBackground ? .white.opacity(0.8) : .secondary)
+                .onAppear {
+                    if floatingAnimation { isFloating = true }
                 }
-                .padding(.horizontal, 32)
 
-                Spacer()
-                Spacer()
+            Spacer(minLength: 40)
+
+            VStack(spacing: 12) {
+                Text(title)
+                    .font(.custom("ComicRelief-Bold", size: 24))
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(lightText ? .white : .primary)
+
+                Text(subtitle)
+                    .font(.system(size: 15))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .foregroundStyle(lightText ? .white.opacity(0.8) : .secondary)
             }
+            .padding(.horizontal, 32)
+
+            Spacer()
+            Spacer()
         }
     }
 }
