@@ -67,7 +67,11 @@ struct BoxEventOnboardingView: View {
             imageName: "onboarding_underwater",
             title: "New Companion Arrived",
             subtitle: "Journey found a new adventure underwater.\nUnlock new companions with Journey Pass.",
-            floatingAnimation: true
+            floatingAnimation: true,
+            backgroundColors: [
+                Color(red: 0.0, green: 0.15, blue: 0.38),
+                Color(red: 0.0, green: 0.30, blue: 0.55)
+            ]
         )
     }
 
@@ -185,46 +189,61 @@ struct OnboardingPageView: View {
     let title: String
     let subtitle: String
     var floatingAnimation: Bool = false
+    var backgroundColors: [Color] = []
 
     @State private var isFloating = false
 
+    private var hasCustomBackground: Bool { !backgroundColors.isEmpty }
+
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 280)
-                .padding(.horizontal, 40)
-                .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
-                .animation(
-                    floatingAnimation
-                        ? .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
-                        : .default,
-                    value: isFloating
+        ZStack {
+            if hasCustomBackground {
+                LinearGradient(
+                    colors: backgroundColors,
+                    startPoint: .bottom,
+                    endPoint: .top
                 )
-                .onAppear {
-                    if floatingAnimation { isFloating = true }
-                }
-
-            Spacer(minLength: 40)
-
-            VStack(spacing: 12) {
-                Text(title)
-                    .font(.custom("ComicRelief-Bold", size: 24))
-                    .multilineTextAlignment(.center)
-
-                Text(subtitle)
-                    .font(.system(size: 15))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4)
+                .ignoresSafeArea()
             }
-            .padding(.horizontal, 32)
 
-            Spacer()
-            Spacer()
+            VStack(spacing: 0) {
+                Spacer()
+
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 280)
+                    .padding(.horizontal, 40)
+                    .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
+                    .animation(
+                        floatingAnimation
+                            ? .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
+                            : .default,
+                        value: isFloating
+                    )
+                    .onAppear {
+                        if floatingAnimation { isFloating = true }
+                    }
+
+                Spacer(minLength: 40)
+
+                VStack(spacing: 12) {
+                    Text(title)
+                        .font(.custom("ComicRelief-Bold", size: 24))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(hasCustomBackground ? .white : .primary)
+
+                    Text(subtitle)
+                        .font(.system(size: 15))
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .foregroundStyle(hasCustomBackground ? .white.opacity(0.8) : .secondary)
+                }
+                .padding(.horizontal, 32)
+
+                Spacer()
+                Spacer()
+            }
         }
     }
 }
