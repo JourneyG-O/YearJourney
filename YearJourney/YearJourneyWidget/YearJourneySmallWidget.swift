@@ -111,7 +111,7 @@ struct YearJourneySmallWidgetEntryView: View {
             config: entry.config,
             isTintMode: isTintMode
         )
-        .containerBackground(.background, for: .widget)
+        .containerBackground(entry.theme.widgetBackground, for: .widget)
     }
 }
 

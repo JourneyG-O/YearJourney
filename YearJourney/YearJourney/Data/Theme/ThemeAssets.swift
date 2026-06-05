@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// 앱에서 사용할 테마 ID
 enum ThemeID: String, Codable, CaseIterable {
@@ -196,6 +197,25 @@ extension ThemeAssets {
         isPremium: false,
         productID: nil
     )
+}
+
+extension ThemeAssets {
+    /// 위젯 배경 — 테마별 커스텀 배경, 기본은 시스템 배경
+    var widgetBackground: AnyShapeStyle {
+        switch themeID {
+        case .catUnderwater:
+            return AnyShapeStyle(LinearGradient(
+                colors: [
+                    Color(red: 0.0, green: 0.15, blue: 0.38),
+                    Color(red: 0.0, green: 0.30, blue: 0.55)
+                ],
+                startPoint: .bottom,
+                endPoint: .top
+            ))
+        default:
+            return AnyShapeStyle(.background)
+        }
+    }
 }
 
 extension ThemeAssets {

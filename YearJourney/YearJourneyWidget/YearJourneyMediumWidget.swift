@@ -127,7 +127,7 @@ struct YearJourneyMediumWidgetEntryView: View {
             bubbleTapURL: bubbleTapURL
         )
         .padding()
-        .containerBackground(.background, for: .widget)
+        .containerBackground(entry.theme.widgetBackground, for: .widget)
         .widgetURL(boxEventURL)
     }
 }
