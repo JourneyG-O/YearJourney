@@ -23,6 +23,7 @@ struct WidgetsView: View {
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
     @State private var mediumConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .medium)
     @State private var smallConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .small)
+    @State private var isSwaying = false
 
     private var yearInfo: YearProgressInfo { ProgressCalculator.yearProgress() }
     private var monthInfo: MonthProgressInfo { ProgressCalculator.monthProgress() }
@@ -41,7 +42,7 @@ struct WidgetsView: View {
                     WidgetSettingsView(kind: .medium)
                 } label: {
                     WidgetPreviewCard(title: "Medium", family: .systemMedium,
-                                      widgetBackground: themeManager.currentTheme.widgetBackground) {
+                                      widgetBackground: themeManager.currentTheme.previewBackground) {
                         YearJourneyMediumWidgetView(
                             progress: yearInfo.progress,
                             dayOfYear: yearInfo.dayOfYear,
@@ -56,6 +57,7 @@ struct WidgetsView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .rotationEffect(.degrees(isSwaying ? 1.5 : -1.5), anchor: .bottom)
 
                 Spacer(minLength: 16)
 
@@ -63,7 +65,7 @@ struct WidgetsView: View {
                     WidgetSettingsView(kind: .small)
                 } label: {
                     WidgetPreviewCard(title: "Small", family: .systemSmall,
-                                      widgetBackground: themeManager.currentTheme.widgetBackground) {
+                                      widgetBackground: themeManager.currentTheme.previewBackground) {
                         YearJourneySmallWidgetView(
                             fillProgress: monthInfo.progress,
                             dayOfMonth: monthInfo.dayOfMonth,
@@ -76,6 +78,7 @@ struct WidgetsView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .rotationEffect(.degrees(isSwaying ? -1.5 : 1.5), anchor: .bottom)
 
                 Spacer(minLength: 16)
             }
@@ -83,6 +86,9 @@ struct WidgetsView: View {
             .background(backgroundColor)
             .onAppear {
                 reloadPreviewState()
+                withAnimation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
+                    isSwaying = true
+                }
             }
         }
     }
@@ -124,6 +130,7 @@ struct WidgetPreviewCard<Content: View>: View {
 
             content
                 .frame(width: widgetSize.width, height: widgetSize.height)
+                .environment(\.colorScheme, .light)
                 .background(widgetBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }

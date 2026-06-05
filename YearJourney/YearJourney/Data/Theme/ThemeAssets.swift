@@ -200,20 +200,30 @@ extension ThemeAssets {
 }
 
 extension ThemeAssets {
-    /// 위젯 배경 — 테마별 커스텀 배경, 기본은 시스템 배경
+    private var oceanGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                Color(red: 0.0, green: 0.15, blue: 0.38),
+                Color(red: 0.0, green: 0.30, blue: 0.55)
+            ],
+            startPoint: .bottom,
+            endPoint: .top
+        )
+    }
+
+    /// 실제 위젯 배경 — 기본은 시스템 적응형
     var widgetBackground: AnyShapeStyle {
         switch themeID {
-        case .catUnderwater:
-            return AnyShapeStyle(LinearGradient(
-                colors: [
-                    Color(red: 0.0, green: 0.15, blue: 0.38),
-                    Color(red: 0.0, green: 0.30, blue: 0.55)
-                ],
-                startPoint: .bottom,
-                endPoint: .top
-            ))
-        default:
-            return AnyShapeStyle(.background)
+        case .catUnderwater: return AnyShapeStyle(oceanGradient)
+        default: return AnyShapeStyle(.background)
+        }
+    }
+
+    /// 앱 내 프리뷰 카드 배경 — 항상 흰색 기본 (다크모드 무관)
+    var previewBackground: AnyShapeStyle {
+        switch themeID {
+        case .catUnderwater: return AnyShapeStyle(oceanGradient)
+        default: return AnyShapeStyle(Color.white)
         }
     }
 }

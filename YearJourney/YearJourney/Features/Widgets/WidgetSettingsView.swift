@@ -103,8 +103,9 @@ struct WidgetSettingsView: View {
 
             widgetPreviewView
                 .frame(width: widgetSize.width, height: widgetSize.height)
+                .environment(\.colorScheme, .light)
                 .padding(16)
-                .background(themeManager.currentTheme.widgetBackground)
+                .background(themeManager.currentTheme.previewBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
                 .id(draftConfig.displayMode)
         }
