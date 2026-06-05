@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "cat_underwater_01_tint.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

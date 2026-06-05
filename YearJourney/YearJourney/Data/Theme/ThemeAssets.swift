@@ -157,7 +157,7 @@ extension ThemeAssets {
     static let boxCat = ThemeAssets(
         themeID: .boxCat,
         displayName: "Box",
-        mainImageName: "cat_box-main",
+        mainImageName: "cat_box_main",
         companionImages: [
             "cat_box_01",
             "cat_box_02",
