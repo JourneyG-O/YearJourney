@@ -11,8 +11,10 @@ struct RootView: View {
 
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject private var dayEventManager: DayEventManager
+    @EnvironmentObject private var themeManager: ThemeManager
 
     @State private var deepLinkEvent: DayEvent? = nil
+    @State private var showBoxOnboarding = false
 
     init() {
         UITabBar.appearance().unselectedItemTintColor = UIColor.systemGray
@@ -45,20 +47,40 @@ struct RootView: View {
                 }
         }
         .tint(.primary)
-        .onOpenURL { url in
-            handleDeepLink(url)
-        }
+        .onAppear { checkBoxOnboarding() }
+        .onChange(of: themeManager.currentTheme.themeID) { _, _ in checkBoxOnboarding() }
+        .onOpenURL { url in handleDeepLink(url) }
         .sheet(item: $deepLinkEvent) { event in
             DayEventFormView(editing: event)
+        }
+        .fullScreenCover(isPresented: $showBoxOnboarding) {
+            BoxEventOnboardingView()
+        }
+    }
+
+    // MARK: - Box Onboarding
+
+    private func checkBoxOnboarding() {
+        if themeManager.currentTheme.themeID == .boxCat && !BoxEventManager.isBoxEventShown {
+            showBoxOnboarding = true
         }
     }
 
     // MARK: - Deep Link
 
-    // yearjourney://dday/{eventId}
     private func handleDeepLink(_ url: URL) {
-        guard url.scheme == "yearjourney",
-              url.host == "dday",
+        guard url.scheme == "yearjourney" else { return }
+
+        // yearjourney://box-event
+        if url.host == "box-event" {
+            if !BoxEventManager.isBoxEventShown {
+                showBoxOnboarding = true
+            }
+            return
+        }
+
+        // yearjourney://dday/{eventId}
+        guard url.host == "dday",
               let uuidString = url.pathComponents.last,
               let uuid = UUID(uuidString: uuidString),
               let event = dayEventManager.events.first(where: { $0.id == uuid })

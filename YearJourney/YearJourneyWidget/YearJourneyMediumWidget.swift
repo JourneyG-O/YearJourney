@@ -108,6 +108,13 @@ struct YearJourneyMediumWidgetEntryView: View {
         return URL(string: "yearjourney://dday/\(event.event.id.uuidString)")
     }
 
+    // 박스 테마일 때 위젯 전체 탭 → 온보딩으로 연결
+    private var boxEventURL: URL? {
+        entry.theme.themeID == .boxCat
+            ? URL(string: "yearjourney://box-event")
+            : nil
+    }
+
     var body: some View {
         YearJourneyMediumWidgetView(
             progress: entry.progress,
@@ -121,6 +128,7 @@ struct YearJourneyMediumWidgetEntryView: View {
         )
         .padding()
         .containerBackground(.background, for: .widget)
+        .widgetURL(boxEventURL)
     }
 }
 
