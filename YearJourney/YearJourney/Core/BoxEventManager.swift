@@ -58,6 +58,8 @@ enum BoxEventManager {
     /// 온보딩 완료 — 기존 테마 복구 및 이벤트 완료 플래그 저장
     static func complete(themeManager: ThemeManager) {
         AppGroupStore.defaults.set(true, forKey: WidgetKeys.boxEventShown)
+        // D-Day 탭 신규 배지 활성화
+        UserDefaults.standard.set(true, forKey: "showDayTabBadge")
 
         let originalID = AppGroupStore.defaults.string(forKey: WidgetKeys.boxEventOriginalThemeID)
         let original = ThemeCatalog.theme(for: originalID)

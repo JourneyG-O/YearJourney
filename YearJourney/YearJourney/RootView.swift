@@ -15,36 +15,46 @@ struct RootView: View {
 
     @State private var deepLinkEvent: DayEvent? = nil
     @State private var showBoxOnboarding = false
+    @State private var selectedTab = 0
+    @AppStorage("showDayTabBadge") private var showDayTabBadge = false
 
     init() {
         UITabBar.appearance().unselectedItemTintColor = UIColor.systemGray
     }
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             TodayView()
                 .tabItem {
                     Image(systemName: "pawprint.fill")
                     Text("Today")
                 }
+                .tag(0)
 
             ThemesView()
                 .tabItem {
                     Image(systemName: colorScheme == .dark ? "face.smiling" : "face.smiling.inverse")
                     Text("Companions")
                 }
+                .tag(1)
 
             DayEventListView()
                 .tabItem {
                     Image(systemName: "calendar.badge.clock")
                     Text("D-Day")
                 }
+                .badge(showDayTabBadge ? 1 : 0)
+                .tag(2)
 
             WidgetsView()
                 .tabItem {
                     Image(systemName: "rectangle.fill.on.rectangle.fill")
                     Text("Widgets")
                 }
+                .tag(3)
+        }
+        .onChange(of: selectedTab) { _, tab in
+            if tab == 2 { showDayTabBadge = false }
         }
         .tint(.primary)
         .onAppear { checkBoxOnboarding() }
