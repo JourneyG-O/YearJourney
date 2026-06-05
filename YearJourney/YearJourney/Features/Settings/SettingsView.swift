@@ -10,6 +10,13 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var storeManager: StoreManager
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
+    }
 
     @State private var showPaywall = false
     @State private var isRestoring = false
@@ -30,7 +37,7 @@ struct SettingsView: View {
                 }
                 .listStyle(.insetGrouped)
             }
-            .background(Color(.systemGroupedBackground))
+            .background(backgroundColor)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
                     .presentationDetents([.fraction(0.65), .large])

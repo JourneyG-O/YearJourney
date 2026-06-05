@@ -7,9 +7,20 @@ import SwiftUI
 
 struct DayEventListView: View {
     @EnvironmentObject private var dayEventManager: DayEventManager
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var showAddForm = false
     @State private var editingEvent: DayEvent? = nil
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
+    }
+
+    private var buttonForeground: Color {
+        colorScheme == .dark ? .black : .white
+    }
 
     // MARK: - Body
 
@@ -36,7 +47,7 @@ struct DayEventListView: View {
                     .scrollContentBackground(.hidden)
                 }
             }
-            .background(Color(.systemGroupedBackground))
+            .background(backgroundColor)
 
             if !dayEventManager.events.isEmpty {
                 addButton
@@ -72,7 +83,7 @@ struct DayEventListView: View {
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 32, weight: .semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(buttonForeground)
                         .frame(width: 80, height: 80)
                         .background(Color.primary)
                         .clipShape(Circle())

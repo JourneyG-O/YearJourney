@@ -12,6 +12,13 @@ struct WidgetsView: View {
 
     @EnvironmentObject private var themeManager: ThemeManager
     @EnvironmentObject private var dayEventManager: DayEventManager
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
+    }
 
     @State private var theme: ThemeAssets = ThemeCatalog.defaultTheme
     @State private var mediumConfig: WidgetConfig = WidgetConfig.defaultConfig(for: .medium)
@@ -73,7 +80,7 @@ struct WidgetsView: View {
                 Spacer(minLength: 16)
             }
             .padding(.horizontal, 16)
-            .background(Color(.systemGroupedBackground))
+            .background(backgroundColor)
             .onAppear {
                 reloadPreviewState()
             }

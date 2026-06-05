@@ -10,6 +10,13 @@ import SwiftUI
 struct ThemesView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @EnvironmentObject private var storeManager: StoreManager
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
+    }
 
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
     @State private var showPaywall = false
@@ -67,7 +74,7 @@ struct ThemesView: View {
             .scrollContentBackground(.hidden)
             } // end else
         }
-        .background(Color(.systemGroupedBackground))
+        .background(backgroundColor)
         // ✅ 진짜 결제 화면 연결!
         .sheet(isPresented: $showPaywall) {
             PaywallView()
