@@ -66,7 +66,8 @@ struct BoxEventOnboardingView: View {
         OnboardingPageView(
             imageName: "onboarding_underwater",
             title: "New Companion Arrived",
-            subtitle: "Journey found a new adventure underwater.\nUnlock new companions with Journey Pass."
+            subtitle: "Journey found a new adventure underwater.\nUnlock new companions with Journey Pass.",
+            floatingAnimation: true
         )
     }
 
@@ -183,6 +184,9 @@ struct OnboardingPageView: View {
     let imageName: String
     let title: String
     let subtitle: String
+    var floatingAnimation: Bool = false
+
+    @State private var isFloating = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -193,6 +197,16 @@ struct OnboardingPageView: View {
                 .scaledToFit()
                 .frame(maxWidth: 280)
                 .padding(.horizontal, 40)
+                .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
+                .animation(
+                    floatingAnimation
+                        ? .easeInOut(duration: 2.0).repeatForever(autoreverses: true)
+                        : .default,
+                    value: isFloating
+                )
+                .onAppear {
+                    if floatingAnimation { isFloating = true }
+                }
 
             Spacer(minLength: 40)
 
