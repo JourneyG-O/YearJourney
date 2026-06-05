@@ -32,6 +32,22 @@ struct TodayView: View {
             : Color(.systemGroupedBackground)
     }
 
+    @ViewBuilder
+    private var backgroundView: some View {
+        if themeManager.currentTheme.themeID == .catUnderwater {
+            LinearGradient(
+                colors: [
+                    Color(red: 0.0, green: 0.15, blue: 0.38),
+                    Color(red: 0.0, green: 0.30, blue: 0.55)
+                ],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        } else {
+            backgroundColor
+        }
+    }
+
     // MARK: - Layout Tokens
 
     private enum Spacing {
@@ -89,7 +105,7 @@ struct TodayView: View {
 
             Spacer()
         }
-        .background(backgroundColor)
+        .background(backgroundView.ignoresSafeArea())
         .sheet(isPresented: $showSettings) {
             SettingsView()
         }
