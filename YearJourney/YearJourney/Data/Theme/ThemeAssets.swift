@@ -171,7 +171,7 @@ extension ThemeAssets {
             "cat_underwater_03_tint",
             "cat_underwater_04_tint"
         ],
-        goalImageName: "cat_fish",
+        goalImageName: "cat_underwater_fish",
         goalTintImageName: "cat_fish_tint",
         isPremium: true,
         productID: nil
