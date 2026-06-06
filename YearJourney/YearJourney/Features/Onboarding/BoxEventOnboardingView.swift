@@ -238,7 +238,7 @@ struct OnboardingPageView: View {
             Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: 280)
+                .frame(maxWidth: 300)
                 .padding(.horizontal, 40)
                 .offset(y: floatingAnimation ? (isFloating ? -10 : 10) : 0)
                 .animation(
