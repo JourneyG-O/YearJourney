@@ -14,7 +14,7 @@ struct BoxEventOnboardingView: View {
     @State private var showPaywall = false
     @State private var showOceanBackground = false
 
-    private var totalPages: Int { storeManager.isPurchased ? 3 : 4 }
+    private var totalPages: Int { 4 }
 
     private let oceanGradient = LinearGradient(
         colors: [Color(red: 0.0, green: 0.15, blue: 0.38), Color(red: 0.0, green: 0.30, blue: 0.55)],
@@ -37,9 +37,7 @@ struct BoxEventOnboardingView: View {
                 page1.tag(0)
                 page2.tag(1)
                 page3.tag(2)
-                if !storeManager.isPurchased {
-                    page4.tag(3)
-                }
+                page4.tag(3)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
 
@@ -100,24 +98,43 @@ struct BoxEventOnboardingView: View {
         VStack(spacing: 0) {
             Spacer()
 
-            Image("ticket_main")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 160, height: 140)
-                .shadow(color: Color(red: 1.0, green: 0.84, blue: 0.0).opacity(0.4), radius: 20)
+            ZStack(alignment: .top) {
+                Image("ticket_main")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 160, height: 140)
+                    .shadow(color: Color(red: 1.0, green: 0.84, blue: 0.0).opacity(0.4), radius: 20)
+
+                Image("ticket_cat_reach")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 300)
+            }
 
             Spacer(minLength: 36)
 
             VStack(spacing: 12) {
-                Text("Enjoy the Full Journey")
+                Text(storeManager.isPurchased ? "Thank You!" : "Enjoy the Full Journey")
                     .font(.custom("ComicRelief-Bold", size: 24))
                     .multilineTextAlignment(.center)
 
-                Text("Widget D-Day bubbles, new companions,\nand future updates — all with Journey Pass.")
-                    .font(.system(size: 15))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4)
+                if storeManager.isPurchased {
+                    // Year Journey는 1인 개발자가 애정을 담아, 여러분의 1년 여정이 매일 행복하길 바라며 열심히 만들고 있습니다.
+                    // 이미 저니 패스와 함께하고 계시네요! 보내주신 소중한 응원 덕분에 오늘도 기운 내서 개발하고 있습니다. 진심으로 감사합니다.
+                    Text("Year Journey is crafted with care by a solo developer, hoping every day of your year is a little brighter.\n\nYou're already on Journey Pass! Your support truly keeps me going every day. Thank you from the bottom of my heart.")
+                        .font(.system(size: 15))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                } else {
+                    // Year Journey는 1인 개발자가 애정을 담아, 여러분의 1년 여정이 매일 행복하길 바라며 열심히 만들고 있습니다.
+                    // 저니 패스는 여러분의 여정을 더욱 알차게 만들어 주며, 개발자에게도 큰 응원과 힘이 될 거예요. 함께해 주셔서 감사합니다.
+                    Text("Year Journey is crafted with care by a solo developer, hoping every day of your year is a little brighter.\n\nJourney Pass makes your year even richer — and means the world to me as the developer. Thank you for being here.")
+                        .font(.system(size: 15))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                }
             }
             .padding(.horizontal, 32)
 
