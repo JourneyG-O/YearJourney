@@ -73,7 +73,7 @@ struct BoxEventOnboardingView: View {
     private var page1: some View {
         OnboardingPageView(
             imageName: "onboarding_box_peek",
-            title: "Something New is Here!",
+            title: "Peek-a-boo!\nSomething New is Here!",
             subtitle: "Journey's been hiding something special.\nSee what's waiting for you."
         )
     }
