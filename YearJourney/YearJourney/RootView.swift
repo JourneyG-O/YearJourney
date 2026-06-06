@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct RootView: View {
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.requestReview) private var requestReview
     @EnvironmentObject private var dayEventManager: DayEventManager
     @EnvironmentObject private var themeManager: ThemeManager
 
     @State private var deepLinkEvent: DayEvent? = nil
     @State private var showBoxOnboarding = false
     @State private var selectedTab = 0
+    @State private var reviewRequested = false
     @AppStorage("showDayTabBadge") private var showDayTabBadge = false
 
     init() {
@@ -55,6 +58,7 @@ struct RootView: View {
         }
         .onChange(of: selectedTab) { _, tab in
             if tab == 2 { showDayTabBadge = false }
+            requestReviewIfEligible(tab: tab)
         }
         .tint(.primary)
         .onAppear { checkBoxOnboarding() }
@@ -66,6 +70,17 @@ struct RootView: View {
         .fullScreenCover(isPresented: $showBoxOnboarding) {
             BoxEventOnboardingView()
         }
+    }
+
+    // MARK: - Review Request
+
+    private func requestReviewIfEligible(tab: Int) {
+        guard tab != 0,
+              !reviewRequested,
+              AppGroupStore.defaults.object(forKey: WidgetKeys.widgetFirstSetupDate) != nil
+        else { return }
+        reviewRequested = true
+        requestReview()
     }
 
     // MARK: - Box Onboarding
