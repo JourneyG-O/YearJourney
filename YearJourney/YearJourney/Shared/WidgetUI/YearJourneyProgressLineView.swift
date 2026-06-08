@@ -46,6 +46,7 @@ struct YearJourneyProgressLineView: View {
                     Capsule().frame(width: lineWidth, height: lineThickness).opacity(0.25)
                     Capsule().frame(width: travelerX, height: lineThickness)
                 }
+                .foregroundStyle(theme.widgetContentColor)
                 .position(x: lineWidth / 2, y: baseY)
                 .mask {
                     if isTintMode {

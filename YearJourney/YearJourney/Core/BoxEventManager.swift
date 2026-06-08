@@ -27,8 +27,9 @@ enum BoxEventManager {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let triggeredVersion = AppGroupStore.defaults.string(forKey: WidgetKeys.boxEventVersion) ?? ""
 
-        // 조건 1: 박스 이벤트가 한 번도 발동된 적 없거나 앱 버전이 올라간 경우
-        if currentVersion != triggeredVersion {
+        // 조건 1: 이미 발동 이력이 있는 기존 사용자가 버전 업데이트 한 경우
+        // triggeredVersion이 비어있으면 신규 설치로 간주 — 조건 2(5일)로만 발동
+        if !triggeredVersion.isEmpty && currentVersion != triggeredVersion {
             return true
         }
 
