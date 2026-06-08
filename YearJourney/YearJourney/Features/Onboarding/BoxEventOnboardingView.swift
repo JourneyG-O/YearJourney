@@ -9,12 +9,19 @@ struct BoxEventOnboardingView: View {
     @EnvironmentObject private var storeManager: StoreManager
     @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var currentPage = 0
     @State private var showPaywall = false
     @State private var showOceanBackground = false
 
     private var totalPages: Int { 4 }
+
+    private var backgroundColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.12, green: 0.12, blue: 0.13)
+            : Color(.systemGroupedBackground)
+    }
 
     private let oceanGradient = LinearGradient(
         colors: [Color(red: 0.0, green: 0.15, blue: 0.38), Color(red: 0.0, green: 0.30, blue: 0.55)],
@@ -27,7 +34,7 @@ struct BoxEventOnboardingView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             // 배경 레이어 — page3에서 페이드인
-            Color(.systemGroupedBackground)
+            backgroundColor
                 .ignoresSafeArea()
             oceanGradient
                 .ignoresSafeArea()
@@ -119,17 +126,17 @@ struct BoxEventOnboardingView: View {
                     .multilineTextAlignment(.center)
 
                 if storeManager.isPurchased {
-                    // Year Journey는 1인 개발자가 애정을 담아, 여러분의 1년 여정이 매일 행복하길 바라며 열심히 만들고 있습니다.
-                    // 이미 저니 패스와 함께하고 계시네요! 보내주신 소중한 응원 덕분에 오늘도 기운 내서 개발하고 있습니다. 진심으로 감사합니다.
-                    Text("Year Journey is crafted with care by a solo developer, hoping every day of your year is a little brighter.\n\nYou're already on Journey Pass! Your support truly keeps me going every day. Thank you from the bottom of my heart.")
+                    // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
+                    // 이미 저니 패스를 이용 중이시네요. 정말 큰 힘이 돼요. 앞으로도 더 좋은 앱을 만들기 위해 최선을 다할게요.
+                    Text("I'm working hard on Year Journey as a solo developer, and I hope it makes your year a little brighter.\n\nYou already have Journey Pass. It's a huge help, and I'll keep doing my best to make Year Journey even better for you.")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
                 } else {
-                    // Year Journey는 1인 개발자가 애정을 담아, 여러분의 1년 여정이 매일 행복하길 바라며 열심히 만들고 있습니다.
-                    // 저니 패스는 여러분의 여정을 더욱 알차게 만들어 주며, 개발자에게도 큰 응원과 힘이 될 거예요. 함께해 주셔서 감사합니다.
-                    Text("Year Journey is crafted with care by a solo developer, hoping every day of your year is a little brighter.\n\nJourney Pass makes your year even richer — and means the world to me as the developer. Thank you for being here.")
+                    // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
+                    // 커피 한 잔 값으로 저니 패스를 구매하시면 매년 더 풍성한 여정을 즐기실 수 있어요. 약속해요! 그리고 개발을 계속할 수 있는 큰 힘이 돼요. 제 앱을 사용해 주셔서, 함께해 주셔서 감사합니다.
+                    Text("I'm working hard on Year Journey as a solo developer, and I hope it makes your year a little brighter.\n\nFor the price of a single coffee, Journey Pass will make every year even better. I promise! Plus, it really helps me keep going. Thanks for using my app, and thanks for being part of it.")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
