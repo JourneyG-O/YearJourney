@@ -122,15 +122,15 @@ struct DayEventFormView: View {
             .onChange(of: showPaywall) { _, isShowing in
                 if !isShowing { dismiss() }
             }
-            .alert("Saved! 🎉", isPresented: $showUpgradeAlert) {
-                Button("Get Journey Pass") {
+            .alert("alert.dday.saved.title", isPresented: $showUpgradeAlert) {
+                Button("alert.dday.saved.upgrade") {
                     showPaywall = true
                 }
-                Button("Got it", role: .cancel) {
+                Button("alert.dday.saved.cancel", role: .cancel) {
                     dismiss()
                 }
             } message: {
-                Text("Your D-Day is now visible in the app.\nTo show the bubble in your widget, you'll need a Journey Pass.")
+                Text("alert.dday.saved.message")
             }
         }
     }

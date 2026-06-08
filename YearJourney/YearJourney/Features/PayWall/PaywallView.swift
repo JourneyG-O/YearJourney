@@ -94,9 +94,9 @@ struct PaywallView: View {
 
     private var benefitsList: some View {
         VStack(alignment: .leading, spacing: 20) {
-            BenefitRow(text: "Pay once, keep forever")
+            BenefitRow(text: "paywall.benefit.once")
             VStack(alignment: .leading, spacing: 8) {
-                BenefitRow(text: "Unlock all companions")
+                BenefitRow(text: "paywall.benefit.companions")
                 HStack(spacing: 8) {
                     Spacer().frame(width: 30)
                     Text("NEW!")
@@ -111,8 +111,8 @@ struct PaywallView: View {
                         .foregroundStyle(.white.opacity(0.65))
                 }
             }
-            BenefitRow(text: "D-Day bubbles on your widget")
-            BenefitRow(text: "Future companions are free")
+            BenefitRow(text: "paywall.benefit.dday")
+            BenefitRow(text: "paywall.benefit.future")
         }
     }
 
@@ -173,7 +173,7 @@ struct PaywallView: View {
 // MARK: - Sub-views
 
 private struct BenefitRow: View {
-    let text: String
+    let text: LocalizedStringKey
 
     var body: some View {
         HStack(spacing: 12) {

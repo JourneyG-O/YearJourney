@@ -79,7 +79,7 @@ struct BoxEventOnboardingView: View {
         OnboardingPageView(
             imageName: "onboarding_box_peek",
             title: "Peek-a-boo!\nSomething New is Here!",
-            subtitle: "Journey's been hiding something special.\nSee what's waiting for you."
+            subtitle: "onboarding.page1.subtitle"
         )
     }
 
@@ -87,7 +87,7 @@ struct BoxEventOnboardingView: View {
         OnboardingPageView(
             imageName: "onboarding_dday",
             title: "Never Miss a Moment",
-            subtitle: "Count down to birthdays, trips, and more.\nYour companion will remind you right on your widget."
+            subtitle: "onboarding.page2.subtitle"
         )
     }
 
@@ -95,7 +95,7 @@ struct BoxEventOnboardingView: View {
         OnboardingPageView(
             imageName: "onboarding_underwater",
             title: "New Companion Arrived",
-            subtitle: "Journey found a new adventure underwater.\nUnlock new companions with Journey Pass.",
+            subtitle: "onboarding.page3.subtitle",
             floatingAnimation: true,
             lightText: true
         )
@@ -121,14 +121,14 @@ struct BoxEventOnboardingView: View {
             Spacer(minLength: 36)
 
             VStack(spacing: 12) {
-                Text(storeManager.isPurchased ? "Thank You!" : "Enjoy the Full Journey")
+                Text(storeManager.isPurchased ? "onboarding.page4.title.paid" : "onboarding.page4.title.free")
                     .font(.custom("ComicRelief-Bold", size: 24))
                     .multilineTextAlignment(.center)
 
                 if storeManager.isPurchased {
                     // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
                     // 이미 저니 패스를 이용 중이시네요. 정말 큰 힘이 돼요. 앞으로도 더 좋은 앱을 만들기 위해 최선을 다할게요.
-                    Text("I'm working hard on Year Journey as a solo developer, and I hope it makes your year a little brighter.\n\nYou already have Journey Pass. It's a huge help, and I'll keep doing my best to make Year Journey even better for you.")
+                    Text("onboarding.page4.body.paid")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -136,7 +136,7 @@ struct BoxEventOnboardingView: View {
                 } else {
                     // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
                     // 커피 한 잔 값으로 저니 패스를 구매하시면 매년 더 풍성한 여정을 즐기실 수 있어요. 약속해요! 그리고 개발을 계속할 수 있는 큰 힘이 돼요. 제 앱을 사용해 주셔서, 함께해 주셔서 감사합니다.
-                    Text("I'm working hard on Year Journey as a solo developer, and I hope it makes your year a little brighter.\n\nFor the price of a single coffee, Journey Pass will make every year even better. I promise! Plus, it really helps me keep going. Thanks for using my app, and thanks for being part of it.")
+                    Text("onboarding.page4.body.free")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -232,7 +232,7 @@ struct BoxEventOnboardingView: View {
 struct OnboardingPageView: View {
     let imageName: String
     let title: String
-    let subtitle: String
+    let subtitle: LocalizedStringKey
     var floatingAnimation: Bool = false
     var lightText: Bool = false
 
