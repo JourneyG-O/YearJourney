@@ -219,6 +219,14 @@ extension ThemeAssets {
         }
     }
 
+    /// 컴패니언 탭 메인 이미지 — 라이트모드 대응이 필요한 테마는 별도 이미지 사용
+    var companionsImageName: String {
+        switch themeID {
+        case .catUnderwater: return "cat_underwater_main_companions"
+        default: return mainImageName
+        }
+    }
+
     /// 컴패니언 탭 표시용 짧은 이름
     var shortDisplayName: String {
         switch themeID {

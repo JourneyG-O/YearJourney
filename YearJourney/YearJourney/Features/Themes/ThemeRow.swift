@@ -49,7 +49,7 @@ struct ThemeRow: View {
 
     private var previewIcons: some View {
         HStack(spacing: 8) {
-            let companion = theme.mainImageName
+            let companion = theme.companionsImageName
             let goal = theme.goalImageName
 
             Image(companion)
