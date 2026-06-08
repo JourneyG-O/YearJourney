@@ -1105,7 +1105,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "모든 친구들 만나기"
+            "value" : "모든 친구들 언락"
           }
         },
         "pt-BR" : {
@@ -1229,79 +1229,79 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neue Begleiter sind kostenlos"
+            "value" : "Alle zukünftigen Updates inklusive"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Future companions are free"
+            "value" : "All future updates, always included"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los futuros compañeros son gratis"
+            "value" : "Todas las actualizaciones futuras incluidas"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los próximos compañeros son gratis"
+            "value" : "Todas las actualizaciones futuras incluidas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les futurs compagnons sont gratuits"
+            "value" : "Toutes les futures mises à jour incluses"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Teman baru di masa depan gratis"
+            "value" : "Semua pembaruan mendatang sudah termasuk"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今後の仲間も無料"
+            "value" : "今後のアップデートもすべて含まれる"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "새로운 친구들도 무료"
+            "value" : "앞으로 추가될 모든 기능 포함"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Novos companheiros são gratuitos"
+            "value" : "Todas as atualizações futuras inclusas"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Futuros companheiros são gratuitos"
+            "value" : "Todas as atualizações futuras incluídas"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพื่อนใหม่ในอนาคตฟรีทั้งหมด"
+            "value" : "อัปเดตในอนาคตทั้งหมดรวมอยู่แล้ว"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未来新伙伴永久免费"
+            "value" : "未来所有更新永久包含"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未來新夥伴永久免費"
+            "value" : "未來所有更新永久包含"
           }
         }
       }
