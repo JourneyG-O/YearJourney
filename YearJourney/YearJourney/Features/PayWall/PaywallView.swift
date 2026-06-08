@@ -32,18 +32,19 @@ struct PaywallView: View {
             }
 
             VStack(spacing: 0) {
-                Spacer().frame(height: 80)
+                Spacer()
 
                 companionsStage
-                    .padding(.bottom, 40)
+                    .padding(.bottom, 48)
 
                 benefitsList
                     .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 40)
 
                 Spacer()
 
                 actionButtons
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 36)
             }
         }
         .onAppear {
@@ -92,9 +93,25 @@ struct PaywallView: View {
     }
 
     private var benefitsList: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 20) {
             BenefitRow(text: "Pay once, keep forever")
-            BenefitRow(text: "Unlock all companions")
+            VStack(alignment: .leading, spacing: 8) {
+                BenefitRow(text: "Unlock all companions")
+                HStack(spacing: 8) {
+                    Spacer().frame(width: 30)
+                    Text("NEW!")
+                        .font(.custom("ComicRelief-Bold", size: 8))
+                        .foregroundStyle(.black.opacity(0.7))
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Color(red: 0.85, green: 0.72, blue: 0.2))
+                        .clipShape(Capsule())
+                    Text("Underwater Journey")
+                        .font(.custom("ComicRelief-Bold", size: 13))
+                        .foregroundStyle(.white.opacity(0.65))
+                }
+            }
+            BenefitRow(text: "D-Day bubbles on your widget")
             BenefitRow(text: "Future companions are free")
         }
     }
@@ -163,7 +180,7 @@ private struct BenefitRow: View {
             Text("🐾")
                 .font(.system(size: 18))
             Text(text)
-                .font(.system(size: 16, weight: .medium))
+                .font(.custom("ComicRelief-Bold", size: 16))
                 .foregroundStyle(.white.opacity(0.9))
         }
     }

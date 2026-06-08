@@ -64,7 +64,7 @@ struct BoxEventOnboardingView: View {
         }
         .sheet(isPresented: $showPaywall) {
             PaywallView()
-                .presentationDetents([.fraction(0.65), .large])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(24)
                 .onChange(of: storeManager.isPurchased) { _, purchased in

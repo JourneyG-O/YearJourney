@@ -40,7 +40,7 @@ struct SettingsView: View {
             .background(backgroundColor)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
-                    .presentationDetents([.fraction(0.65), .large])
+                    .presentationDetents([.large])
                     .presentationDragIndicator(.visible)
                     .presentationCornerRadius(24)
             }

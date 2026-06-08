@@ -78,7 +78,7 @@ struct ThemesView: View {
         // ✅ 진짜 결제 화면 연결!
         .sheet(isPresented: $showPaywall) {
             PaywallView()
-                .presentationDetents([.fraction(0.65), .large])
+                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(24)
         }
