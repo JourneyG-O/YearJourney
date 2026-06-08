@@ -193,6 +193,7 @@ struct WidgetSettingsView: View {
                 Text("Show D-Day bubble")
                     .font(.custom("ComicRelief-Bold", size: 14))
             }
+            .tint(Color(.systemGreen))
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)

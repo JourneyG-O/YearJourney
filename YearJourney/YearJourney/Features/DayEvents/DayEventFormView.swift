@@ -196,6 +196,7 @@ struct DayEventFormView: View {
                 Text("Repeat Yearly")
                     .font(.custom("ComicRelief-Bold", size: 16))
             }
+            .tint(Color(.systemGreen))
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
 
