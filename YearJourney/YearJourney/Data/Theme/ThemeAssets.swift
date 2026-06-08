@@ -157,7 +157,7 @@ extension ThemeAssets {
 
     static let catUnderwater = ThemeAssets(
         themeID: .catUnderwater,
-        displayName: "Underwater",
+        displayName: "Underwater Journey",
         mainImageName: "cat_underwater_main",
         companionImages: [
             "cat_underwater_01",
