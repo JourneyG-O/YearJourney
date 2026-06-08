@@ -27,7 +27,7 @@ struct ThemeRow: View {
             previewIcons
                 .layoutPriority(1) // 이미지들이 찌그러지지 않게 우선순위 높임
 
-            Text(theme.displayName)
+            Text(theme.shortDisplayName)
                 .font(.custom("ComicRelief-Bold", size: 18))
                 .lineLimit(1)
                 .layoutPriority(1) // 텍스트도 중요

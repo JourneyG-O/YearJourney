@@ -219,6 +219,22 @@ extension ThemeAssets {
         }
     }
 
+    /// 컴패니언 탭 표시용 짧은 이름
+    var shortDisplayName: String {
+        switch themeID {
+        case .catUnderwater: return "Underwater"
+        default: return displayName
+        }
+    }
+
+    /// 위젯 텍스트/컨텐츠 컬러 — 어두운 배경 테마는 흰색 고정
+    var widgetContentColor: Color {
+        switch themeID {
+        case .catUnderwater: return .white
+        default: return .primary
+        }
+    }
+
     /// 앱 내 프리뷰 카드 배경 — 항상 흰색 기본 (다크모드 무관)
     var previewBackground: AnyShapeStyle {
         switch themeID {

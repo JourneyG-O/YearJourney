@@ -65,7 +65,7 @@ struct YearJourneySmallWidgetView: View {
             if let text = displayText {
                 Text(text)
                     .font(.custom("ComicRelief-Bold", size: 16))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(theme.widgetContentColor)
                     .opacity(0.8)
                     .padding(.top, 2)
             }
