@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsView: View {
     @Environment(\.openURL) private var openURL
@@ -157,6 +158,14 @@ private extension SettingsView {
                 AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
             }
             .foregroundStyle(.orange)
+
+            Button("Test Widget Box Event") {
+                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventShown)
+                AppGroupStore.defaults.set("0.0.0", forKey: WidgetKeys.boxEventVersion)
+                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+            .foregroundStyle(.red)
         }
     }
     #endif
