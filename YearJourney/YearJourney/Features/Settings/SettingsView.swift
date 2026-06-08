@@ -153,7 +153,7 @@ private extension SettingsView {
         Section("Debug") {
             Button("Reset Box Event") {
                 AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventShown)
-                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventVersion)
+                AppGroupStore.defaults.set("0.0.0", forKey: WidgetKeys.boxEventVersion)
                 AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
             }
             .foregroundStyle(.orange)

@@ -23,6 +23,28 @@ struct YearJourneySmallEntry: TimelineEntry {
 
 struct YearJourneySmallProvider: TimelineProvider {
 
+    private func activateBoxEventIfNeeded() {
+        guard !AppGroupStore.defaults.bool(forKey: WidgetKeys.boxEventShown) else { return }
+        let selectedThemeID = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
+        guard selectedThemeID != ThemeID.boxCat.rawValue else { return }
+
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        let triggeredVersion = AppGroupStore.defaults.string(forKey: WidgetKeys.boxEventVersion) ?? ""
+
+        var shouldActivate = false
+        if !triggeredVersion.isEmpty && currentVersion != triggeredVersion {
+            shouldActivate = true
+        } else if let setupDate = AppGroupStore.defaults.object(forKey: WidgetKeys.widgetFirstSetupDate) as? Date {
+            let days = Calendar.current.dateComponents([.day], from: setupDate, to: Date()).day ?? 0
+            shouldActivate = days >= 5
+        }
+
+        guard shouldActivate else { return }
+        AppGroupStore.defaults.set(selectedThemeID ?? ThemeID.catBasic.rawValue, forKey: WidgetKeys.boxEventOriginalThemeID)
+        AppGroupStore.defaults.set(currentVersion, forKey: WidgetKeys.boxEventVersion)
+        AppGroupStore.defaults.set(ThemeID.boxCat.rawValue, forKey: WidgetKeys.selectedThemeID)
+    }
+
     private func currentTheme() -> ThemeAssets {
         let id = AppGroupStore.defaults.string(forKey: WidgetKeys.selectedThemeID)
         return ThemeCatalog.theme(for: id)
@@ -61,6 +83,7 @@ struct YearJourneySmallProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<YearJourneySmallEntry>) -> Void) {
+        activateBoxEventIfNeeded()
         let now = Date()
         let info = ProgressCalculator.monthProgress(for: now)
         let theme = currentTheme()
