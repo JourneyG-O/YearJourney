@@ -12,7 +12,7 @@ You are a senior iOS developer and architecture specialist collaborating on this
 
 ## Project Overview
 
-Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.0.2, Build 2).
+Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.1.0, Build 3).
 
 | Key | Value |
 |---|---|
@@ -200,3 +200,20 @@ Use emoji + Korean only. No English tags. One space between emoji and content.
 - IAP simulator testing: use `Resources/Products.storekit`
 - Widget testing: add widget directly to simulator home screen
 - Widget timeline refresh: +5 min booster entry after reload, then hourly cadence
+
+---
+
+## Release History
+
+| Version | Build | Date | Summary |
+|---|---|---|---|
+| 1.0.2 | 2 | 2026 이전 | 초기 출시 |
+| 1.1.0 | 3 | 2026-06-09 | D-Day 기능, Underwater Journey 테마, 박스 이벤트 온보딩, 13개국 로컬라이징, 페이월 UI 개선, 앱 리뷰 요청 |
+
+### v1.1.0 주요 변경사항
+- **D-Day**: 이벤트 카운트다운, 위젯 말풍선 표시 (Journey Pass 전용)
+- **Underwater Journey**: 신규 테마 추가 (위젯 배경 오션 그라디언트, 컨텐츠 흰색 고정)
+- **박스 이벤트 온보딩**: 업데이트 알림 전략 — 위젯 타임라인에서 자동 발동 (기존 유저: 5일 경과 즉시, 신규 유저: 위젯 설정 후 5일)
+- **로컬라이징**: `Localizable.xcstrings` — 온보딩/페이월/D-Day 알러트 13개 언어 지원
+- **페이월**: 전체화면 전환, 혜택 항목 개선
+- **앱 리뷰 요청**: 위젯 설정 이력 있는 유저가 탭 전환 시 발동
