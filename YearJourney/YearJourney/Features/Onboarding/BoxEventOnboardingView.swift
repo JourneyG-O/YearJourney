@@ -121,7 +121,7 @@ struct BoxEventOnboardingView: View {
             Spacer(minLength: 36)
 
             VStack(spacing: 12) {
-                Text(storeManager.isPurchased ? "onboarding.page4.title.paid" : "onboarding.page4.title.free")
+                Text(verbatim: storeManager.isPurchased ? "Thank You!" : "Enjoy the Full Journey")
                     .font(.custom("ComicRelief-Bold", size: 24))
                     .multilineTextAlignment(.center)
 
