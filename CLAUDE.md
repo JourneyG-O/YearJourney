@@ -12,7 +12,7 @@ You are a senior iOS developer and architecture specialist collaborating on this
 
 ## Project Overview
 
-Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.1.0, Build 3).
+Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.1.1, Build 4).
 
 | Key | Value |
 |---|---|
@@ -209,6 +209,7 @@ Use emoji + Korean only. No English tags. One space between emoji and content.
 |---|---|---|---|
 | 1.0.2 | 2 | 2026 이전 | 초기 출시 |
 | 1.1.0 | 3 | 2026-06-09 | D-Day 기능, Underwater Journey 테마, 박스 이벤트 온보딩, 13개국 로컬라이징, 페이월 UI 개선, 앱 리뷰 요청 |
+| 1.1.1 | 4 | 2026-06-15 | 박스 이벤트 발동 로직 수정 (TimedThemeEvent 시스템), 온보딩 4페이지 문구 개선 |
 
 ### v1.1.0 주요 변경사항
 - **D-Day**: 이벤트 카운트다운, 위젯 말풍선 표시 (Journey Pass 전용)
@@ -217,3 +218,7 @@ Use emoji + Korean only. No English tags. One space between emoji and content.
 - **로컬라이징**: `Localizable.xcstrings` — 온보딩/페이월/D-Day 알러트 13개 언어 지원
 - **페이월**: 전체화면 전환, 혜택 항목 개선
 - **앱 리뷰 요청**: 위젯 설정 이력 있는 유저가 탭 전환 시 발동
+
+### v1.1.1 주요 변경사항
+- **박스 이벤트 버그 수정**: v1.1.0의 발동 조건이 모든 유저에게 항상 false였던 문제 수정. `Core/TimedThemeEvent.swift` + `Core/TimedThemeEventManager.swift`로 재설계 — 이벤트별 `firstSeen` 날짜를 AppGroupStore에 기록하고, cutoffDate(2026-06-25) 기준으로 기존 유저(3일 후)/신규 유저(10일 후) 발동 시점을 분기. 앱/위젯 양쪽에서 동일하게 동작하며, 향후 이벤트는 `TimedThemeEvent.all`에 항목만 추가하면 재사용 가능
+- **온보딩 4페이지 문구 개선**: 타이틀을 1~3페이지와 통일해 영문으로 고정, 서브타이틀(감사 메시지)을 더 진솔한 톤으로 재작성하고 13개 언어 번역
