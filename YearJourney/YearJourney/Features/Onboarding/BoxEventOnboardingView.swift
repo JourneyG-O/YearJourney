@@ -126,16 +126,12 @@ struct BoxEventOnboardingView: View {
                     .multilineTextAlignment(.center)
 
                 if storeManager.isPurchased {
-                    // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
-                    // 이미 저니 패스를 이용 중이시네요. 정말 큰 힘이 돼요. 앞으로도 더 좋은 앱을 만들기 위해 최선을 다할게요.
                     Text("onboarding.page4.body.paid")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
                 } else {
-                    // 저는 1인 개발자로서 Year Journey를 열심히 만들고 있어요. 여러분의 한 해가 조금 더 빛나길 바라며요.
-                    // 커피 한 잔 값으로 저니 패스를 구매하시면 매년 더 풍성한 여정을 즐기실 수 있어요. 약속해요! 그리고 개발을 계속할 수 있는 큰 힘이 돼요. 제 앱을 사용해 주셔서, 함께해 주셔서 감사합니다.
                     Text("onboarding.page4.body.free")
                         .font(.system(size: 15))
                         .foregroundStyle(.secondary)
