@@ -153,16 +153,12 @@ private extension SettingsView {
     var debugSection: some View {
         Section("Debug") {
             Button("Reset Box Event") {
-                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventShown)
-                AppGroupStore.defaults.set("0.0.0", forKey: WidgetKeys.boxEventVersion)
-                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
+                TimedThemeEventManager.reset(.boxCat2026)
             }
             .foregroundStyle(.orange)
 
             Button("Test Widget Box Event") {
-                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventShown)
-                AppGroupStore.defaults.set("0.0.0", forKey: WidgetKeys.boxEventVersion)
-                AppGroupStore.defaults.removeObject(forKey: WidgetKeys.boxEventOriginalThemeID)
+                TimedThemeEventManager.debugForceActivate(.boxCat2026)
                 WidgetCenter.shared.reloadAllTimelines()
             }
             .foregroundStyle(.red)

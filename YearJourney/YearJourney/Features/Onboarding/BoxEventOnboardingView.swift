@@ -121,7 +121,7 @@ struct BoxEventOnboardingView: View {
             Spacer(minLength: 36)
 
             VStack(spacing: 12) {
-                Text(storeManager.isPurchased ? "onboarding.page4.title.paid" : "onboarding.page4.title.free")
+                Text(verbatim: storeManager.isPurchased ? "Thank You!" : "Enjoy the Full Journey")
                     .font(.custom("ComicRelief-Bold", size: 24))
                     .multilineTextAlignment(.center)
 
@@ -222,7 +222,11 @@ struct BoxEventOnboardingView: View {
     }
 
     private func complete() {
-        BoxEventManager.complete(themeManager: themeManager)
+        if let event = TimedThemeEvent.all.first(where: { $0.themeID == themeManager.currentTheme.themeID }) {
+            TimedThemeEventManager.complete(event)
+            themeManager.refresh()
+        }
+        UserDefaults.standard.set(true, forKey: "showDayTabBadge")
         dismiss()
     }
 }

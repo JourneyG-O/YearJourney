@@ -30,9 +30,6 @@ enum WidgetKeys {
     static let dayEvents = "dayEvents"
     static let isPurchased = "store.isPurchased"
 
-    // Box Event
-    static let boxEventShown = "boxEvent.shown"
-    static let boxEventVersion = "boxEvent.version"
-    static let boxEventOriginalThemeID = "boxEvent.originalThemeID"
+    // Widget Setup
     static let widgetFirstSetupDate = "widget.firstSetupDate"
 }

@@ -21,9 +21,12 @@ struct ThemesView: View {
     // 결제 뷰(ProUpgradeView)를 띄우기 위한 상태
     @State private var showPaywall = false
 
-    // 박스 이벤트 활성 중에는 테마 변경 불가
+    // 타이밍 테마 이벤트 활성 중에는 테마 변경 불가
     private var isBoxEventActive: Bool {
-        themeManager.currentTheme.themeID == .boxCat && !BoxEventManager.isBoxEventShown
+        if let event = TimedThemeEvent.all.first(where: { $0.themeID == themeManager.currentTheme.themeID }) {
+            return !TimedThemeEventManager.isShown(event)
+        }
+        return false
     }
 
     var body: some View {

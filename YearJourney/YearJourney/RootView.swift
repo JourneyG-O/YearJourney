@@ -86,9 +86,13 @@ struct RootView: View {
     // MARK: - Box Onboarding
 
     private func checkBoxOnboarding() {
-        if themeManager.currentTheme.themeID == .boxCat && !BoxEventManager.isBoxEventShown {
-            showBoxOnboarding = true
+        if let event = activeThemeEvent {
+            showBoxOnboarding = !TimedThemeEventManager.isShown(event)
         }
+    }
+
+    private var activeThemeEvent: TimedThemeEvent? {
+        TimedThemeEvent.all.first { $0.themeID == themeManager.currentTheme.themeID }
     }
 
     // MARK: - Deep Link
@@ -98,9 +102,7 @@ struct RootView: View {
 
         // yearjourney://box-event
         if url.host == "box-event" {
-            if !BoxEventManager.isBoxEventShown {
-                showBoxOnboarding = true
-            }
+            checkBoxOnboarding()
             return
         }
 
