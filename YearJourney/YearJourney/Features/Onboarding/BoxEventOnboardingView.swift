@@ -222,7 +222,11 @@ struct BoxEventOnboardingView: View {
     }
 
     private func complete() {
-        BoxEventManager.complete(themeManager: themeManager)
+        if let event = TimedThemeEvent.all.first(where: { $0.themeID == themeManager.currentTheme.themeID }) {
+            TimedThemeEventManager.complete(event)
+            themeManager.refresh()
+        }
+        UserDefaults.standard.set(true, forKey: "showDayTabBadge")
         dismiss()
     }
 }

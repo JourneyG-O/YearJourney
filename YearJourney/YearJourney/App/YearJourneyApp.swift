@@ -22,9 +22,11 @@ struct YearJourneyApp: App {
                 .task {
                     await storeManager.updateCustomerProductStatus()
 
-                    // 상자 이벤트 조건 체크 — 충족 시 자동으로 boxCat 테마 적용
-                    if BoxEventManager.shouldActivateBoxTheme() {
-                        BoxEventManager.activate(themeManager: themeManager)
+                    // 타이밍 테마 이벤트 조건 체크 — 충족 시 자동으로 이벤트 테마 적용
+                    for event in TimedThemeEvent.all where TimedThemeEventManager.shouldActivate(event) {
+                        TimedThemeEventManager.activate(event)
+                        themeManager.refresh()
+                        break
                     }
                 }
         }

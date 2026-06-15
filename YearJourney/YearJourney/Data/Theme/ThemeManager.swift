@@ -33,4 +33,11 @@ final class ThemeManager: ObservableObject {
         // 3) 위젯들도 새 테마를 반영하도록 요청
         WidgetCenter.shared.reloadAllTimelines()
     }
+
+    /// AppGroupStore에 직접 쓰여진 선택 테마를 메모리 상태에 반영
+    func refresh() {
+        let savedID = userDefaults.string(forKey: WidgetKeys.selectedThemeID)
+        currentTheme = ThemeCatalog.theme(for: savedID)
+        WidgetCenter.shared.reloadAllTimelines()
+    }
 }
