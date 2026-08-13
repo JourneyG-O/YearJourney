@@ -12,7 +12,7 @@ You are a senior iOS developer and architecture specialist collaborating on this
 
 ## Project Overview
 
-Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.1.1, Build 4).
+Year/month progress tracker with character themes (Companions). iPhone-only. App Store live (v1.1.2, Build 5).
 
 | Key | Value |
 |---|---|
@@ -210,6 +210,7 @@ Use emoji + Korean only. No English tags. One space between emoji and content.
 | 1.0.2 | 2 | 2026 이전 | 초기 출시 |
 | 1.1.0 | 3 | 2026-06-09 | D-Day 기능, Underwater Journey 테마, 박스 이벤트 온보딩, 13개국 로컬라이징, 페이월 UI 개선, 앱 리뷰 요청 |
 | 1.1.1 | 4 | 2026-06-15 | 박스 이벤트 발동 로직 수정 (TimedThemeEvent 시스템), 온보딩 4페이지 문구 개선 |
+| 1.1.2 | 5 | 2026-08-13 | 위젯 틴트 모드 버그 수정 (지우개 마스크 포즈 불일치 / D-Day 말풍선 가독성), D-Day 이모지 세트 큐레이션 |
 
 ### v1.1.0 주요 변경사항
 - **D-Day**: 이벤트 카운트다운, 위젯 말풍선 표시 (Journey Pass 전용)
@@ -222,3 +223,9 @@ Use emoji + Korean only. No English tags. One space between emoji and content.
 ### v1.1.1 주요 변경사항
 - **박스 이벤트 버그 수정**: v1.1.0의 발동 조건이 모든 유저에게 항상 false였던 문제 수정. `Core/TimedThemeEvent.swift` + `Core/TimedThemeEventManager.swift`로 재설계 — 이벤트별 `firstSeen` 날짜를 AppGroupStore에 기록하고, cutoffDate(2026-06-25) 기준으로 기존 유저(3일 후)/신규 유저(10일 후) 발동 시점을 분기. 앱/위젯 양쪽에서 동일하게 동작하며, 향후 이벤트는 `TimedThemeEvent.all`에 항목만 추가하면 재사용 가능
 - **온보딩 4페이지 문구 개선**: 타이틀을 1~3페이지와 통일해 영문으로 고정, 서브타이틀(감사 메시지)을 더 진솔한 톤으로 재작성하고 13개 언어 번역
+
+### v1.1.2 주요 변경사항
+- **틴트 모드 지우개 마스크 수정**: 미디엄 위젯 진행선에서 캐릭터(tint)와 뒤에 깔리는 지우개(non-tint) 마스크가 각각 독립적으로 랜덤 프레임을 뽑아 포즈가 어긋나던 문제 수정. `ThemeAssets.resolvedCompanionIndex(fixIndex:)`로 인덱스를 한 번만 확정하고 `companionImageName(isTintMode:index:)`로 캐릭터·지우개가 동일 포즈를 공유하도록 변경
+- **틴트 모드 D-Day 말풍선 가독성 수정**: 흰 말풍선 + 흰 콘텐츠가 한 덩어리로 뭉개지던 문제. `DayEventBubbleView`에 `isTintMode` 분기 추가 — 이모지를 매칭 SF Symbol로 대체하고, 반투명(0.4) 말풍선 배경 위에 불투명 심볼·텍스트를 얹어 알파 대비로 가독성 확보 (accented 렌더러가 알파를 존중하는 특성 활용)
+- **D-Day 이모지 세트 큐레이션**: 부적절하거나 SF Symbol 대응이 없는 이모지를 정리하고 D-Day용 이모지를 추가해 36개로 재구성. `DayEventEmoji` 카탈로그 신설 — 이모지↔SF Symbol을 단일 소스에서 파생해 키 불일치를 방지하고, 매핑에 없는 레거시 이모지는 폴백 심볼(`calendar`)로 처리
+- **디버그 도구**: `#if DEBUG` 전용 구매 상태 토글 버튼 추가 (프리미엄/D-Day 게이팅 테스트용, 릴리즈 빌드 미포함)
