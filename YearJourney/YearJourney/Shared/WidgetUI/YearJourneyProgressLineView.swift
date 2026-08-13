@@ -35,9 +35,11 @@ struct YearJourneyProgressLineView: View {
             let centerToBottomDistance = goalSize / 2
 
             let fixIndex: Int? = isPreview ? 0 : nil
-            let companionName = theme.companionImageName(isTintMode: isTintMode, fixIndex: fixIndex)
+            // 캐릭터와 지우개 마스크가 같은 포즈를 공유하도록 인덱스를 한 번만 확정한다.
+            let companionIndex = theme.resolvedCompanionIndex(fixIndex: fixIndex)
+            let companionName = theme.companionImageName(isTintMode: isTintMode, index: companionIndex)
             let goalName = isTintMode ? theme.goalTintImageName : theme.goalImageName
-            let eraserName = isTintMode ? theme.companionImageName(isTintMode: false, fixIndex: fixIndex) : ""
+            let eraserName = isTintMode ? theme.companionImageName(isTintMode: false, index: companionIndex) : ""
 
             ZStack(alignment: .topLeading) {
 
