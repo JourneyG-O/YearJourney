@@ -11,6 +11,7 @@ struct DayEventBubbleView: View {
     let activeEvent: ActiveDayEvent
     var showOnRight: Bool = true
     var compact: Bool = false
+    var isTintMode: Bool = false
 
     // MARK: - Layout constants
 
@@ -23,14 +24,37 @@ struct DayEventBubbleView: View {
 
     var body: some View {
         ZStack {
+            // 말풍선 배경 — 틴트 모드에선 알파를 낮춰(반투명) 위에 얹히는
+            // 불투명 심볼·텍스트와 알파 대비를 만든다. accented 렌더러는 알파를 존중한다.
             Image(systemName: "message.fill")
                 .resizable()
                 .scaledToFit()
                 .frame(width: bubbleWidth, height: bubbleHeight)
                 .foregroundStyle(.white)
+                .opacity(isTintMode ? 0.4 : 1)
                 .scaleEffect(x: showOnRight ? 1 : -1, y: 1)
                 .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 2)
 
+            content
+        }
+        .frame(width: bubbleWidth, height: bubbleHeight)
+    }
+
+    // MARK: - Content
+
+    @ViewBuilder
+    private var content: some View {
+        if isTintMode {
+            // 틴트(accented) 모드: 이모지는 단색 실루엣으로 뭉개지므로 매칭 SF Symbol로 대체하고,
+            // 심볼·텍스트를 불투명 흰색으로 유지해 반투명 말풍선 배경과 대비시킨다.
+            VStack(spacing: 1) {
+                Image(systemName: DayEventEmoji.symbolName(for: activeEvent.event.emoji))
+                    .font(.system(size: emojiSize))
+                Text(dDayLabel)
+                    .font(.custom("ComicRelief-Bold", size: dDayFontSize))
+            }
+            .foregroundStyle(.white)
+        } else {
             VStack(spacing: 0) {
                 Text(activeEvent.event.emoji)
                     .font(.system(size: emojiSize))
@@ -39,7 +63,6 @@ struct DayEventBubbleView: View {
                     .foregroundStyle(Color.black)
             }
         }
-        .frame(width: bubbleWidth, height: bubbleHeight)
     }
 
     // MARK: - Helpers

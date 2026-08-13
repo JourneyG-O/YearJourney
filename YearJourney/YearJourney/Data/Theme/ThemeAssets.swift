@@ -253,18 +253,23 @@ extension ThemeAssets {
 }
 
 extension ThemeAssets {
-    func companionImageName(isTintMode: Bool, fixIndex: Int? = nil) -> String {
+    /// 컴패니언 프레임 인덱스를 하나 확정한다.
+    /// `fixIndex`가 유효하면 그 값을, 없으면 랜덤 인덱스를 반환한다.
+    /// 캐릭터와 지우개 마스크가 같은 포즈를 공유하도록, 인덱스는 한 번만 확정해 재사용한다.
+    func resolvedCompanionIndex(fixIndex: Int? = nil) -> Int {
+        if let index = fixIndex, companionImages.indices.contains(index) {
+            return index
+        }
+        return companionImages.indices.randomElement() ?? 0
+    }
+
+    /// 확정된 인덱스로 컴패니언 이미지 이름을 반환한다.
+    func companionImageName(isTintMode: Bool, index: Int) -> String {
         let source = isTintMode ? companionTintImages : companionImages
-
-        guard let first = source.first else {
-            return isTintMode ? goalTintImageName : goalImageName
+        guard source.indices.contains(index) else {
+            return goalImageName(isTintMode: isTintMode)
         }
-
-        if let index = fixIndex, source.indices.contains(index) {
-            return source[index]
-        }
-
-        return source.randomElement() ?? first
+        return source[index]
     }
 }
 

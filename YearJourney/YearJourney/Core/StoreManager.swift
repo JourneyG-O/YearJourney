@@ -72,6 +72,14 @@ final class StoreManager: ObservableObject {
         setIsPurchased(false)
     }
 
+    #if DEBUG
+    /// 디버그 전용 — StoreKit 트랜잭션과 무관하게 구매 상태를 강제 설정한다.
+    /// 앱 UI와 위젯(AppGroupStore) 양쪽의 프리미엄 게이팅을 테스트하기 위한 용도.
+    func debugSetPurchased(_ value: Bool) {
+        setIsPurchased(value)
+    }
+    #endif
+
     // MARK: - Private
 
     // Syncs isPurchased to AppGroupStore so the widget can read it
