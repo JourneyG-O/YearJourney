@@ -85,7 +85,8 @@ struct YearJourneyProgressLineView: View {
                     let bubble = DayEventBubbleView(
                         activeEvent: event,
                         showOnRight: showOnRight,
-                        compact: true
+                        compact: true,
+                        isTintMode: isTintMode
                     )
                     .fixedSize()
 
