@@ -272,17 +272,7 @@ struct EmojiPickerView: View {
     @Binding var selectedEmoji: String
     @Environment(\.dismiss) private var dismiss
 
-    private let emojis: [String] = [
-        "🎂","🎁","🎉","🎊","🎈","🥳",
-        "✈️","🚀","🏖️","⛺","🗺️","🎡",
-        "📚","🎓","📝","✏️","💼","🖥️",
-        "❤️","💕","💝","🤝","💌","🌹",
-        "🏃","🏋️","⚽","🎾","🏊","🚴",
-        "🌸","🌺","🌻","🌈","⭐","🌙",
-        "🍕","🍰","🍜","🍣","☕","🍷",
-        "🐶","🐱","🐻","🐼","🦊","🐨",
-        "💊","🏥","🩺","🧸","🎮","🎵"
-    ]
+    private let emojis: [String] = DayEventEmoji.all
 
     private let columns = Array(repeating: GridItem(.flexible()), count: 6)
 
