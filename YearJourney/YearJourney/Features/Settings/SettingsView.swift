@@ -152,14 +152,28 @@ private extension SettingsView {
     #if DEBUG
     var debugSection: some View {
         Section("Debug") {
-            Button("Reset Box Event") {
+            Button {
+                storeManager.debugSetPurchased(!storeManager.isPurchased)
+                WidgetCenter.shared.reloadAllTimelines()
+            } label: {
+                Text(verbatim: storeManager.isPurchased
+                    ? "Revoke Journey Pass"
+                    : "Grant Journey Pass")
+            }
+            .foregroundStyle(.blue)
+
+            Button {
                 TimedThemeEventManager.reset(.boxCat2026)
+            } label: {
+                Text(verbatim: "Reset Box Event")
             }
             .foregroundStyle(.orange)
 
-            Button("Test Widget Box Event") {
+            Button {
                 TimedThemeEventManager.debugForceActivate(.boxCat2026)
                 WidgetCenter.shared.reloadAllTimelines()
+            } label: {
+                Text(verbatim: "Test Widget Box Event")
             }
             .foregroundStyle(.red)
         }
